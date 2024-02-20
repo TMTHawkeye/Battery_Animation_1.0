@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">Battery Animation</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_home">Home</string>
+    <string name="title_battery">Battery</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">Welcome</string>
+    <string name="active_animation">Active Animation</string>
+    <string name="enable">Enable</string>
+    <string name="animation">Animations</string>
+    <string name="animation_sub">Select Battery Animation</string>
+    <string name="walpaper">Wallpapers</string>
+    <string name="walpaper_sub">Select Background</string>
+    <string name="creation">Creations</string>
+    <string name="create_new">Create New</string>
+    <string name="create_sub">Create Your Own Screen</string>
+    <string name="creations_sub">Check You Creations</string>
+    <string name="enable_animation_title">Enable Animation</string>
+    <string name="batteryPercentage">Show Battery Percentage</string>
+    <string name="double_tap_close_screen">Double Tap Close Screen</string>
+    <string name="animation_duration">Animation Duration</string>
+    <string name="circle">Circle</string>
+    <string name="moods">Moods</string>
+    <string name="characters">Characters</string>
+    <string name="animals">Animals</string>
+    <string name="cars">Cars</string>
+    <string name="set_animation_title">Set Animation</string>
+    <string name="set_wallpaper_title">Set Wallpaper</string>
+    <string name="batteryInfo">Battery Info</string>
+    <string name="dummy_battery_remaining_time">Battery 1h 10 min</string>
+    <string name="notConnected">Not Connected</string>
+    <string name="connected">CONNECTED</string>
+    <string name="temperature_title">Temperature</string>
+    <string name="voltage_title">Voltage</string>
+    <string name="technology_title">Technology</string>
+    <string name="health_title">Health</string>
+    <string name="capacity_title">Capacity</string>
+    <string name="plugged_title">Plugged</string>
+    <string name="full_charge_notification">Full Charge Notification</string>
+    <string name="title_language">Select Language</string>
+    <string name="language">Language</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="general">General</string>
+    <string name="rateus_title">Rate Us</string>
+    <string name="share_title">Share</string>
+    <string name="moreapps_title">More Apps</string>
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="charging_alarm">Charging Alarm</string>
+    <string name="low_battery">Low Battery</string>
+    <string name="fullBattery">Full Battery</string>
+    <string name="charger_connect">Charger Connect</string>
+    <string name="disconnectTitle">Charger Disconnect</string>
+    <string name="myCreation_title">My Creations</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="battery_in_h_min">Battery in %1$s H %2$s min</string>
+    <string name="unplugged">Unplugged</string>
+    <string name="plugged">Plugged</string>
+    <string name="good">Good</string>
+    <string name="bad">Bad</string>
+    <string name="battery_full"><font color="#00FF82">BATTERY FULL</font></string>
+    <string name="disconnect_charger_desc">Please Disconnect Charger</string>
+    <string name="ok">OK</string>
+    <string name="charger_connected">Charger Connected</string>
+    <string name="disconnected">DISCONNECTED</string>
+    <string name="charger_disconnected">Charger Disconnected</string>
+    <string name="battery_low">BATTERY_LOW</string>
+    <string name="connect_charger_desc">Please Connect Charger</string>
+    <string name="charging_notification">Charging Notifications</string>
+
+    <style name="textStyle_normal" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="fontFamily">@font/inter_regulat</item>
+    </style>
+
+    <string-array name="spinner_items">
+        <item>3 sec</item>
+        <item>5 sec</item>
+        <item>10 sec</item>
+        <item>15 sec</item>
+    </string-array>
+</resources>

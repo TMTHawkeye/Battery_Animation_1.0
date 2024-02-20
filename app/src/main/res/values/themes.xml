@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BatteryAnimation" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorButtonNormal">@color/theme</item>
+        <item name="colorPrimary">@color/theme</item>
+        <item name="colorAccent">@color/theme</item>
+        <item name="android:navigationBarColor">@color/theme</item>
+
+    </style>
+
+    <style name="Theme.BatteryAnimation" parent="Base.Theme.BatteryAnimation" />
+</resources>

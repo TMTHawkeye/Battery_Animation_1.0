@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ChargingAlarm"
+    android:background="@drawable/gradient_bg_layout">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_btn_img"
+        android:id="@+id/back_btn_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"/>
+
+    <TextView
+        android:id="@+id/charging_alarm_title_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/charging_alarm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back_btn_id"
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn_id"
+        style="@style/textStyle_normal"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/charging_alarm_icon_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/charging_alarm_title_id"
+        android:src="@drawable/charging_alarm_img"
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/card_low_battery"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_low_battery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/charging_alarm_icon_id"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/dark_grey"
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/low_battery_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/low_battery_img"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/low_battery"
+                app:layout_constraintBottom_toBottomOf="@+id/low_battery_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/low_battery_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/low_battery_img_id"
+                app:layout_constraintTop_toTopOf="@+id/low_battery_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/low_battery_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:thumbTint="@drawable/switch_thumb_selector"
+                app:trackTint="@drawable/switch_track_selector"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_percentage_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardCornerRadius="@dimen/_15sdp"
+        app:strokeColor="@color/dark_grey"
+
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="@id/card_low_battery"
+        app:layout_constraintStart_toStartOf="@id/card_low_battery"
+        app:layout_constraintTop_toBottomOf="@+id/card_low_battery"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/full_battery_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:src="@drawable/battery_duration_img"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/fullBattery"
+                app:layout_constraintBottom_toBottomOf="@+id/full_battery_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/full_battery_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/full_battery_img_id"
+                app:layout_constraintTop_toTopOf="@+id/full_battery_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/full_battery_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:thumbTint="@drawable/switch_thumb_selector"
+                app:trackTint="@drawable/switch_track_selector"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_charger_connect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="@id/card_low_battery"
+        app:layout_constraintStart_toStartOf="@id/card_low_battery"
+        app:layout_constraintTop_toBottomOf="@+id/card_percentage_animation"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/dark_grey"
+
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/_5sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/charger_connect_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/charger_connect_img"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/charger_connect"
+                app:layout_constraintBottom_toBottomOf="@+id/charger_connect_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/charger_connect_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/charger_connect_img_id"
+                app:layout_constraintTop_toTopOf="@+id/charger_connect_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/charger_connect_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:thumbTint="@drawable/switch_thumb_selector"
+                app:trackTint="@drawable/switch_track_selector"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_charger_disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_charger_connect"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/dark_grey"
+
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/_5sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/charger_disconnect_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/charger_disconnect_img"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/disconnectTitle"
+                app:layout_constraintBottom_toBottomOf="@+id/charger_disconnect_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/charger_disconnect_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/charger_disconnect_img_id"
+                app:layout_constraintTop_toTopOf="@+id/charger_disconnect_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/charger_disconnect_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:thumbTint="@drawable/switch_thumb_selector"
+                app:trackTint="@drawable/switch_track_selector"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.EnableActivity"
+    android:background="@drawable/gradient_bg_layout">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_btn_img"
+        android:id="@+id/back_btn_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"/>
+
+    <TextView
+        android:id="@+id/eneble_animation_title_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enable_animation_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back_btn_id"
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn_id"
+        style="@style/textStyle_normal"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"/>
+
+
+    <ImageView
+        android:id="@+id/enable_animation_main_icon_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eneble_animation_title_id"
+        android:src="@drawable/enable_animation_main_icon"
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/card_active_animation"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_active_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enable_animation_main_icon_id"
+        app:strokeWidth="1dp"
+        app:cardCornerRadius="@dimen/_15sdp"
+        app:strokeColor="@color/dark_grey"
+
+        android:layout_marginVertical="@dimen/_5sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_7sdp">
+
+            <ImageView
+                android:id="@+id/active_animation_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/active_animation_img"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/active_animation"
+                app:layout_constraintBottom_toBottomOf="@+id/active_animation_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/active_animation_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/active_animation_img_id"
+                app:layout_constraintTop_toTopOf="@+id/active_animation_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/active_animation_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_percentage_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardCornerRadius="@dimen/_15sdp"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_active_animation"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/dark_grey"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_7sdp">
+
+            <ImageView
+                android:id="@+id/percentage_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:src="@drawable/battery_duration_img"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/batteryPercentage"
+                app:layout_constraintBottom_toBottomOf="@+id/percentage_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/percentage_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/percentage_img_id"
+                app:layout_constraintTop_toTopOf="@+id/percentage_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/percentage_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_double_tap_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_percentage_animation"
+        app:strokeWidth="1dp"
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        app:strokeColor="@color/dark_grey"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_7sdp">
+
+            <ImageView
+                android:id="@+id/double_tap_close_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/double_tap_close_img"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/double_tap_close_screen"
+                app:layout_constraintBottom_toBottomOf="@+id/double_tap_close_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/double_tap_close_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/double_tap_close_img_id"
+                app:layout_constraintTop_toTopOf="@+id/double_tap_close_img_id" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/double_tap_close_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_animation_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/gradient_bg_card"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_double_tap_close"
+        app:strokeWidth="1dp"
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        app:strokeColor="@color/dark_grey"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg_card"
+            android:padding="@dimen/_7sdp">
+
+            <ImageView
+                android:id="@+id/animation_duration_img_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/duration_animation_img"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:text="@string/animation_duration"
+                app:layout_constraintBottom_toBottomOf="@+id/animation_duration_img_id"
+                app:layout_constraintEnd_toStartOf="@+id/animation_duration_switch"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/animation_duration_img_id"
+                app:layout_constraintTop_toTopOf="@+id/animation_duration_img_id" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/animation_duration_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/spinner_items"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
