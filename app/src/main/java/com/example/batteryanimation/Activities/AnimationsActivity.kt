@@ -16,9 +16,7 @@ class AnimationsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        populateList{
-            setUpAdapter(it)
-        }
+
     }
 
     private fun setUpAdapter(animationsList: ArrayList<CategoryModel>) {
@@ -71,5 +69,12 @@ class AnimationsActivity : AppCompatActivity() {
         )
         
         callback(animationsList)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        populateList{
+            setUpAdapter(it)
+        }
     }
 }

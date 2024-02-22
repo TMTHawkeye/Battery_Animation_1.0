@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
         if (!hasOverlayPermission(this@MainActivity)) {
             requestOverlayPermission(this@MainActivity, OVERLAY_PERMISSION_REQUEST_CODE)
         } else {
-            chargerStateReceiver = BootReceiver(this)
-            registerReceiver(chargerStateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+//            chargerStateReceiver = BootReceiver(this)
+//            registerReceiver(chargerStateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 //            val intent = Intent(this, BatteryService::class.java)
 //            startService(intent)
 
@@ -321,7 +321,9 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
         if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
             if (hasOverlayPermission(this@MainActivity)) {
                 val serviceIntent = Intent(this, BatteryService::class.java)
-                ContextCompat.startForegroundService(this, serviceIntent)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent)
+                }
 
 //                chargerStateReceiver = BootReceiver(this)
 //                registerReceiver(chargerStateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))

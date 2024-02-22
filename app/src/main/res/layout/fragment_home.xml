@@ -37,6 +37,7 @@
             android:id="@+id/battery_lottie_id_main"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_200sdp"
+            app:lottie_rawRes="@raw/battery_anim"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/card_enable"
@@ -50,7 +51,7 @@
             app:layout_constraintStart_toStartOf="@id/battery_lottie_id_main"
             app:layout_constraintEnd_toEndOf="@+id/battery_lottie_id_main"
             app:layout_constraintBottom_toTopOf="@+id/charging_status_id"
-            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             style="@style/textStyle_normal"/>
 
         <TextView
@@ -59,8 +60,8 @@
             android:id="@+id/charging_status_id"
             app:layout_constraintStart_toStartOf="@id/battery_lottie_id_main"
             app:layout_constraintEnd_toEndOf="@+id/battery_lottie_id_main"
-            app:layout_constraintBottom_toBottomOf="@+id/battery_lottie_id_main"
-            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/card_enable"
+            android:layout_marginBottom="@dimen/_3sdp"
             style="@style/textStyle_normal"/>
 
 

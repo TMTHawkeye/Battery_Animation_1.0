@@ -24,7 +24,7 @@ class BatteryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBatteryBinding.inflate(layoutInflater, container, false)
-//        getBatteryInfo()
+        getBatteryInfo()
 
 
         return binding.root

@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.batteryanimation.Adapters.SubAnimationAdapter
+import com.example.batteryanimation.HelperClasses.getAnimalAnimations
 import com.example.batteryanimation.HelperClasses.getBatteryAnimations
+import com.example.batteryanimation.HelperClasses.getCarsAnimations
+import com.example.batteryanimation.HelperClasses.getCharactersAnimations
 import com.example.batteryanimation.HelperClasses.getCicleAnimations
+import com.example.batteryanimation.HelperClasses.getMoodsAnimations
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivitySubAnimationBinding
 
@@ -17,17 +21,14 @@ class SubAnimationActivity : AppCompatActivity() {
         binding=ActivitySubAnimationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intentFrom=intent.getStringExtra("intentFrom")
 
-        populateList(intentFrom){
-            setUpAdapter(it)
-        }
+
     }
 
-    private fun setUpAdapter(animationsList: ArrayList<Int>) {
+    private fun setUpAdapter(animationsList: ArrayList<Int>, intentFrom: String?) {
         val layoutManager = GridLayoutManager(this, 2)
         binding.animationRV.setLayoutManager(layoutManager)
-        val adapter= SubAnimationAdapter(this@SubAnimationActivity,animationsList)
+        val adapter= SubAnimationAdapter(this@SubAnimationActivity,animationsList,intentFrom)
         binding.animationRV.adapter=adapter
 
     }
@@ -42,21 +43,34 @@ class SubAnimationActivity : AppCompatActivity() {
             callback(animList)
         }
         else if (intentFrom.equals(getString(R.string.moods))){
-
+            val moodsList= getMoodsAnimations()
+            callback(moodsList)
         }
 
         else if (intentFrom.equals(getString(R.string.characters))){
-
+            val charactersList= getCharactersAnimations()
+            callback(charactersList)
         }
 
         else if (intentFrom.equals(getString(R.string.animals))){
-
+            val animalsList= getAnimalAnimations()
+            callback(animalsList)
         }
         else if (intentFrom.equals(getString(R.string.cars))){
-
+            val carsList= getCarsAnimations()
+            callback(carsList)
         }
 
 //        callback(listOfAnimations)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val intentFrom=intent.getStringExtra("intentFrom")
+
+        populateList(intentFrom){
+            setUpAdapter(it,intentFrom)
+        }
     }
 
 }

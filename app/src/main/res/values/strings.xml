@@ -66,6 +66,7 @@
     <string name="battery_low">BATTERY_LOW</string>
     <string name="connect_charger_desc">Please Connect Charger</string>
     <string name="charging_notification">Charging Notifications</string>
+    <string name="animation_applied">Animation Applied!</string>
 
     <style name="textStyle_normal" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>

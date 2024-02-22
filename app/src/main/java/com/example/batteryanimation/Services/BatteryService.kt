@@ -1,33 +1,19 @@
 package com.example.batteryanimation.Services
+
+
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.example.batteryanimation.Activities.ChargingAlarm
 import com.example.batteryanimation.BroadCastReceivers.BootReceiver
-import com.example.batteryanimation.CustomDialogs.CustomDialogChargerConnected
 import com.example.batteryanimation.Interfaces.OnStateCharge
-import com.example.batteryanimation.MainActivity
 import com.example.batteryanimation.R
-import com.example.batteryanimation.ViewModels.BatteryInfoViewModel
-import com.example.batteryanimation.databinding.CustomDialogChargerConnectedBinding
-import com.example.batteryanimation.databinding.CustomDialogChargerDisconnectedBinding
-import org.koin.android.ext.android.inject
 import java.util.Timer
 import java.util.TimerTask
 
@@ -56,20 +42,21 @@ class BatteryService : Service() {
 
         startForeground(FOREGROUND_SERVICE_ID, notification)
 
-        batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
-            override fun charge(isCharging: Boolean) {
-                if (isCharging) {
-                    // Device is connected to the charger
-                } else {
-                    // Device is disconnected from the charger
-                }
-            }
-        })
+            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
+                override fun charge(isCharging: Boolean) {
+                    if (isCharging) {
+                    } else {
 
-        val filter = IntentFilter()
-        filter.addAction(Intent.ACTION_POWER_CONNECTED)
-        filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
-        registerReceiver(batteryBoardcastReciver, filter)
+                    }
+                }
+            })
+
+            val filter = IntentFilter()
+            filter.addAction(Intent.ACTION_POWER_CONNECTED)
+            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+//        filter.addAction(Intent.ACTION_TIME_TICK)
+            registerReceiver(batteryBoardcastReciver, filter)
+
 
         val timer = Timer()
         val handler = Handler(Looper.getMainLooper())
@@ -82,6 +69,8 @@ class BatteryService : Service() {
         }
         timer.schedule(doAsynchronousTask, 5000L, 5000L)
     }
+
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

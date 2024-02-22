@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.airbnb.lottie.LottieDrawable
 import com.example.batteryanimation.Activities.AnimationsActivity
 import com.example.batteryanimation.Activities.WallpaperActivity
 import com.example.batteryanimation.R
@@ -26,7 +27,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentHomeBinding.inflate(layoutInflater,container,false)
-//        getBatteryInfo()
+        binding.batteryLottieIdMain.repeatCount = LottieDrawable.INFINITE
+        binding.batteryLottieIdMain.playAnimation()
+        getBatteryInfo()
 
         binding.cardBattery.setOnClickListener {
             startActivity(Intent(requireContext(),AnimationsActivity::class.java))
