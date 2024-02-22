@@ -19,72 +19,35 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChargingAlarm : AppCompatActivity() {
-    lateinit var binding:ActivityChargingAlarmBinding
+    lateinit var binding: ActivityChargingAlarmBinding
     val batteryInfoViewModel: BatteryInfoViewModel by viewModel()
 
-  private val stopAlarmReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            finish()
-        }
-    }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        // Unregister the BroadcastReceiver when the activity is destroyed
-//        stopAlarmReceiver?.let { unregisterReceiver(it) }
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        stopAlarmReceiver?.let { unregisterReceiver(it) }
-//
-//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityChargingAlarmBinding.inflate(layoutInflater)
+        binding = ActivityChargingAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//    BootReceiver().register(this@ChargingAlarm)
-    val filter = IntentFilter("com.example.batteryanimation.STOP_CHARGING_ALARM")
-    registerReceiver(stopAlarmReceiver, filter)
-        batteryInfoViewModel.isSwitchOn.observe(this@ChargingAlarm, Observer{ isSwitchOn ->
-            binding.fullBatterySwitch.isChecked = isSwitchOn
+        batteryInfoViewModel.switchState.observe(this, Observer { switchState ->
+            // Update UI based on the switch state
+            binding.lowBatterySwitch.isChecked = switchState.isLowBatterySwitchOn
+            binding.fullBatterySwitch.isChecked = switchState.isFullBatterySwitchOn
+            binding.chargerConnectSwitch.isChecked = switchState.isChargerConnectSwitchOn
+            binding.chargerDisconnectSwitch.isChecked = switchState.isChargerDisconnectSwitchOn
         })
 
+        // Set up listeners for switch state changes
+        binding.lowBatterySwitch.setOnCheckedChangeListener { _, isChecked ->
+            batteryInfoViewModel.updateSwitchState("low_battery", isChecked)
+        }
         binding.fullBatterySwitch.setOnCheckedChangeListener { _, isChecked ->
-            batteryInfoViewModel.updateSwitchState(isChecked)
+            batteryInfoViewModel.updateSwitchState("full_battery", isChecked)
+        }
+        binding.chargerConnectSwitch.setOnCheckedChangeListener { _, isChecked ->
+            batteryInfoViewModel.updateSwitchState("charger_connect", isChecked)
+        }
+        binding.chargerDisconnectSwitch.setOnCheckedChangeListener { _, isChecked ->
+            batteryInfoViewModel.updateSwitchState("charger_disconnect", isChecked)
         }
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-//                startActivity(Intent(this@ChargingAlarm,MainActivity::class.java))
-            }
-
-        })
-//        batteryInfoViewModel.batteryPercentage.observeForever { batteryPercentage ->
-//            if (batteryInfoViewModel.isSwitchOn.value == true && batteryPercentage == 99) {
-//                Toast.makeText(requireContext(), "Charging completed successfully!", Toast.LENGTH_LONG).show()
-//            }
-//        }
     }
-
-//    override fun charge(isCharging: Boolean) {
-//        if(!isCharging){
-//            val filter = IntentFilter().apply {
-//                addAction("STOP_CHARGING_ALARM")
-//            }
-//        registerReceiver(broadcastReceiver, filter)
-//        }
-//
-//    }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        BootReceiver().unregister(this@ChargingAlarm)
-//    }
-
-//    override fun onPause() {
-//        super.onPause()
-//        BootReceiver().unregister(this@ChargingAlarm)
-//    }
 }

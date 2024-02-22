@@ -65,6 +65,10 @@ class HomeFragment : Fragment() {
 
             }
         })
+
+        batteryInfoViewModel.switchState.observe(viewLifecycleOwner, Observer { switchState ->
+            Log.d("SwitchState", "SwitchState: $switchState")
+        })
     }
 
 

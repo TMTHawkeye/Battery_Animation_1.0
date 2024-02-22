@@ -159,8 +159,8 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
     private var disconnectedDialog: Dialog? = null
 
     fun observeBatteryStatus() {
-        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
-            if (isSwitchOn) {
+//        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
+//            if (isSwitchOn) {
                 batteryInfoViewModel.batteryPercentage.observe(
                     this@MainActivity,
                     Observer { batteryPercentage ->
@@ -183,8 +183,8 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
                         }
                     }
                 )
-            }
-        })
+//            }
+//        })
 
         var wasCharging = batteryInfoViewModel.isCharging.value ?: false
 

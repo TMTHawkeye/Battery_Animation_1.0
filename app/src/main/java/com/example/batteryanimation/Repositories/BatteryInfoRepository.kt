@@ -9,6 +9,8 @@ import android.os.BatteryManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.batteryanimation.HelperClasses.Constants
+import com.example.batteryanimation.ModelClasses.SwitchStates
+import com.google.gson.Gson
 
 
 class BatteryInfoRepository(val context: Context) {
@@ -116,19 +118,57 @@ class BatteryInfoRepository(val context: Context) {
         return batteryCapacity
     }
 
+//    private val sharedPreferences: SharedPreferences =
+//        context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+//
+//    private val _isSwitchOn = MutableLiveData<Boolean>()
+//    val isSwitchOn: LiveData<Boolean>
+//        get() = _isSwitchOn
+//    init {
+//        _isSwitchOn.value = sharedPreferences.getBoolean(Constants.SWITCH_STATE_KEY, false)
+//    }
+//
+//    fun updateSwitchState(isSwitchOn: Boolean) {
+//        _isSwitchOn.value = isSwitchOn
+//        sharedPreferences.edit().putBoolean(Constants.SWITCH_STATE_KEY, isSwitchOn).apply()
+//    }
+
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
 
-    private val _isSwitchOn = MutableLiveData<Boolean>()
-    val isSwitchOn: LiveData<Boolean>
-        get() = _isSwitchOn
+    private val _switchState = MutableLiveData<SwitchStates>()
+    val switchState: LiveData<SwitchStates>
+        get() = _switchState
+
     init {
-        _isSwitchOn.value = sharedPreferences.getBoolean(Constants.SWITCH_STATE_KEY, false)
+        // Load switch state from SharedPreferences
+        val savedSwitchStateString = sharedPreferences.getString(Constants.SWITCH_STATE_KEY, null)
+        val defaultSwitchState = SwitchStates(
+            isLowBatterySwitchOn = false,
+            isFullBatterySwitchOn = false,
+            isChargerConnectSwitchOn = false,
+            isChargerDisconnectSwitchOn = false
+        )
+        _switchState.value = savedSwitchStateString?.let { deserializeSwitchState(it) } ?: defaultSwitchState
     }
 
-    fun updateSwitchState(isSwitchOn: Boolean) {
-        _isSwitchOn.value = isSwitchOn
-        sharedPreferences.edit().putBoolean(Constants.SWITCH_STATE_KEY, isSwitchOn).apply()
+    // Method to update and save switch state
+    fun updateSwitchState(newSwitchState: SwitchStates) {
+        _switchState.value = newSwitchState
+
+        // Serialize switch state to string and save in SharedPreferences
+        val switchStateString = serializeSwitchState(newSwitchState)
+        sharedPreferences.edit().putString(Constants.SWITCH_STATE_KEY, switchStateString).apply()
+    }
+
+    // Helper function to serialize switch state to string
+    private fun serializeSwitchState(switchState: SwitchStates): String {
+        return Gson().toJson(switchState)
+    }
+
+    // Helper function to deserialize switch state from string
+    private fun deserializeSwitchState(switchStateString: String): SwitchStates {
+        return Gson().fromJson(switchStateString, SwitchStates::class.java)
     }
 
 
