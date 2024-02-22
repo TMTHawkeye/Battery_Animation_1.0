@@ -25,7 +25,7 @@ class BatteryService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.getStringExtra("stringValues")
-        var  selectedAnimationResId = intent?.getIntExtra("selectedAnimation", 0) ?: 0
+        var selectedAnimationResId = intent?.getIntExtra("selectedAnimation", 0) ?: 0
 
         return START_STICKY
     }
@@ -42,20 +42,21 @@ class BatteryService : Service() {
 
         startForeground(FOREGROUND_SERVICE_ID, notification)
 
-            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
-                override fun charge(isCharging: Boolean) {
-                    if (isCharging) {
-                    } else {
+        batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
+            override fun charge(isCharging: Boolean) {
+                if (isCharging) {
+                } else {
 
-                    }
                 }
-            })
+            }
+        })
 
-            val filter = IntentFilter()
-            filter.addAction(Intent.ACTION_POWER_CONNECTED)
-            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
-//        filter.addAction(Intent.ACTION_TIME_TICK)
-            registerReceiver(batteryBoardcastReciver, filter)
+        val filter = IntentFilter()
+        filter.addAction(Intent.ACTION_POWER_CONNECTED)
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+        filter.addAction(Intent.ACTION_BATTERY_CHANGED)
+        filter.addAction(Intent.ACTION_TIME_TICK)
+        registerReceiver(batteryBoardcastReciver, filter)
 
 
         val timer = Timer()
@@ -71,7 +72,6 @@ class BatteryService : Service() {
     }
 
 
-
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -79,7 +79,8 @@ class BatteryService : Service() {
                 "Battery Charging Animation is Started",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

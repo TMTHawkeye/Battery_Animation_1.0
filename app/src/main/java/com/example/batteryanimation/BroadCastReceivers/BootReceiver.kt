@@ -1,29 +1,39 @@
 package com.example.batteryanimation.BroadCastReceivers
 
 import android.app.ActivityManager
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.BatteryManager
+import android.os.Build
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.Window
+import androidx.annotation.RequiresApi
+import com.example.batteryanimation.Activities.BatteryFullDialogActivity
+import com.example.batteryanimation.Activities.BatteryLowDialogActivity
 import com.example.batteryanimation.Activities.SetAnimationAcivity
 import com.example.batteryanimation.Activities.SetWallpaperActivity
+import com.example.batteryanimation.CustomDialogs.CustomDialogChargerConnected
+import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.MainActivity
+import com.example.batteryanimation.ModelClasses.SwitchStates
+import com.example.batteryanimation.databinding.CustomDialogBatteryFullBinding
+import com.google.gson.Gson
+import java.util.Calendar
 
 class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver() {
 
-//    override fun onReceive(context: Context?, intent: Intent?) {
-//        if (intent?.action == Intent.ACTION_BATTERY_CHANGED) {
-//            val status: Int = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
-//            val isCharging: Boolean = status == BatteryManager.BATTERY_STATUS_CHARGING
-//                    || status == BatteryManager.BATTERY_STATUS_FULL
-//            onStateCharge.charge(isCharging)
-//        }
-//    }
+    lateinit var dialogChargerConnected: CustomDialogChargerConnected
 
-    // Default constructor
     constructor() : this(object : OnStateCharge {
         override fun charge(isCharging: Boolean) {
             if (isCharging) {
@@ -34,124 +44,127 @@ class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver
         }
     })
 
-//    override fun onReceive(context: Context, intent: Intent) {
-//        val intentString = intent.action
-//        when (intentString) {
-//            Intent.ACTION_POWER_CONNECTED -> {
-//                // Log for debugging purposes
-//                Log.d("UpdatingGiffReceiver", "Received ACTION_POWER_CONNECTED")
-//
-//                // Check if UpdatingGiffPreviewActivity is already running
-//                if (getActivityIntent(context).equals("animation")) {
-//                    if (!isSetAnimationRunning(context)) {
-//                        val showActivityIntent =
-//                            Intent(context, SetAnimationAcivity::class.java)
-//                        showActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                        context.startActivity(showActivityIntent)
-//                    }
-//
-//                } else if (getActivityIntent(context).equals("wallpaper")) {
-//                    if (!isSetWallpaperRunning(context)) {
-//
-//                        val showActivityIntent = Intent(context, SetWallpaperActivity::class.java)
-//                        showActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                        context.startActivity(showActivityIntent)
-//                    }
-//                }
-////                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////                        CustomDialogChargerConnected(context).showChargerConnectedDialog()
-////                    }
-//
-//                // Notify charging state
-//                onStateCharge.charge(true)
-//
-//            }
-//
-//            Intent.ACTION_POWER_DISCONNECTED -> {
-//                // Log for debugging purposes
-//                Log.d("UpdatingGiffReceiver", "Received ACTION_POWER_DISCONNECTED")
-////                Toast.makeText(context, "Charging DisConnected", Toast.LENGTH_SHORT).show()
-//
-//
-//                // Notify discharging state
-//                onStateCharge.charge(false)
-//            }
-//        }
-//    }
-
     override fun onReceive(context: Context, intent: Intent) {
         try {
             val intentString = intent.action
             val resumeIntent = getResumeIntent(context) // Get the PendingIntent to resume the app
+            /*var batteryFullDetected = false*/ // Declare this variable globally in your class
+            val switchStates = getSwitchStates(context)
 
             when (intentString) {
                 Intent.ACTION_POWER_CONNECTED -> {
                     // Log for debugging purposes
-                    Log.d("UpdatingGiffReceiver", "Received ACTION_POWER_CONNECTED")
+                    Log.d("Receiver", "Received ACTION_POWER_CONNECTED")
 
-                    // Save the state of the app
-                    saveAppState(context)
-
-                    // Check if UpdatingGiffPreviewActivity is already running
-                    if (getActivityIntent(context).equals("animation")) {
-                       /* if (!isSetAnimationRunning(context)) {
-                            val showActivityIntent =
-                                Intent(context, SetAnimationAcivity::class.java)
-                            showActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            showActivityIntent.putExtra("resumeIntent", resumeIntent) // Pass the PendingIntent to the activity
-                            context.startActivity(showActivityIntent)
-                        }*/
-                        if (!isSetAnimationRunning(context)) {
-                            val showActivityIntent = Intent(context, SetAnimationAcivity::class.java)
-                            showActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                            showActivityIntent.putExtra("resumeIntent", resumeIntent) // Pass the PendingIntent to the activity
-                            context.startActivity(showActivityIntent)
-                        }
-
-                    } else if (getActivityIntent(context).equals("wallpaper")) {
-                        if (!isSetWallpaperRunning(context)) {
-                            val showActivityIntent = Intent(context, SetWallpaperActivity::class.java)
-                            showActivityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                            showActivityIntent.putExtra("resumeIntent", resumeIntent) // Pass the PendingIntent to the activity
-                            context.startActivity(showActivityIntent)
+                    if(getSwitchStateFromSharedPreferences(context)) {
+                        saveAppState(context)
+                        if (getActivityIntent(context).equals("animation")) {
+                            if (!isSetAnimationRunning(context)) {
+                                val showActivityIntent =
+                                    Intent(context, SetAnimationAcivity::class.java)
+                                showActivityIntent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                showActivityIntent.putExtra(
+                                    "resumeIntent",
+                                    resumeIntent
+                                )
+                                context.startActivity(showActivityIntent)
+                            }
+                        } else if (getActivityIntent(context).equals("wallpaper")) {
+                            if (!isSetWallpaperRunning(context)) {
+                                val showActivityIntent =
+                                    Intent(context, SetWallpaperActivity::class.java)
+                                showActivityIntent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                showActivityIntent.putExtra(
+                                    "resumeIntent",
+                                    resumeIntent
+                                )
+                                context.startActivity(showActivityIntent)
+                            }
                         }
                     }
 
-                    // Notify charging state
                     onStateCharge.charge(true)
                 }
 
                 Intent.ACTION_POWER_DISCONNECTED -> {
                     // Log for debugging purposes
-                    Log.d("UpdatingGiffReceiver", "Received ACTION_POWER_DISCONNECTED")
+                    Log.d("Receiver", "Received ACTION_POWER_DISCONNECTED")
 
                     // Notify discharging state
                     onStateCharge.charge(false)
                 }
+
+                Intent.ACTION_BATTERY_CHANGED -> {
+                    val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+                    val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                    val batteryPercentage = (level.toFloat() / scale.toFloat() * 100).toInt()
+
+                    if (switchStates.isFullBatterySwitchOn) {
+                        if (batteryPercentage == 100 /*&& !batteryFullDetected*/) {
+                            Log.d("Receiver", "Battery is full")
+                            /*
+                        batteryFullDetected = true // Set the flag to true to prevent further detections
+*/
+                            if (!isFullBatteryRunning(context)) {
+                                saveAppState(context)
+                                val showActivityIntent =
+                                    Intent(context, BatteryFullDialogActivity::class.java)
+                                showActivityIntent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                        or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                showActivityIntent.putExtra("resumeIntent", resumeIntent)
+                                context.startActivity(showActivityIntent)
+//                        context?.unregisterReceiver(this)
+                            }
+                        }
+                    }
+                    if (switchStates.isLowBatterySwitchOn) {
+                        if (batteryPercentage == 20) {
+                            Log.d("Receiver", "Battery is low")
+                            if (!isLowBatteryRunning(context)) {
+                                saveAppState(context)
+                                val showActivityIntent =
+                                    Intent(context, BatteryLowDialogActivity::class.java)
+                                showActivityIntent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                        or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                showActivityIntent.putExtra("resumeIntent", resumeIntent)
+                                context.startActivity(showActivityIntent)
+//                        context?.unregisterReceiver(this)
+                            }
+                        }
+                    }
+                }
+
+
             }
         } catch (e: Exception) {
-            // Log the exception to a file or SharedPreferences for later examination
-            Log.e("UpdatingGiffReceiver", "Error in onReceive: ${e.message}")
-            // You can also log additional details or the stack trace if needed
-            // Log.e("UpdatingGiffReceiver", Log.getStackTraceString(e))
+            Log.e("Receiver", "Error in onReceive: ${e.message}")
         }
     }
 
 
     private fun getResumeIntent(context: Context): PendingIntent {
-        // Create an intent to launch the main activity of your app
         val resumeIntent = Intent(context, MainActivity::class.java)
-        // Modify the intent to clear the back stack and start the activity as a new task
         resumeIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        // Create the PendingIntent with FLAG_IMMUTABLE
-        return PendingIntent.getActivity(context, 0, resumeIntent, /*PendingIntent.FLAG_UPDATE_CURRENT or*/ PendingIntent.FLAG_IMMUTABLE)
+        return PendingIntent.getActivity(
+            context,
+            0,
+            resumeIntent, /*PendingIntent.FLAG_UPDATE_CURRENT or*/
+            PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
+    fun getSwitchStateFromSharedPreferences(context: Context): Boolean {
+        val sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME_ANIMATION, Context.MODE_PRIVATE)
+        return sharedPreferences.getBoolean(Constants.SWITCH_STATE_ANIMATION_KEY, false)
     }
 
 
     private fun saveAppState(context: Context) {
-        // Save the state of the app to persistent storage (e.g., SharedPreferences, a local database)
-        // You can save relevant data such as the current activity, UI state, etc.
-        // For simplicity, let's assume we're saving a boolean indicating whether the app was in animation or wallpaper mode
+
         val sharedPreferences = context.getSharedPreferences("app_state", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putBoolean("is_animation_mode", getActivityIntent(context).equals("animation"))
@@ -164,50 +177,6 @@ class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver
         return sharedPreferences.getString("intent", "animation")
     }
 
-//    override fun onReceive(context: Context, intent: Intent) {
-//        val intentString = intent.action
-//        when (intentString) {
-//            Intent.ACTION_TIME_TICK -> {
-//                val currentTime = Calendar.getInstance()
-//                val hour = currentTime.get(Calendar.HOUR_OF_DAY)
-//                val minute = currentTime.get(Calendar.MINUTE)
-//
-//                if (hour == 11 && minute == 54) {
-//                    // Log for debugging purposes
-//                    Log.d("UpdatingGiffReceiver", "$hour and $minute")
-//
-//                    // Check if UpdatingGiffPreviewActivity is already running
-////                    if (!isUpdatingGiffPreviewActivityRunning(context)) {
-//                        // Show the dialog when the current time is 11:05 AM
-////                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////                            CustomDialogChargerConnected(context).showChargerConnectedDialog()
-////                        }
-//
-//                    if (!isUpdatingGiffPreviewActivityRunning(context)) {
-//                        val showActivityIntent = Intent(context, SetAnimationAcivity::class.java)
-//                        showActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                        context.startActivity(showActivityIntent)
-////                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////                        CustomDialogChargerConnected(context).showChargerConnectedDialog()
-////                    }
-//
-//                        // Notify charging state
-//                        onStateCharge.charge(true)
-//                    }
-//                        // Notify charging state
-////                    }
-//                } else {
-//                    // Log for debugging purposes
-//                    Log.d("UpdatingGiffReceiver", "Current time is not 11:05 AM")
-//
-//                    // Notify discharging state
-//                    onStateCharge.charge(false)
-//                }
-//            }
-//        }
-//    }
-
-
     private fun isSetAnimationRunning(context: Context): Boolean {
         // Check if UpdatingGiffPreviewActivity is currently running
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -215,6 +184,28 @@ class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver
         if (runningActivities.isNotEmpty()) {
             val topActivity = runningActivities[0].topActivity
             return topActivity?.className == SetAnimationAcivity::class.java.name
+        }
+        return false
+    }
+
+    private fun isFullBatteryRunning(context: Context): Boolean {
+        // Check if UpdatingGiffPreviewActivity is currently running
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningActivities = activityManager.getRunningTasks(1)
+        if (runningActivities.isNotEmpty()) {
+            val topActivity = runningActivities[0].topActivity
+            return topActivity?.className == BatteryFullDialogActivity::class.java.name
+        }
+        return false
+    }
+
+    private fun isLowBatteryRunning(context: Context): Boolean {
+        // Check if UpdatingGiffPreviewActivity is currently running
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningActivities = activityManager.getRunningTasks(1)
+        if (runningActivities.isNotEmpty()) {
+            val topActivity = runningActivities[0].topActivity
+            return topActivity?.className == BatteryLowDialogActivity::class.java.name
         }
         return false
     }
@@ -243,4 +234,23 @@ class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver
     fun unregister(context: Context) {
         context.unregisterReceiver(this)
     }
+
+    fun getSwitchStates(context: Context): SwitchStates {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        val savedSwitchStateString = sharedPreferences.getString(Constants.SWITCH_STATE_KEY, null)
+        val defaultSwitchState = SwitchStates(
+            isLowBatterySwitchOn = false,
+            isFullBatterySwitchOn = false,
+            isChargerConnectSwitchOn = false,
+            isChargerDisconnectSwitchOn = false
+        )
+        return savedSwitchStateString?.let { deserializeSwitchState(it) } ?: defaultSwitchState
+    }
+
+    private fun deserializeSwitchState(switchStateString: String): SwitchStates {
+        return Gson().fromJson(switchStateString, SwitchStates::class.java)
+    }
+
+
 }

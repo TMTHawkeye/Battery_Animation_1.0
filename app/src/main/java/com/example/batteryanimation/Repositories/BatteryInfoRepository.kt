@@ -152,7 +152,6 @@ class BatteryInfoRepository(val context: Context) {
         _switchState.value = savedSwitchStateString?.let { deserializeSwitchState(it) } ?: defaultSwitchState
     }
 
-    // Method to update and save switch state
     fun updateSwitchState(newSwitchState: SwitchStates) {
         _switchState.value = newSwitchState
 

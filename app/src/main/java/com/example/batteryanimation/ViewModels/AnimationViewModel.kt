@@ -10,4 +10,11 @@ class AnimationViewModel(val animationRepository: AnimationRepository):ViewModel
     fun updateAnimation(savedAnimation:Int){
         animationRepository.updateAnimation(savedAnimation)
     }
+
+
+    val isSwitchOn=animationRepository.isSwitchOn
+
+    fun updateSwitchState(isSwitchOn:Boolean){
+        animationRepository.updateSwitchState(isSwitchOn)
+    }
 }

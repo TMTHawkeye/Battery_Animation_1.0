@@ -96,6 +96,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/enable_animation_card_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -111,11 +112,11 @@
                         android:paddingVertical="@dimen/_5sdp">
 
                         <TextView
-                            android:textStyle="bold"
-                            android:layout_centerInParent="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/enable" />
+                            android:layout_centerInParent="true"
+                            android:text="@string/enable"
+                            android:textStyle="bold" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 

@@ -20,9 +20,7 @@ import com.example.batteryanimation.databinding.CustomDialogChargerConnectedBind
 class CustomDialogChargerConnected(val context: Context){
     val dialog = Dialog(context)
     val dialog_binding = CustomDialogChargerConnectedBinding.inflate(LayoutInflater.from(context))
-    fun test(s: String) {
-        Log.i("TAG", "test: $s")
-    }
+
     init{
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -31,7 +29,6 @@ class CustomDialogChargerConnected(val context: Context){
         dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
         dialog.window?.setGravity(Gravity.CENTER)
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showChargerConnectedDialog() {
 
 //        val dialog = Dialog(context, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar_MinWidth)

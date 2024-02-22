@@ -24,4 +24,21 @@ class AnimationRepository(val context: Context) {
         _savedAnimation.value = savedAnimationValue
         sharedPreferences.edit().putInt(Constants.SAVED_ANIMATION_KEY, savedAnimationValue).apply()
     }
+
+
+    private val sharedPreferencesAnimation: SharedPreferences =
+        context.getSharedPreferences(Constants.PREF_NAME_ANIMATION, Context.MODE_PRIVATE)
+
+    private val _isSwitchOn = MutableLiveData<Boolean>()
+    val isSwitchOn: LiveData<Boolean>
+        get() = _isSwitchOn
+
+    init {
+        _isSwitchOn.value = sharedPreferencesAnimation.getBoolean(Constants.SWITCH_STATE_ANIMATION_KEY, true)
+    }
+
+    fun updateSwitchState(isSwitchOn: Boolean) {
+        _isSwitchOn.value = isSwitchOn
+        sharedPreferencesAnimation.edit().putBoolean(Constants.SWITCH_STATE_ANIMATION_KEY, isSwitchOn).apply()
+    }
 }
