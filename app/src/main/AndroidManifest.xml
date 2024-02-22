@@ -19,6 +19,12 @@
         android:theme="@style/Theme.BatteryAnimation"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.ChargerDisconnectDialogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ChargerConnectDialogActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.BatteryLowDialogActivity"
             android:exported="false" />
         <activity
