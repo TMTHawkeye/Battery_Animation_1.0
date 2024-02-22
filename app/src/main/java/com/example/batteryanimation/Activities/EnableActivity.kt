@@ -19,13 +19,27 @@ class EnableActivity : AppCompatActivity() {
         binding=ActivityEnableBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        animationViewModel.isSwitchOn.observe(this, Observer {
-            binding.activeAnimationSwitch.isChecked = it
+        animationViewModel.switchState.observe(this, Observer {
+            binding.activeAnimationSwitch.isChecked = it.isactiveAnimationSwitchOn
+            binding.percentageSwitch.isChecked = it.isbatteryPercentageSwitchOn
+            binding.doubleTapCloseSwitch.isChecked = it.isdouble_tap_closeSwitchOn
+
         })
 
         binding.activeAnimationSwitch.setOnCheckedChangeListener { _, isChecked ->
-            animationViewModel.updateSwitchState(isChecked)
+            animationViewModel.updateSwitchState("activeAnimation", isChecked)
         }
+
+        binding.percentageSwitch.setOnCheckedChangeListener { _, isChecked ->
+            animationViewModel.updateSwitchState("batteryPercentage", isChecked)
+        }
+
+        binding.doubleTapCloseSwitch.setOnCheckedChangeListener { _, isChecked ->
+            animationViewModel.updateSwitchState("double_tap_close", isChecked)
+        }
+//        binding.animationDurationSwitch.setOnCheckedChangeListener { _, isChecked ->
+//            animationViewModel.updateSwitchState("double_tap_close", isChecked)
+//        }
 
 
 

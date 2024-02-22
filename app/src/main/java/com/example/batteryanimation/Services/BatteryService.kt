@@ -55,7 +55,6 @@ class BatteryService : Service() {
         filter.addAction(Intent.ACTION_POWER_CONNECTED)
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
         filter.addAction(Intent.ACTION_BATTERY_CHANGED)
-        filter.addAction(Intent.ACTION_TIME_TICK)
         registerReceiver(batteryBoardcastReciver, filter)
 
 

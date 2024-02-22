@@ -68,6 +68,42 @@
         style="@style/textStyle_normal" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/battery_percentage_constrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/_20sdp">
+
+        <TextView
+            android:id="@+id/battery_percentage_id"
+            style="@style/textStyle_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btry_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/btry_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/battery_icon_animation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@+id/battery_percentage_id" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:visibility="gone"
         android:id="@+id/animations_options_constrain"
         android:layout_width="0dp"

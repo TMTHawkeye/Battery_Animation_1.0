@@ -3,6 +3,7 @@ package com.example.batteryanimation.Activities
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,11 +17,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.batteryanimation.BroadCastReceivers.BootReceiver
+import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
 import com.example.batteryanimation.Interfaces.OnStateCharge
+import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivitySetWallpaperBinding
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,12 +37,18 @@ class SetWallpaperActivity : AppCompatActivity() {
     private var batteryBoardcastReciver: BootReceiver? = null
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
+
+    lateinit var  switchStatesAnmations : AnimationSwitchStates
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetWallpaperBinding.inflate(layoutInflater)
         setContentView(binding.root)
         updateCurrentTime()
         updateCurrentDate()
+        switchStatesAnmations = getSwitchStatesAnimations(this@SetWallpaperActivity)
+
+
         val subintentFrom = intent.getStringExtra("intentFrom")
         val folderName: String = "battery_wallpapers/"
         currentTimeLiveData.observe(this, Observer { time ->
@@ -69,7 +79,13 @@ class SetWallpaperActivity : AppCompatActivity() {
 //            binding.timeTV.text = getCurrentTime()
 //            binding.dateTV.text = getCurrentDateFormatted()
 
-
+            if(switchStatesAnmations.isbatteryPercentageSwitchOn){
+                binding.batteryPercentageConstrain.visibility=View.VISIBLE
+                binding.batteryPercentageId.text=getBatteryPercentageFromSharedPreference().toString()
+            }
+            else{
+                binding.batteryPercentageConstrain.visibility=View.GONE
+            }
 
             batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
                 override fun charge(isCharging: Boolean) {
@@ -159,6 +175,13 @@ class SetWallpaperActivity : AppCompatActivity() {
 
     }
 
+    private fun getBatteryPercentageFromSharedPreference(): Int {
+        // Use a specific shared preference file named "battery_preference_file"
+        val sharedPreferences: SharedPreferences = getSharedPreferences(Constants.BATTERY_PREFERENCE_FILE, Context.MODE_PRIVATE)
+        // Retrieve the battery percentage from shared preferences
+        return sharedPreferences.getInt("battery_percentage", 0)
+    }
+
     fun saveWallpaperState(animationId: String?) {
         val sharedPreferences = getSharedPreferences("WallpaperState", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -201,4 +224,23 @@ class SetWallpaperActivity : AppCompatActivity() {
     private fun updateCurrentDate() {
         currentDateLiveData.value = getCurrentDateFormatted()
     }
+
+    fun getSwitchStatesAnimations(context: Context): AnimationSwitchStates {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME_ANIMATION, Context.MODE_PRIVATE)
+        val savedSwitchStateString =
+            sharedPreferences.getString(Constants.SWITCH_STATE_ANIMATION_KEY, null)
+        val defaultSwitchState = AnimationSwitchStates(
+            isactiveAnimationSwitchOn = false,
+            isbatteryPercentageSwitchOn = false,
+            isdouble_tap_closeSwitchOn = false,
+        )
+        return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
+            ?: defaultSwitchState
+    }
+
+    private fun deserializeSwitchStateAnimation(switchStateString: String): AnimationSwitchStates {
+        return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
+    }
+
 }

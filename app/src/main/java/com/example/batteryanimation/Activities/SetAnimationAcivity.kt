@@ -1,9 +1,11 @@
 package com.example.batteryanimation.Activities
 
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -22,31 +24,39 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieDrawable
 import com.example.batteryanimation.BroadCastReceivers.BootReceiver
+import com.example.batteryanimation.HelperClasses.Constants
+import com.example.batteryanimation.HelperClasses.getBatteryPercentage
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
 import com.example.batteryanimation.Interfaces.OnStateCharge
+import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivitySetAnimationAcivityBinding
 import com.example.batteryanimation.databinding.CustomDialogChargerConnectedBinding
 import com.example.batteryanimation.databinding.CustomDialogChargerDisconnectedBinding
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class SetAnimationAcivity : AppCompatActivity() {
     lateinit var binding: ActivitySetAnimationAcivityBinding
+    lateinit var  switchStatesAnmations : AnimationSwitchStates
     var subintentFrom = ""
     //    val animationViewModel:AnimationViewModel by viewModel()
     private var batteryBoardcastReciver: BootReceiver? = null
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
     var animationId: Int = R.raw.battery_anim_1
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetAnimationAcivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         updateCurrentTime()
         updateCurrentDate()
+        switchStatesAnmations = getSwitchStatesAnimations(this@SetAnimationAcivity)
 
 
         currentTimeLiveData.observe(this, Observer { time ->
@@ -75,6 +85,14 @@ class SetAnimationAcivity : AppCompatActivity() {
             animationId = getAnimationState()
             binding.timeTV.visibility = View.VISIBLE
             binding.dateTV.visibility = View.VISIBLE
+
+            if(switchStatesAnmations.isbatteryPercentageSwitchOn){
+                binding.batteryPercentageConstrain.visibility=View.VISIBLE
+                binding.batteryPercentageId.text=getBatteryPercentageFromSharedPreference().toString()
+            }
+            else{
+                binding.batteryPercentageConstrain.visibility=View.GONE
+            }
 
 //            binding.timeTV.text = getCurrentTime()
 //            binding.dateTV.text = getCurrentDateFormatted()
@@ -170,6 +188,13 @@ class SetAnimationAcivity : AppCompatActivity() {
 //        }
 //    }
 
+    private fun getBatteryPercentageFromSharedPreference(): Int {
+        // Use a specific shared preference file named "battery_preference_file"
+        val sharedPreferences: SharedPreferences = getSharedPreferences(Constants.BATTERY_PREFERENCE_FILE, Context.MODE_PRIVATE)
+        // Retrieve the battery percentage from shared preferences
+        return sharedPreferences.getInt("battery_percentage", 0)
+    }
+
     fun saveAnimationState(animationId: Int) {
         val sharedPreferences = getSharedPreferences("AnimationState", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -187,6 +212,8 @@ class SetAnimationAcivity : AppCompatActivity() {
         editor.putString("intent", "animation")
         editor.apply()
     }
+
+
 
 
 
@@ -245,6 +272,24 @@ class SetAnimationAcivity : AppCompatActivity() {
     }
     private fun updateCurrentDate() {
         currentDateLiveData.value = getCurrentDateFormatted()
+    }
+
+    fun getSwitchStatesAnimations(context: Context): AnimationSwitchStates {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME_ANIMATION, Context.MODE_PRIVATE)
+        val savedSwitchStateString =
+            sharedPreferences.getString(Constants.SWITCH_STATE_ANIMATION_KEY, null)
+        val defaultSwitchState = AnimationSwitchStates(
+            isactiveAnimationSwitchOn = false,
+            isbatteryPercentageSwitchOn = false,
+            isdouble_tap_closeSwitchOn = false,
+        )
+        return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
+            ?: defaultSwitchState
+    }
+
+    private fun deserializeSwitchStateAnimation(switchStateString: String): AnimationSwitchStates {
+        return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
     }
 
 }

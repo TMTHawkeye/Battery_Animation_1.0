@@ -32,28 +32,28 @@
 
     <TextView
         android:id="@+id/time_TV"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
+        style="@style/textStyle_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/_50sdp"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/_18sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/date_TV"
-        style="@style/textStyle_normal"
-        android:textSize="@dimen/_18sdp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/date_TV"
-        android:visibility="gone"
-        android:gravity="center_horizontal"
+        style="@style/textStyle_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_TV"
-        style="@style/textStyle_normal" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_TV" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_id"
@@ -62,18 +62,53 @@
         android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:lottie_rawRes="@raw/battery_anim_1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:lottie_rawRes="@raw/battery_anim_1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/battery_percentage_constrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/_20sdp">
+
+        <TextView
+            android:id="@+id/battery_percentage_id"
+            style="@style/textStyle_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btry_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/btry_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/battery_icon_animation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@+id/battery_percentage_id" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/animations_options_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cancel_animation_id"
@@ -82,9 +117,9 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             app:cardCornerRadius="@dimen/_100sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"

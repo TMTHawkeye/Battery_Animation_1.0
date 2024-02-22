@@ -2,6 +2,8 @@ package com.example.batteryanimation.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivityBatteryFullDialogBinding
 
@@ -19,6 +21,10 @@ class BatteryFullDialogActivity : AppCompatActivity() {
         binding.cardOk.setOnClickListener {
             finish()
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 2000)
 
     }
 }

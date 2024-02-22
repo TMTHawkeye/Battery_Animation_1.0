@@ -2,11 +2,31 @@ package com.example.batteryanimation.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.R
+import com.example.batteryanimation.databinding.ActivityChargerConnectDialogBinding
+import com.example.batteryanimation.databinding.ActivityChargerDisconnectDialogBinding
 
-class ChargerDisconnectDialogActivity : AppCompatActivity() {
+class ChargerDisconnectDialogActivity : AppCompatActivity() ,OnStateCharge{
+    lateinit var binding: ActivityChargerDisconnectDialogBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_charger_disconnect_dialog)
+        binding = ActivityChargerDisconnectDialogBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.closeDialogId.setOnClickListener {
+            finish()
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 2000)
+
+    }
+
+    override fun charge(isCharging: Boolean) {
+        finish()
     }
 }
