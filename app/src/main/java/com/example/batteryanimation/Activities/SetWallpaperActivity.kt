@@ -34,7 +34,7 @@ import java.io.InputStream
 class SetWallpaperActivity : AppCompatActivity() {
     lateinit var binding: ActivitySetWallpaperBinding
     var animationId : String? = null
-    private var batteryBoardcastReciver: BootReceiver? = null
+//    private var batteryBoardcastReciver: BootReceiver? = null
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
 
@@ -87,20 +87,20 @@ class SetWallpaperActivity : AppCompatActivity() {
                 binding.batteryPercentageConstrain.visibility=View.GONE
             }
 
-            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
-                override fun charge(isCharging: Boolean) {
-                    if (isCharging) {
-                    } else {
-                        finish()
-                    }
-                }
-            })
+//            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
+//                override fun charge(isCharging: Boolean) {
+//                    if (isCharging) {
+//                    } else {
+//                        finish()
+//                    }
+//                }
+//            })
 
-            val filter = IntentFilter()
-            filter.addAction(Intent.ACTION_POWER_CONNECTED)
-            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
-//        filter.addAction(Intent.ACTION_TIME_TICK)
-            registerReceiver(batteryBoardcastReciver, filter)
+//            val filter = IntentFilter()
+//            filter.addAction(Intent.ACTION_POWER_CONNECTED)
+//            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+////        filter.addAction(Intent.ACTION_TIME_TICK)
+//            registerReceiver(batteryBoardcastReciver, filter)
 
 
         }

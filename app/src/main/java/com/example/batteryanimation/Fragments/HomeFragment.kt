@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieDrawable
 import com.example.batteryanimation.Activities.AnimationsActivity
+import com.example.batteryanimation.Activities.CreateNewAnimationActivity
+import com.example.batteryanimation.Activities.CreatedAnimationsActivity
 import com.example.batteryanimation.Activities.EnableActivity
 import com.example.batteryanimation.Activities.WallpaperActivity
 import com.example.batteryanimation.R
@@ -41,11 +43,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardCreateNew.setOnClickListener {
-            startActivity(Intent(requireContext(),WallpaperActivity::class.java))
+            startActivity(Intent(requireContext(),CreateNewAnimationActivity::class.java))
         }
 
         binding.cardCreation.setOnClickListener {
-            startActivity(Intent(requireContext(),WallpaperActivity::class.java))
+            startActivity(Intent(requireContext(), CreatedAnimationsActivity::class.java))
         }
 
         binding.enableAnimationCardId.setOnClickListener {
@@ -71,9 +73,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        batteryInfoViewModel.switchState.observe(viewLifecycleOwner, Observer { switchState ->
-//            Log.d("SwitchState", "SwitchState: $switchState")
-        })
     }
 
 

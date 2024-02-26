@@ -99,20 +99,20 @@ class SetAnimationAcivity : AppCompatActivity() {
 
 
 
-            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
-                override fun charge(isCharging: Boolean) {
-                    if (isCharging) {
-                    } else {
-                        finish()
-                    }
-                }
-            })
-
-            val filter = IntentFilter()
-            filter.addAction(Intent.ACTION_POWER_CONNECTED)
-            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
-//        filter.addAction(Intent.ACTION_TIME_TICK)
-            registerReceiver(batteryBoardcastReciver, filter)
+//            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
+//                override fun charge(isCharging: Boolean) {
+//                    if (isCharging) {
+//                    } else {
+//                        finish()
+//                    }
+//                }
+//            })
+//
+//            val filter = IntentFilter()
+//            filter.addAction(Intent.ACTION_POWER_CONNECTED)
+//            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+////        filter.addAction(Intent.ACTION_TIME_TICK)
+//            registerReceiver(batteryBoardcastReciver, filter)
 
         }
 

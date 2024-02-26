@@ -67,6 +67,12 @@
     <string name="connect_charger_desc">Please Connect Charger</string>
     <string name="charging_notification">Charging Notifications</string>
     <string name="animation_applied">Animation Applied!</string>
+    <string name="add_pic">Add Pic</string>
+    <string name="add_text">Text</string>
+    <string name="preview">Preview</string>
+    <string name="my_designs">My Designs</string>
+    <string name="apply">Apply</string>
+    <string name="save_file_desc">Your Picture, Saved ‘ Creation’ Folder\n Click Creation > Apply.></string>
 
     <style name="textStyle_normal" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>

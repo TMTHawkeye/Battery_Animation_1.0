@@ -31,16 +31,17 @@ class BatteryFragment : Fragment() {
     }
 
     fun getBatteryInfo() {
-        batteryInfoViewModel.remainingTime.observe(viewLifecycleOwner, Observer { remainingTime ->
+       /* batteryInfoViewModel.remainingTime.observe(viewLifecycleOwner, Observer { remainingTime ->
             if (remainingTime != null) {
                 val hours = remainingTime / (1000 * 60 * 60)
                 val minutes = (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
+                Log.d("TAG", " getBatteryInfo: $remainingTime")
+
                 val remainingTimeString = getString(R.string.battery_in_h_min, "$hours", "$minutes")
                 binding.batteryRemainingId.text = remainingTimeString
-                Log.d("TAG", " getBatteryInfo: $remainingTime")
             }
 
-        })
+        })*/
 
         batteryInfoViewModel.batteryPercentage.observe(
             viewLifecycleOwner,

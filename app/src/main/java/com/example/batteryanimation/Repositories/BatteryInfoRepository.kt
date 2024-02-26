@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.os.BatteryManager
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.batteryanimation.HelperClasses.Constants
@@ -78,12 +79,13 @@ class BatteryInfoRepository(val context: Context) {
             0
         }
 
+//        Log.d("TAG_remaining", "updateBatteryInfo: $scale and $level")
+
         val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
-
-
 
         if (isCharging && batteryPercentage!=100) {
             val remainingCapacity = scale - level
+
             val remainingTimeInSeconds = (remainingCapacity.toDouble() / (voltage * getBatterysCapacity()) * 3600).toLong()
             _remainingTime.postValue(remainingTimeInSeconds)
         }

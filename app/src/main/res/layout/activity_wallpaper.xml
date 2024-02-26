@@ -31,13 +31,14 @@
         android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wallpaper_RV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wallpaper_title_id"
         android:padding="@dimen/_10sdp"
-        android:id="@+id/wallpaper_RV"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wallpaper_title_id" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

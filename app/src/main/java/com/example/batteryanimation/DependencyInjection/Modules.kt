@@ -15,5 +15,4 @@ val mainModule= module {
     single { AnimationRepository(get()) }
     viewModel { AnimationViewModel(get()) }
 
-
 }

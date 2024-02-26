@@ -29,7 +29,10 @@ import com.example.batteryanimation.CustomDialogs.CustomDialogChargerConnected
 import com.example.batteryanimation.Fragments.BatteryFragment
 import com.example.batteryanimation.Fragments.HomeFragment
 import com.example.batteryanimation.Fragments.SettingsFragment
+import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.Interfaces.OnStateCharge
+import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
+import com.example.batteryanimation.ModelClasses.SwitchStates
 import com.example.batteryanimation.Services.BatteryService
 import com.example.batteryanimation.ViewModels.BatteryInfoViewModel
 import com.example.batteryanimation.databinding.ActivityMainBinding
@@ -37,41 +40,38 @@ import com.example.batteryanimation.databinding.CustomDialogBatteryFullBinding
 import com.example.batteryanimation.databinding.CustomDialogChargerConnectedBinding
 import com.example.batteryanimation.databinding.CustomDialogChargerDisconnectedBinding
 import com.example.batteryanimation.databinding.CustomDialogLowBatteryBinding
+import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(),OnStateCharge {
+class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    private val batteryInfoViewModel: BatteryInfoViewModel by viewModel()
-    private lateinit var chargerStateReceiver: BootReceiver
-    private val dialogChargerConnected: CustomDialogChargerConnected by lazy {
-        CustomDialogChargerConnected(this)
-    }
-    @RequiresApi(Build.VERSION_CODES.O)
+    lateinit var switchStatesAnmations : AnimationSwitchStates
+    lateinit var switchStatesBattery : SwitchStates
+//    val batteryInfoViewModel: BatteryInfoViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        switchStatesBattery = getSwitchStates()
+        switchStatesAnmations = getSwitchStatesAnimations()
 
         if (!hasOverlayPermission(this@MainActivity)) {
             requestOverlayPermission(this@MainActivity, OVERLAY_PERMISSION_REQUEST_CODE)
         } else {
-//            chargerStateReceiver = BootReceiver(this)
-//            registerReceiver(chargerStateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-//            val intent = Intent(this, BatteryService::class.java)
-//            startService(intent)
-
-            // Start the foreground service
-            val serviceIntent = Intent(this, BatteryService::class.java)
-            startForegroundService(serviceIntent)
-
-//            chargerStateReceiver = BootReceiver(this)
-//            registerReceiver(chargerStateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-
+            if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
+                || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
+                || switchStatesAnmations.isactiveAnimationSwitchOn
+                || switchStatesAnmations.isbatteryPercentageSwitchOn
+                || switchStatesAnmations.isdouble_tap_closeSwitchOn
+            ) {
+                startService()
+            }
         }
-
+//        observeBatteryStatus()
 
         val selectedColor = ContextCompat.getColor(this, R.color.bottom_nav_icon_selected)
-//        observeBatteryStatus()
 
         val unselectedColor = ContextCompat.getColor(this, R.color.bottom_nav_icon_unselected)
 
@@ -108,8 +108,6 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
         }
 
         binding.bottomNav.selectedItemId = R.id.home
-//        var batteryInfo = getBatteryInfo()
-
         loadfragment(HomeFragment())
 
 
@@ -142,7 +140,12 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
 
     }
 
-
+    private fun startService() {
+        val serviceIntent = Intent(this, BatteryService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        }
+    }
 
 
     private fun loadfragment(fragment: Fragment) {
@@ -153,64 +156,64 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
     }
 
 
-    private var batteryFullDialog: Dialog? = null
-    private var batteryLowDialog: Dialog? = null
-    private var chargerConnectedDialog: Dialog? = null
-    private var disconnectedDialog: Dialog? = null
+      private var batteryFullDialog: Dialog? = null
+      private var batteryLowDialog: Dialog? = null
+      private var chargerConnectedDialog: Dialog? = null
+      private var disconnectedDialog: Dialog? = null
 
-    fun observeBatteryStatus() {
-//        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
-//            if (isSwitchOn) {
-                batteryInfoViewModel.batteryPercentage.observe(
-                    this@MainActivity,
-                    Observer { batteryPercentage ->
-                        if (batteryPercentage != null) {
-                            if (batteryPercentage >= 51) {
-                                if (batteryFullDialog == null || !batteryFullDialog!!.isShowing) {
-                                    batteryFullDialog = showBatteryFullDialog()
-                                    batteryFullDialog?.show()
-                                }
-                            } else if (batteryPercentage <= 20) {
-                                if (batteryLowDialog == null || !batteryLowDialog!!.isShowing) {
-                                    batteryLowDialog = showBatteryLowDialog()
-                                    batteryLowDialog?.show()
-                                }
-                            } else {
-                                // Dismiss dialogs if not needed
-                                batteryFullDialog?.dismiss()
-                                batteryLowDialog?.dismiss()
-                            }
-                        }
-                    }
-                )
-//            }
-//        })
+   /*  fun observeBatteryStatus() {
+ //        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
+ //            if (isSwitchOn) {
+                *//* batteryInfoViewModel.batteryPercentage.observe(
+                     this@MainActivity,
+                     Observer { batteryPercentage ->
+                         if (batteryPercentage != null) {
+                             if (batteryPercentage >= 51) {
+                                 if (batteryFullDialog == null || !batteryFullDialog!!.isShowing) {
+                                     batteryFullDialog = showBatteryFullDialog()
+                                     batteryFullDialog?.show()
+                                 }
+                             } else if (batteryPercentage <= 20) {
+                                 if (batteryLowDialog == null || !batteryLowDialog!!.isShowing) {
+                                     batteryLowDialog = showBatteryLowDialog()
+                                     batteryLowDialog?.show()
+                                 }
+                             } else {
+                                 // Dismiss dialogs if not needed
+                                 batteryFullDialog?.dismiss()
+                                 batteryLowDialog?.dismiss()
+                             }
+                         }
+                     }
+                 )*//*
+ //            }
+ //        })
 
-        var wasCharging = batteryInfoViewModel.isCharging.value ?: false
+         var wasCharging = batteryInfoViewModel.isCharging.value ?: false
 
-        batteryInfoViewModel.isCharging.observe(this@MainActivity, Observer { newChargingState ->
-            if (newChargingState != null && newChargingState != wasCharging) {
-                wasCharging = newChargingState
-                if (newChargingState) {
-                    disconnectedDialog?.dismiss()
-                    if (chargerConnectedDialog == null || !chargerConnectedDialog!!.isShowing) {
-                        chargerConnectedDialog = showChargerConnectedDialog()
-                        chargerConnectedDialog?.show()
-                    }
-                } else {
-                    chargerConnectedDialog?.dismiss()
-                    if (disconnectedDialog == null || !disconnectedDialog!!.isShowing) {
-                        disconnectedDialog = showDisconnectedDialog()
-                        disconnectedDialog?.show()
-                    }
-                }
-            }
-        })
+         batteryInfoViewModel.isCharging.observe(this@MainActivity, Observer { newChargingState ->
+             if (newChargingState != null && newChargingState != wasCharging) {
+                 wasCharging = newChargingState
+                 if (newChargingState) {
+                     disconnectedDialog?.dismiss()
+                     if (chargerConnectedDialog == null || !chargerConnectedDialog!!.isShowing) {
+                         *//*chargerConnectedDialog = showChargerConnectedDialog()
+                         chargerConnectedDialog?.show()*//*
+                     }
+                 } else {
+                     chargerConnectedDialog?.dismiss()
+                     if (disconnectedDialog == null || !disconnectedDialog!!.isShowing) {
+                         *//*disconnectedDialog = showDisconnectedDialog()
+                         disconnectedDialog?.show()*//*
+                     }
+                 }
+             }
+         })
 
-    }
+     }*/
 
 
-    private fun showBatteryFullDialog() : Dialog{
+    /*private fun showBatteryFullDialog() : Dialog{
         val dialog_binding = CustomDialogBatteryFullBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -234,77 +237,77 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
         return dialog
 
 
-    }
+    }*/
 
-    private fun showChargerConnectedDialog(): Dialog {
-        val dialog_binding = CustomDialogChargerConnectedBinding.inflate(layoutInflater)
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(dialog_binding.root)
+    /*    private fun showChargerConnectedDialog(): Dialog {
+            val dialog_binding = CustomDialogChargerConnectedBinding.inflate(layoutInflater)
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(dialog_binding.root)
 
-        val window: Window = dialog.window!!
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setGravity(Gravity.CENTER)
+            val window: Window = dialog.window!!
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.setGravity(Gravity.CENTER)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            dialog.dismiss()
-        }, 5000)
+            Handler(Looper.getMainLooper()).postDelayed({
+                dialog.dismiss()
+            }, 5000)
 
-        dialog_binding.closeDialogId.setOnClickListener {
-            dialog.dismiss()
-        }
-        return dialog
-    }
+            dialog_binding.closeDialogId.setOnClickListener {
+                dialog.dismiss()
+            }
+            return dialog
+        }*/
 
-    private fun showDisconnectedDialog(): Dialog {
-        val dialog_binding = CustomDialogChargerDisconnectedBinding.inflate(layoutInflater)
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(dialog_binding.root)
+    /*  private fun showDisconnectedDialog(): Dialog {
+          val dialog_binding = CustomDialogChargerDisconnectedBinding.inflate(layoutInflater)
+          val dialog = Dialog(this)
+          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+          dialog.setCancelable(false)
+          dialog.setContentView(dialog_binding.root)
 
-        val window: Window = dialog.window!!
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setGravity(Gravity.CENTER)
-        Handler(Looper.getMainLooper()).postDelayed({
-            dialog.dismiss()
-        }, 5000)
+          val window: Window = dialog.window!!
+          window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+          window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+          window.setGravity(Gravity.CENTER)
+          Handler(Looper.getMainLooper()).postDelayed({
+              dialog.dismiss()
+          }, 5000)
 
-        dialog_binding.closeDialogId.setOnClickListener {
-            dialog.dismiss()
-        }
-        return dialog
-    }
+          dialog_binding.closeDialogId.setOnClickListener {
+              dialog.dismiss()
+          }
+          return dialog
+      }*/
 
-    private fun showBatteryLowDialog():Dialog {
-        val dialog_binding = CustomDialogLowBatteryBinding.inflate(layoutInflater)
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(dialog_binding.root)
+    /* private fun showBatteryLowDialog():Dialog {
+         val dialog_binding = CustomDialogLowBatteryBinding.inflate(layoutInflater)
+         val dialog = Dialog(this)
+         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+         dialog.setCancelable(false)
+         dialog.setContentView(dialog_binding.root)
 
-        val window: Window = dialog.window!!
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setGravity(Gravity.CENTER)
-
-
-        dialog_binding.closeDialogId.setOnClickListener {
-//            prEvents("cancel_btn","cancel Button from exit dialog is pressed!")
-            dialog.dismiss()
-        }
-
-        dialog_binding.cardOk.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        return dialog
+         val window: Window = dialog.window!!
+         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+         window.setGravity(Gravity.CENTER)
 
 
-    }
+         dialog_binding.closeDialogId.setOnClickListener {
+ //            prEvents("cancel_btn","cancel Button from exit dialog is pressed!")
+             dialog.dismiss()
+         }
+
+         dialog_binding.cardOk.setOnClickListener {
+             dialog.dismiss()
+         }
+
+         return dialog
+
+
+     }*/
     fun requestOverlayPermission(activity: Activity, requestCode: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val intent = Intent(
@@ -320,66 +323,61 @@ class MainActivity : AppCompatActivity(),OnStateCharge {
 
         if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
             if (hasOverlayPermission(this@MainActivity)) {
-                val serviceIntent = Intent(this, BatteryService::class.java)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(serviceIntent)
+                if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
+                    || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
+                    || switchStatesAnmations.isactiveAnimationSwitchOn
+                    || switchStatesAnmations.isbatteryPercentageSwitchOn
+                    || switchStatesAnmations.isdouble_tap_closeSwitchOn
+                ) {
+                    startService()
                 }
-
-//                chargerStateReceiver = BootReceiver(this)
-//                registerReceiver(chargerStateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-
-//                startService(
-//                    Intent(
-//                        this@MainActivity,
-//                        BatteryService::class.java
-//                    )
-//                )
-
-                // Start the foreground service
-//                val serviceIntent = Intent(this, BatteryService::class.java)
-//                ContextCompat.startForegroundService(this, serviceIntent)
             }
         } else {
-//            binding.notifSwitch.isChecked = false
+            Toast.makeText(this@MainActivity, "Permission not granted!!", Toast.LENGTH_SHORT).show()
         }
     }
 
     private val OVERLAY_PERMISSION_REQUEST_CODE = 123
 
     fun hasOverlayPermission(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return Settings.canDrawOverlays(context)
-        }
-        return true // On versions below Marshmallow, overlay permission is not required.
+        return Settings.canDrawOverlays(context)
+        return true
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun charge(isCharging: Boolean) {
-        if (isCharging) {
-            // Charger connected, show the dialog
-//            if(!dialogChargerConnected.dialog.isShowing) {
-                showConnectionDialog()
-//            }
-        } else {
-//            if(dialogChargerConnected.dialog.isShowing) {
-//                dialogChargerConnected.closeDialog()
-//            }
-            // Charger disconnected
-            // Handle charger disconnected scenario if needed
-            showDisconnectionDialog()
-        }
+    fun getSwitchStates(): SwitchStates {
+        val sharedPreferences =
+            getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        val savedSwitchStateString = sharedPreferences.getString(Constants.SWITCH_STATE_KEY, null)
+        val defaultSwitchState = SwitchStates(
+            isLowBatterySwitchOn = false,
+            isFullBatterySwitchOn = false,
+            isChargerConnectSwitchOn = false,
+            isChargerDisconnectSwitchOn = false
+        )
+        return savedSwitchStateString?.let { deserializeSwitchState(it) } ?: defaultSwitchState
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun showConnectionDialog() {
-        dialogChargerConnected.showChargerConnectedDialog()
+    fun getSwitchStatesAnimations(): AnimationSwitchStates {
+        val sharedPreferences =
+            getSharedPreferences(Constants.PREF_NAME_ANIMATION, Context.MODE_PRIVATE)
+        val savedSwitchStateString =
+            sharedPreferences.getString(Constants.SWITCH_STATE_ANIMATION_KEY, null)
+        val defaultSwitchState = AnimationSwitchStates(
+            isactiveAnimationSwitchOn = true,
+            isbatteryPercentageSwitchOn = false,
+            isdouble_tap_closeSwitchOn = false,
+        )
+        return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
+            ?: defaultSwitchState
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun showDisconnectionDialog() {
-        dialogChargerConnected.dialog_binding.closeDialogId.setOnClickListener {
-            dialogChargerConnected.closeDialog()
-        }
+    private fun deserializeSwitchState(switchStateString: String): SwitchStates {
+        return Gson().fromJson(switchStateString, SwitchStates::class.java)
     }
+
+    private fun deserializeSwitchStateAnimation(switchStateString: String): AnimationSwitchStates {
+        return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
+    }
+
 
 }

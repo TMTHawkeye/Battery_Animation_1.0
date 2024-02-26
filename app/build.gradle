@@ -72,4 +72,9 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.10.1'
 
+//    implementation 'com.github.QuadFlask:colorpicker:0.0.15'
+
+    implementation 'com.github.Dhaval2404:ColorPicker:2.3'
+
+    implementation 'io.github.pilgr:paperdb:2.7.2'
 }
