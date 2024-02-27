@@ -7,6 +7,6 @@ import android.graphics.Typeface
 
 interface FontCallback {
 
-    fun addFont(typeface: Typeface?)
+    fun addFont(typeface: Typeface?,fontPath:String?)
 
 }

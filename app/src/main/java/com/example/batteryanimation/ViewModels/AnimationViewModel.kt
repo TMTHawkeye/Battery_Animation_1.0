@@ -32,4 +32,8 @@ class AnimationViewModel(val animationRepository: AnimationRepository):ViewModel
 //        switchState.value = newState
         animationRepository.updateSwitchState(newState)
     }
+
+    fun updateAnimationDuration(duration: Int) {
+        animationRepository.updateAnimationDuration(duration)
+    }
 }

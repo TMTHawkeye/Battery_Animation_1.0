@@ -11,6 +11,9 @@ fun getBatteryAnimations() :ArrayList<Int>{
     listOfAnimations.add(R.raw.battery_anim_3)
     listOfAnimations.add(R.raw.battery_anim_4)
 //    listOfAnimations.add(R.raw.battery_anim_5)
+    listOfAnimations.add(R.raw.battery_anim_6)
+    listOfAnimations.add(R.raw.battery_anim_7)
+    listOfAnimations.add(R.raw.battery_anim_8)
     return listOfAnimations
 }
 

@@ -33,13 +33,17 @@ class CreatedAnimationsActivity : AppCompatActivity() , NoDataCallBack{
             }
         }
 
+
+        binding.backBtnId.setOnClickListener {
+            finish()
+        }
+
     }
 
     private fun retrieveListFromPaperDb(callBack:(ArrayList<CreatedWallpaperModel>?)->Unit){
         val wallpaperList: ArrayList<CreatedWallpaperModel>?=
             Paper.book().read("wallpaperModels", ArrayList())
         callBack(wallpaperList)
-
     }
 
     override fun noDataFound(noDataFound: Boolean) {

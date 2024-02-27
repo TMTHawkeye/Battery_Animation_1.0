@@ -17,6 +17,12 @@ class AnimationsActivity : AppCompatActivity() {
         binding=ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.backBtnId.setOnClickListener {
+            finish()
+        }
+
+
+
     }
 
     private fun setUpAdapter(animationsList: ArrayList<CategoryModel>) {

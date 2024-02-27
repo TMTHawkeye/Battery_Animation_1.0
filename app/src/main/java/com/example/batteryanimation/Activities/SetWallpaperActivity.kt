@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -20,6 +21,7 @@ import com.example.batteryanimation.BroadCastReceivers.BootReceiver
 import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
+import com.example.batteryanimation.Interfaces.DoubleClickListener
 import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.R
@@ -34,7 +36,7 @@ import java.io.InputStream
 class SetWallpaperActivity : AppCompatActivity() {
     lateinit var binding: ActivitySetWallpaperBinding
     var animationId : String? = null
-//    private var batteryBoardcastReciver: BootReceiver? = null
+    private var batteryBoardcastReciver: BootReceiver? = null
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
 
@@ -44,9 +46,36 @@ class SetWallpaperActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySetWallpaperBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+        binding.setAnimationIdCard.setOnClickListener {
+            saveWallpaperState(animationId)
+            saveActivityIntent()
+            Toast.makeText(this@SetWallpaperActivity,
+                getString(R.string.animation_applied), Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(this@SetWallpaperActivity, WallpaperActivity::class.java).putExtra("intentFrom",subintentFrom))
+            finish()
+        }
+
+        binding.cancelAnimationId.setOnClickListener {
+//            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+            finish()
+        }
+
+
+
+        binding.backBtnId.setOnClickListener {
+            finish()
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         updateCurrentTime()
         updateCurrentDate()
-        switchStatesAnmations = getSwitchStatesAnimations(this@SetWallpaperActivity)
+//        switchStatesAnmations = getSwitchStatesAnimations(this@SetWallpaperActivity)
 
 
         val subintentFrom = intent.getStringExtra("intentFrom")
@@ -69,15 +98,17 @@ class SetWallpaperActivity : AppCompatActivity() {
             animationId = intent.getStringExtra("wallpaperPath")
 
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE
+            }
+            switchStatesAnmations = getSwitchStatesAnimations(this@SetWallpaperActivity)
+            startFinishHandler()
             binding.animationsOptionsConstrain.visibility = View.GONE
             binding.backBtnId.visibility = View.GONE
             binding.setWallpaperTitleId.visibility = View.GONE
             animationId = getWallpaperState()
             binding.timeTV.visibility = View.VISIBLE
             binding.dateTV.visibility = View.VISIBLE
-
-//            binding.timeTV.text = getCurrentTime()
-//            binding.dateTV.text = getCurrentDateFormatted()
 
             if(switchStatesAnmations.isbatteryPercentageSwitchOn){
                 binding.batteryPercentageConstrain.visibility=View.VISIBLE
@@ -87,37 +118,31 @@ class SetWallpaperActivity : AppCompatActivity() {
                 binding.batteryPercentageConstrain.visibility=View.GONE
             }
 
-//            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
-//                override fun charge(isCharging: Boolean) {
-//                    if (isCharging) {
-//                    } else {
-//                        finish()
-//                    }
-//                }
-//            })
+            if(switchStatesAnmations.isdouble_tap_closeSwitchOn) {
+                binding.mainViewId.setOnClickListener(object : DoubleClickListener() {
+                    override fun onSingleClick(v: View?) {}
+                    override fun onDoubleClick(v: View?) {
+                        finish()
+                    }
+                })
+            }
 
-//            val filter = IntentFilter()
-//            filter.addAction(Intent.ACTION_POWER_CONNECTED)
-//            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
-////        filter.addAction(Intent.ACTION_TIME_TICK)
-//            registerReceiver(batteryBoardcastReciver, filter)
+            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
+                override fun charge(isCharging: Boolean) {
+                    if (isCharging) {
+                    } else {
+                        finish()
+                    }
+                }
+            })
 
+            val filter = IntentFilter()
+            filter.addAction(Intent.ACTION_POWER_CONNECTED)
+            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+            filter.addAction(Intent.ACTION_BATTERY_CHANGED)
+//        filter.addAction(Intent.ACTION_TIME_TICK)
+            registerReceiver(batteryBoardcastReciver, filter)
 
-        }
-
-
-        binding.setAnimationIdCard.setOnClickListener {
-            saveWallpaperState(animationId)
-            saveActivityIntent()
-            Toast.makeText(this@SetWallpaperActivity,
-                getString(R.string.animation_applied), Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(this@SetWallpaperActivity, WallpaperActivity::class.java).putExtra("intentFrom",subintentFrom))
-            finish()
-        }
-
-        binding.cancelAnimationId.setOnClickListener {
-//            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
-            finish()
         }
 
         binding.previewAnimationId.setOnTouchListener { view, motionEvent ->
@@ -129,11 +154,6 @@ class SetWallpaperActivity : AppCompatActivity() {
                     binding.animationsOptionsConstrain.visibility = View.GONE
                     binding.timeTV.visibility = View.VISIBLE
                     binding.dateTV.visibility = View.VISIBLE
-//                    binding.timeTV.text = getCurrentTime()
-//                    binding.dateTV.text = getCurrentDateFormatted()
-
-
-
                 }
                 MotionEvent.ACTION_UP -> {
                     // When released
@@ -154,25 +174,6 @@ class SetWallpaperActivity : AppCompatActivity() {
             val drawable = loadImageAsync(folderName + animationId)
             binding.selectedWallpaperId.setImageDrawable(drawable)
         }
-
-//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-////                prEvents("back_btn","back Button from main activity is pressed and exit dialog is showed!")
-//                if (subintentFrom.equals("From_Adapter")) {
-//                    startActivity(
-//                        Intent(
-//                            this@SetWallpaperActivity,
-//                            WallpaperActivity::class.java
-//                        )/*.putExtra("intentFrom", subintentFrom)*/
-//                    )
-//                    finish()
-//                } else {
-//                    finishAffinity()
-//                }
-//            }
-//
-//        })
-
     }
 
     private fun getBatteryPercentageFromSharedPreference(): Int {
@@ -234,6 +235,8 @@ class SetWallpaperActivity : AppCompatActivity() {
             isactiveAnimationSwitchOn = false,
             isbatteryPercentageSwitchOn = false,
             isdouble_tap_closeSwitchOn = false,
+            animationDuration = 3000
+
         )
         return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
             ?: defaultSwitchState
@@ -242,5 +245,28 @@ class SetWallpaperActivity : AppCompatActivity() {
     private fun deserializeSwitchStateAnimation(switchStateString: String): AnimationSwitchStates {
         return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
     }
+    private var finishHandler: Handler? = null
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopFinishHandler()
+
+    }
+    private fun startFinishHandler() {
+        finishHandler = Handler(Looper.getMainLooper())
+        finishHandler?.postDelayed({
+            finish()
+        }, switchStatesAnmations.animationDuration.toLong())
+    }
+
+    private fun stopFinishHandler() {
+        finishHandler?.removeCallbacksAndMessages(null)
+        finishHandler = null
+    }
+
 
 }

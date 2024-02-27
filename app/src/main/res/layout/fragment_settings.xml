@@ -194,7 +194,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/linear_privacy"
+                    app:layout_constraintHorizontal_bias="0.0">
 
                     <ImageView
                         android:id="@+id/feedback_icon_id"
@@ -220,7 +222,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="@+id/linear_feedback"
-                    app:layout_constraintTop_toBottomOf="@+id/linear_feedback">
+                    app:layout_constraintTop_toBottomOf="@+id/linear_feedback"
+                    app:layout_constraintEnd_toEndOf="@+id/linear_privacy"
+                    app:layout_constraintHorizontal_bias="0.0">
 
                     <ImageView
                         android:id="@+id/rateus_icon_id"
@@ -246,7 +250,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="@+id/linear_feedback"
-                    app:layout_constraintTop_toBottomOf="@+id/linear_rate_us">
+                    app:layout_constraintTop_toBottomOf="@+id/linear_rate_us"
+                    app:layout_constraintEnd_toEndOf="@+id/linear_privacy"
+                    app:layout_constraintHorizontal_bias="0.0">
 
                     <ImageView
                         android:id="@+id/share_icon_id"
@@ -272,7 +278,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="@+id/linear_feedback"
-                    app:layout_constraintTop_toBottomOf="@+id/linear_share">
+                    app:layout_constraintTop_toBottomOf="@+id/linear_share"
+                    app:layout_constraintEnd_toEndOf="@+id/linear_privacy"
+                    app:layout_constraintHorizontal_bias="0.0">
 
                     <ImageView
                         android:id="@+id/moreapps_icon_id"
@@ -293,10 +301,12 @@
 
                 <LinearLayout
                     android:id="@+id/linear_privacy"
-                    android:padding="@dimen/_4sdp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
+                    android:padding="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/linear_feedback"
                     app:layout_constraintTop_toBottomOf="@+id/linear_moreapps">
 
@@ -305,16 +315,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:src="@drawable/privacy_policy_img"
-                         />
+                        android:src="@drawable/privacy_policy_img" />
 
                     <TextView
                         style="@style/textStyle_normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:text="@string/privacy_title"
-                        android:layout_gravity="center_vertical"/>
+                        android:text="@string/privacy_title" />
                 </LinearLayout>
 
 

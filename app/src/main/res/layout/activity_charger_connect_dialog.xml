@@ -35,18 +35,18 @@
                 android:layout_margin="@dimen/_2sdp"
                 android:src="@drawable/cross_img"/>
 
+
             <ImageView
+                android:id="@+id/charger_connected_img_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
 
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/charger_connected_img"
+                app:layout_constraintBottom_toTopOf="@+id/charger_connected_header_id_TV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/charger_connected_header_id_TV"
-                android:id="@+id/charger_connected_img_id"/>
-
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/charger_connected_header_id_TV"

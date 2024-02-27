@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg_layout"
-    tools:context=".Activities.SetAnimationAcivity">
+    tools:context=".Activities.SetAnimationAcivity"
+    android:id="@+id/mainViewId">
 
     <ImageView
         android:id="@+id/back_btn_id"
@@ -57,8 +58,9 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
         android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +107,6 @@
         android:id="@+id/animations_options_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

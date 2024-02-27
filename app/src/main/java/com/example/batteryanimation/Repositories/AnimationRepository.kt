@@ -59,7 +59,7 @@ class AnimationRepository(val context: Context) {
             isactiveAnimationSwitchOn = true,
             isbatteryPercentageSwitchOn = false,
             isdouble_tap_closeSwitchOn = false,
-//            isChargerDisconnectSwitchOn = false
+            animationDuration = 3000
         )
         _switchState.value = savedSwitchStateString?.let { deserializeSwitchState(it) } ?: defaultSwitchState
     }
@@ -67,12 +67,16 @@ class AnimationRepository(val context: Context) {
     fun updateSwitchState(newSwitchState: AnimationSwitchStates) {
         _switchState.value = newSwitchState
 
-        // Serialize switch state to string and save in SharedPreferences
         val switchStateString = serializeSwitchState(newSwitchState)
         sharedPreferencesAnimation.edit().putString(Constants.SWITCH_STATE_ANIMATION_KEY, switchStateString).apply()
     }
 
-    // Helper function to serialize switch state to string
+    fun updateAnimationDuration(duration: Int) {
+        val currentState = switchState.value ?: return
+        val newState = currentState.copy(animationDuration = duration)
+        updateSwitchState(newState)
+    }
+
     private fun serializeSwitchState(switchState: AnimationSwitchStates): String {
         return Gson().toJson(switchState)
     }

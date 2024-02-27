@@ -12,6 +12,8 @@ class MyCreationActivity : AppCompatActivity() {
         binding=ActivityMyCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        binding.backBtnId.setOnClickListener {
+            finish()
+        }
     }
 }

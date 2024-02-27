@@ -24,8 +24,8 @@ class BatteryService : Service() {
     private var batteryBoardcastReciver: BootReceiver? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        intent?.getStringExtra("stringValues")
-        var selectedAnimationResId = intent?.getIntExtra("selectedAnimation", 0) ?: 0
+//        intent?.getStringExtra("stringValues")
+//        var selectedAnimationResId = intent?.getIntExtra("selectedAnimation", 0) ?: 0
 
         return START_STICKY
     }

@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.SetWallpaperActivity"
-    android:background="@drawable/gradient_bg_layout">
+    android:background="@drawable/gradient_bg_layout"
+    android:id="@+id/mainViewId">
 
-    <ImageView
+
+<ImageView
         android:id="@+id/selected_wallpaper_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

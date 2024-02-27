@@ -16,12 +16,13 @@ class WallpaperActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityWallpaperBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        populateList{
-//            setUpAdapter(it)
-//        }
 
         getListFromAssets{
             setUpAdapter(it)
+        }
+
+        binding.backBtnId.setOnClickListener {
+            finish()
         }
     }
 

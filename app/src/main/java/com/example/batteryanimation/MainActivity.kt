@@ -1,10 +1,12 @@
 package com.example.batteryanimation
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -19,8 +21,10 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -46,9 +50,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var switchStatesAnmations : AnimationSwitchStates
-    lateinit var switchStatesBattery : SwitchStates
-//    val batteryInfoViewModel: BatteryInfoViewModel by viewModel()
+    lateinit var switchStatesAnmations: AnimationSwitchStates
+    lateinit var switchStatesBattery: SwitchStates
+
+    //    val batteryInfoViewModel: BatteryInfoViewModel by viewModel()
+    private val STORAGE_PERMISSION_CODE = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,18 +63,34 @@ class MainActivity : AppCompatActivity() {
         switchStatesBattery = getSwitchStates()
         switchStatesAnmations = getSwitchStatesAnimations()
 
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted
+            // Request the permission
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                STORAGE_PERMISSION_CODE
+            )
+        }
         if (!hasOverlayPermission(this@MainActivity)) {
             requestOverlayPermission(this@MainActivity, OVERLAY_PERMISSION_REQUEST_CODE)
         } else {
             if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
                 || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
                 || switchStatesAnmations.isactiveAnimationSwitchOn
-                || switchStatesAnmations.isbatteryPercentageSwitchOn
-                || switchStatesAnmations.isdouble_tap_closeSwitchOn
+            /*|| switchStatesAnmations.isbatteryPercentageSwitchOn
+            || switchStatesAnmations.isdouble_tap_closeSwitchOn*/
             ) {
                 startService()
             }
         }
+
+
 //        observeBatteryStatus()
 
         val selectedColor = ContextCompat.getColor(this, R.color.bottom_nav_icon_selected)
@@ -138,7 +160,29 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // Create a callback for back button press
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentFragment = getCurrentFragment()
+                if (currentFragment is HomeFragment) {
+                    finish()
+                } else {
+                    binding.bottomNav.selectedItemId=R.id.home
+                    loadfragment(HomeFragment())
+                }
+            }
+        }
+
+        // Add the callback to the activity's OnBackPressedDispatcher
+        this.onBackPressedDispatcher.addCallback(this, callback)
+
+
     }
+
+    private fun getCurrentFragment(): Fragment? {
+        return supportFragmentManager.findFragmentById(R.id.continerView)
+    }
+
 
     private fun startService() {
         val serviceIntent = Intent(this, BatteryService::class.java)
@@ -156,15 +200,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-      private var batteryFullDialog: Dialog? = null
-      private var batteryLowDialog: Dialog? = null
-      private var chargerConnectedDialog: Dialog? = null
-      private var disconnectedDialog: Dialog? = null
+    private var batteryFullDialog: Dialog? = null
+    private var batteryLowDialog: Dialog? = null
+    private var chargerConnectedDialog: Dialog? = null
+    private var disconnectedDialog: Dialog? = null
 
-   /*  fun observeBatteryStatus() {
- //        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
- //            if (isSwitchOn) {
-                *//* batteryInfoViewModel.batteryPercentage.observe(
+    /*  fun observeBatteryStatus() {
+  //        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
+  //            if (isSwitchOn) {
+                 *//* batteryInfoViewModel.batteryPercentage.observe(
                      this@MainActivity,
                      Observer { batteryPercentage ->
                          if (batteryPercentage != null) {
@@ -326,8 +370,8 @@ class MainActivity : AppCompatActivity() {
                 if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
                     || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
                     || switchStatesAnmations.isactiveAnimationSwitchOn
-                    || switchStatesAnmations.isbatteryPercentageSwitchOn
-                    || switchStatesAnmations.isdouble_tap_closeSwitchOn
+                /* || switchStatesAnmations.isbatteryPercentageSwitchOn
+                 || switchStatesAnmations.isdouble_tap_closeSwitchOn*/
                 ) {
                     startService()
                 }
@@ -366,6 +410,7 @@ class MainActivity : AppCompatActivity() {
             isactiveAnimationSwitchOn = true,
             isbatteryPercentageSwitchOn = false,
             isdouble_tap_closeSwitchOn = false,
+            animationDuration = 3000
         )
         return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
             ?: defaultSwitchState
@@ -377,6 +422,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun deserializeSwitchStateAnimation(switchStateString: String): AnimationSwitchStates {
         return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this@MainActivity, "Read permission granted!!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this@MainActivity, "Read permission not granted!!", Toast.LENGTH_SHORT).show()
+
+            }
+        }
     }
 
 

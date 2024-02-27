@@ -21,7 +21,9 @@ class SubAnimationActivity : AppCompatActivity() {
         binding=ActivitySubAnimationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        binding.backBtnId.setOnClickListener {
+            finish()
+        }
 
     }
 
@@ -67,7 +69,7 @@ class SubAnimationActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val intentFrom=intent.getStringExtra("intentFrom")
-
+        binding.subAnimationTitleId.text=intentFrom
         populateList(intentFrom){
             setUpAdapter(it,intentFrom)
         }

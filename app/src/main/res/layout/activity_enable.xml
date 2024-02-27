@@ -257,13 +257,13 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/animation_duration"
                 app:layout_constraintBottom_toBottomOf="@+id/animation_duration_img_id"
-                app:layout_constraintEnd_toStartOf="@+id/animation_duration_switch"
+                app:layout_constraintEnd_toStartOf="@+id/animation_duration_spinner"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/animation_duration_img_id"
                 app:layout_constraintTop_toTopOf="@+id/animation_duration_img_id" />
 
             <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/animation_duration_switch"
+                android:id="@+id/animation_duration_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"

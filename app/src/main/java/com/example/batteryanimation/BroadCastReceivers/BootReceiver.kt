@@ -15,6 +15,7 @@ import com.example.batteryanimation.Activities.BatteryLowDialogActivity
 import com.example.batteryanimation.Activities.ChargerConnectDialogActivity
 import com.example.batteryanimation.Activities.ChargerDisconnectDialogActivity
 import com.example.batteryanimation.Activities.SetAnimationAcivity
+import com.example.batteryanimation.Activities.SetCreatedAnimationActivity
 import com.example.batteryanimation.Activities.SetWallpaperActivity
 import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.Interfaces.OnStateCharge
@@ -58,6 +59,16 @@ class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver
                             ) {
                                 showConcernedActivity(
                                     context, SetWallpaperActivity::class.java, resumeIntent
+                                )
+                            }
+                        }
+                        else if (getActivityIntent(context).equals("creation")) {
+                            if (!isActivityRunning(
+                                    context, SetCreatedAnimationActivity::class.java.name
+                                )
+                            ) {
+                                showConcernedActivity(
+                                    context, SetCreatedAnimationActivity::class.java, resumeIntent
                                 )
                             }
                         }
@@ -286,9 +297,10 @@ class BootReceiver(private val onStateCharge: OnStateCharge) : BroadcastReceiver
         val savedSwitchStateString =
             sharedPreferences.getString(Constants.SWITCH_STATE_ANIMATION_KEY, null)
         val defaultSwitchState = AnimationSwitchStates(
-            isactiveAnimationSwitchOn = false,
+            isactiveAnimationSwitchOn = true,
             isbatteryPercentageSwitchOn = false,
             isdouble_tap_closeSwitchOn = false,
+            animationDuration = 3000
         )
         return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
             ?: defaultSwitchState

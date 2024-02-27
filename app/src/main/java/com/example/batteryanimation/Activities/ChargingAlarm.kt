@@ -49,5 +49,8 @@ class ChargingAlarm : AppCompatActivity() {
             batteryInfoViewModel.updateSwitchState("charger_disconnect", isChecked)
         }
 
+        binding.backBtnId.setOnClickListener {
+            finish()
+        }
     }
 }

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:strokeWidth="0dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:background="@drawable/gradient_bg_reverse_card"
+    android:id="@+id/card_item_id">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/gradient_bg_reverse_card">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/close_dialog_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="@dimen/_2sdp"
+                android:src="@drawable/cross_img"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+
+                android:src="@drawable/rate_us_dialog_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/low_battery_header_id_TV"
+                android:id="@+id/low_battery_img_id"/>
+
+
+            <TextView
+                android:id="@+id/low_battery_header_id_TV"
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/rateus_desc"
+                app:layout_constraintEnd_toEndOf="@+id/low_battery_img_id"
+                app:layout_constraintStart_toStartOf="@+id/low_battery_img_id"
+                app:layout_constraintTop_toBottomOf="@+id/low_battery_img_id"
+                android:textSize="@dimen/_10sdp"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:isIndicator="true"
+                android:numStars="5"
+                style="@style/CustomRatingBarStyle"
+                android:progressBackgroundTint="@color/white"
+                android:progressTint="@color/sea_green"
+                android:stepSize="1"
+                android:rating="4"
+
+                app:layout_constraintEnd_toEndOf="@+id/low_battery_header_id_TV"
+                app:layout_constraintStart_toStartOf="@+id/low_battery_header_id_TV"
+                app:layout_constraintTop_toBottomOf="@+id/low_battery_header_id_TV"
+                app:layout_constraintBottom_toTopOf="@+id/tap_to_rate_img_id"/>
+
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tap_to_rate_img"
+                android:id="@+id/tap_to_rate_img_id"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                app:layout_constraintEnd_toEndOf="@+id/ratingBar"
+                android:layout_marginEnd="@dimen/_25sdp"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/low_battery_img_id"
+                app:layout_constraintStart_toStartOf="@+id/low_battery_img_id"
+                app:layout_constraintTop_toBottomOf="@id/tap_to_rate_img_id"
+                app:cardCornerRadius="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/yellow"
+                    android:paddingHorizontal="@dimen/_25sdp"
+                    android:paddingVertical="@dimen/_7sdp">
+
+                    <TextView
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/submit"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

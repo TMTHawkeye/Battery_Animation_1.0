@@ -18,6 +18,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.WindowInsets
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.MutableLiveData
@@ -28,6 +29,7 @@ import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.HelperClasses.getBatteryPercentage
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
+import com.example.batteryanimation.Interfaces.DoubleClickListener
 import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.R
@@ -43,7 +45,6 @@ class SetAnimationAcivity : AppCompatActivity() {
     lateinit var binding: ActivitySetAnimationAcivityBinding
     lateinit var  switchStatesAnmations : AnimationSwitchStates
     var subintentFrom = ""
-    //    val animationViewModel:AnimationViewModel by viewModel()
     private var batteryBoardcastReciver: BootReceiver? = null
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
@@ -56,7 +57,6 @@ class SetAnimationAcivity : AppCompatActivity() {
         setContentView(binding.root)
         updateCurrentTime()
         updateCurrentDate()
-        switchStatesAnmations = getSwitchStatesAnimations(this@SetAnimationAcivity)
 
 
         currentTimeLiveData.observe(this, Observer { time ->
@@ -68,71 +68,7 @@ class SetAnimationAcivity : AppCompatActivity() {
             binding.dateTV.text = date
         })
 
-        val intentFrom = intent.getStringExtra("intentFrom")
-        subintentFrom = intent.getStringExtra("fromAdapter")?:"from_receiver"
 
-        if (subintentFrom.equals("From_Adapter")) {
-            binding.animationsOptionsConstrain.visibility = View.VISIBLE
-            binding.backBtnId.visibility = View.VISIBLE
-            binding.setAnimationTitleId.visibility = View.VISIBLE
-            binding.timeTV.visibility = View.GONE
-            binding.dateTV.visibility = View.GONE
-            animationId = intent.getIntExtra("animationId", R.raw.battery_anim_1)
-        } else {
-            binding.animationsOptionsConstrain.visibility = View.GONE
-            binding.backBtnId.visibility = View.GONE
-            binding.setAnimationTitleId.visibility = View.GONE
-            animationId = getAnimationState()
-            binding.timeTV.visibility = View.VISIBLE
-            binding.dateTV.visibility = View.VISIBLE
-
-            if(switchStatesAnmations.isbatteryPercentageSwitchOn){
-                binding.batteryPercentageConstrain.visibility=View.VISIBLE
-                binding.batteryPercentageId.text=getBatteryPercentageFromSharedPreference().toString()
-            }
-            else{
-                binding.batteryPercentageConstrain.visibility=View.GONE
-            }
-
-//            binding.timeTV.text = getCurrentTime()
-//            binding.dateTV.text = getCurrentDateFormatted()
-
-
-
-//            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
-//                override fun charge(isCharging: Boolean) {
-//                    if (isCharging) {
-//                    } else {
-//                        finish()
-//                    }
-//                }
-//            })
-//
-//            val filter = IntentFilter()
-//            filter.addAction(Intent.ACTION_POWER_CONNECTED)
-//            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
-////        filter.addAction(Intent.ACTION_TIME_TICK)
-//            registerReceiver(batteryBoardcastReciver, filter)
-
-        }
-
-        binding.animationId.setAnimation(animationId)
-        binding.animationId.repeatCount = LottieDrawable.INFINITE
-        binding.animationId.playAnimation()
-
-        binding.setAnimationIdCard.setOnClickListener {
-            saveAnimationState(animationId)
-            saveActivityIntent()
-            Toast.makeText(this@SetAnimationAcivity,
-                getString(R.string.animation_applied), Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
-            finish()
-        }
-
-        binding.cancelAnimationId.setOnClickListener {
-            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
-            finish()
-        }
 
         binding.previewAnimationId.setOnTouchListener { view, motionEvent ->
             when (motionEvent.action) {
@@ -162,12 +98,12 @@ class SetAnimationAcivity : AppCompatActivity() {
         }
 
         binding.backBtnId.setOnClickListener {
-            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+//            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
             finish()
         }
 
 
-//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+/*//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
 //            override fun handleOnBackPressed() {
 ////                prEvents("back_btn","back Button from main activity is pressed and exit dialog is showed!")
 //                if (subintentFrom.equals("From_Adapter")) {
@@ -178,15 +114,88 @@ class SetAnimationAcivity : AppCompatActivity() {
 //                }
 //            }
 //
-//        })
+//        })*/
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//        if (!subintentFrom.equals("From_Adapter")) {
-//            finishAffinity()
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        val intentFrom = intent.getStringExtra("intentFrom")
+        subintentFrom = intent.getStringExtra("fromAdapter")?:"from_receiver"
+
+        if (subintentFrom.equals("From_Adapter")) {
+            binding.animationsOptionsConstrain.visibility = View.VISIBLE
+            binding.backBtnId.visibility = View.VISIBLE
+            binding.setAnimationTitleId.visibility = View.VISIBLE
+            binding.timeTV.visibility = View.GONE
+            binding.dateTV.visibility = View.GONE
+            animationId = intent.getIntExtra("animationId", R.raw.battery_anim_1)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE
+            }
+            switchStatesAnmations = getSwitchStatesAnimations(this@SetAnimationAcivity)
+            startFinishHandler()
+            binding.animationsOptionsConstrain.visibility = View.GONE
+            binding.backBtnId.visibility = View.GONE
+            binding.setAnimationTitleId.visibility = View.GONE
+            animationId = getAnimationState()
+            binding.timeTV.visibility = View.VISIBLE
+            binding.dateTV.visibility = View.VISIBLE
+
+            if(switchStatesAnmations.isbatteryPercentageSwitchOn){
+                binding.batteryPercentageConstrain.visibility=View.VISIBLE
+                binding.batteryPercentageId.text=getBatteryPercentageFromSharedPreference().toString()
+            }
+            else{
+                binding.batteryPercentageConstrain.visibility=View.GONE
+            }
+
+            if(switchStatesAnmations.isdouble_tap_closeSwitchOn) {
+                binding.mainViewId.setOnClickListener(object : DoubleClickListener() {
+                    override fun onSingleClick(v: View?) {}
+                    override fun onDoubleClick(v: View?) {
+                        finish()
+                    }
+                })
+            }
+
+            batteryBoardcastReciver = BootReceiver(object : OnStateCharge {
+                override fun charge(isCharging: Boolean) {
+                    if (isCharging) {
+                    } else {
+                        finish()
+                    }
+                }
+            })
+//
+            val filter = IntentFilter()
+            filter.addAction(Intent.ACTION_POWER_CONNECTED)
+            filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
+            filter.addAction(Intent.ACTION_BATTERY_CHANGED)
+//        filter.addAction(Intent.ACTION_TIME_TICK)
+            registerReceiver(batteryBoardcastReciver, filter)
+
+        }
+
+        binding.animationId.setAnimation(animationId)
+        binding.animationId.repeatCount = LottieDrawable.INFINITE
+        binding.animationId.playAnimation()
+
+        binding.setAnimationIdCard.setOnClickListener {
+            saveAnimationState(animationId)
+            saveActivityIntent()
+            Toast.makeText(this@SetAnimationAcivity,
+                getString(R.string.animation_applied), Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+            finish()
+        }
+
+        binding.cancelAnimationId.setOnClickListener {
+            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+            finish()
+        }
+    }
+
 
     private fun getBatteryPercentageFromSharedPreference(): Int {
         // Use a specific shared preference file named "battery_preference_file"
@@ -283,6 +292,7 @@ class SetAnimationAcivity : AppCompatActivity() {
             isactiveAnimationSwitchOn = false,
             isbatteryPercentageSwitchOn = false,
             isdouble_tap_closeSwitchOn = false,
+            animationDuration = 3000
         )
         return savedSwitchStateString?.let { deserializeSwitchStateAnimation(it) }
             ?: defaultSwitchState
@@ -291,5 +301,31 @@ class SetAnimationAcivity : AppCompatActivity() {
     private fun deserializeSwitchStateAnimation(switchStateString: String): AnimationSwitchStates {
         return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
     }
+
+    private var finishHandler: Handler? = null
+
+    override fun onPause() {
+        super.onPause()
+        stopFinishHandler()
+    }
+
+  /*  private fun getAnimationDuration(): Long {
+        val sharedPreferences = getSharedPreferences("AnimationState", Context.MODE_PRIVATE)
+        return sharedPreferences.getLong("animationDuration", 0)
+    }*/
+
+    private fun startFinishHandler() {
+        finishHandler = Handler(Looper.getMainLooper())
+        finishHandler?.postDelayed({
+            finish()
+        }, switchStatesAnmations.animationDuration.toLong())
+    }
+
+    private fun stopFinishHandler() {
+        finishHandler?.removeCallbacksAndMessages(null)
+        finishHandler = null
+    }
+
+
 
 }

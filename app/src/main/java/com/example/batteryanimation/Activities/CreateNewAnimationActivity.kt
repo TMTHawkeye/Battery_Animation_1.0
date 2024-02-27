@@ -49,6 +49,7 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
     private lateinit var sharedPreferences: SharedPreferences
+     var fontPath : String?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,7 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
         setContentView(binding.root)
         updateCurrentTime()
         updateCurrentDate()
+        fontPath= getString(R.string.default_font_path)
         sharedPreferences = getSharedPreferences("created_wallpaper_prefs", MODE_PRIVATE)
 
         binding.addPicImgId.setOnClickListener(View.OnClickListener { openGallery() })
@@ -106,22 +108,26 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
         }
 
         binding.doneId.setOnClickListener {
-            val createdWallpaperModel = CreatedWallpaperModel(
-                binding.timeTV.typeface,
-                binding.timeTV.currentTextColor,
-                binding.selectedImgId.drawable.toBitmap()
-            )
-
-            val wallpaperModels: ArrayList<CreatedWallpaperModel>? =
-                Paper.book().read("wallpaperModels", ArrayList())
-
-            wallpaperModels?.add(createdWallpaperModel)
-
-            Paper.book().write("wallpaperModels", wallpaperModels?:ArrayList())
+//            val createdWallpaperModel = CreatedWallpaperModel(
+//                binding.timeTV.typeface,
+//                binding.timeTV.currentTextColor,
+//                binding.selectedImgId.drawable.toBitmap()
+//            )
+//
+//            val wallpaperModels: ArrayList<CreatedWallpaperModel>? =
+//                Paper.book().read("wallpaperModels", ArrayList())
+//
+//            wallpaperModels?.add(createdWallpaperModel)
+//
+//            Paper.book().write("wallpaperModels", wallpaperModels?:ArrayList())
 
 //            startActivity(Intent(this@CreateNewAnimationActivity, CreatedAnimationsActivity::class.java))
             showSaveCreationDialog().show()
 
+        }
+
+        binding.backBtnId.setOnClickListener {
+            finish()
         }
 
     }
@@ -142,6 +148,19 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
 
 
          dialog_binding.cardOk.setOnClickListener {
+             val createdWallpaperModel = CreatedWallpaperModel(
+                 fontPath,
+                 binding.timeTV.currentTextColor,
+                 selectedImagePath ?: ""
+             )
+
+             val wallpaperModels: ArrayList<CreatedWallpaperModel>? =
+                 Paper.book().read("wallpaperModels", ArrayList())
+
+             wallpaperModels?.add(createdWallpaperModel)
+
+             Paper.book().write("wallpaperModels", wallpaperModels ?: ArrayList())
+
              dialog.dismiss()
              finish()
          }
@@ -163,6 +182,8 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
         binding.dateTV.setTextColor(color)
     }
 
+    private var selectedImagePath: String? = null
+
     private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
@@ -172,28 +193,27 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
             val selectedImageUri = data.data
-            binding.doneId.visibility = View.VISIBLE
-//            binding.selectedImgId.setImageURI(selectedImageUri)
+            selectedImagePath = selectedImageUri?.toString()
 
+            binding.doneId.visibility = View.VISIBLE
             Glide.with(this)
-                .load(selectedImageUri) // Pass your image URI here
+                .load(selectedImageUri)
                 .into(binding.selectedImgId)
 
             currentTimeLiveData.observe(this, Observer { time ->
                 binding.timeTV.text = time
             })
 
-            // Observe current date
             currentDateLiveData.observe(this, Observer { date ->
                 binding.dateTV.text = date
             })
         }
     }
 
-    override fun addFont(typeface: Typeface?) {
+    override fun addFont(typeface: Typeface?,fontPath:String?) {
         binding.timeTV.setTypeface(typeface)
         binding.dateTV.setTypeface(typeface)
-
+        this.fontPath=fontPath
     }
 
     private fun updateCurrentTime() {

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.SetCreatedAnimationActivity"
-    android:background="@drawable/gradient_bg_layout">
+    android:background="@drawable/gradient_bg_layout"
+    android:id="@+id/main_view_id">
 
     <ImageView
         android:id="@+id/selected_wallpaper_id"
