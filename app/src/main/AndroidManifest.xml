@@ -20,6 +20,15 @@
         android:theme="@style/Theme.BatteryAnimation"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.GuideScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.SetCreatedAnimationActivity"
             android:exported="false" />
         <activity
@@ -83,7 +92,7 @@
             android:name=".Activities.EnableActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.LauncherScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

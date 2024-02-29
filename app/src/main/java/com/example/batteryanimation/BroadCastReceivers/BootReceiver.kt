@@ -1,14 +1,11 @@
 package com.example.batteryanimation.BroadCastReceivers
 
-import android.app.Activity
 import android.app.ActivityManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.BatteryManager
-import android.preference.PreferenceManager
 import android.util.Log
 import com.example.batteryanimation.Activities.BatteryFullDialogActivity
 import com.example.batteryanimation.Activities.BatteryLowDialogActivity
@@ -19,7 +16,7 @@ import com.example.batteryanimation.Activities.SetCreatedAnimationActivity
 import com.example.batteryanimation.Activities.SetWallpaperActivity
 import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.Interfaces.OnStateCharge
-import com.example.batteryanimation.MainActivity
+import com.example.batteryanimation.Activities.MainActivity
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.ModelClasses.SwitchStates
 import com.google.gson.Gson

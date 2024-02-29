@@ -1,52 +1,33 @@
-package com.example.batteryanimation
+package com.example.batteryanimation.Activities
 
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.Settings
-import android.view.Gravity
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import com.example.batteryanimation.BroadCastReceivers.BootReceiver
-import com.example.batteryanimation.CustomDialogs.CustomDialogChargerConnected
 import com.example.batteryanimation.Fragments.BatteryFragment
 import com.example.batteryanimation.Fragments.HomeFragment
 import com.example.batteryanimation.Fragments.SettingsFragment
 import com.example.batteryanimation.HelperClasses.Constants
-import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.ModelClasses.SwitchStates
+import com.example.batteryanimation.R
 import com.example.batteryanimation.Services.BatteryService
-import com.example.batteryanimation.ViewModels.BatteryInfoViewModel
 import com.example.batteryanimation.databinding.ActivityMainBinding
-import com.example.batteryanimation.databinding.CustomDialogBatteryFullBinding
-import com.example.batteryanimation.databinding.CustomDialogChargerConnectedBinding
-import com.example.batteryanimation.databinding.CustomDialogChargerDisconnectedBinding
-import com.example.batteryanimation.databinding.CustomDialogLowBatteryBinding
 import com.google.gson.Gson
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -167,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                 if (currentFragment is HomeFragment) {
                     finish()
                 } else {
-                    binding.bottomNav.selectedItemId=R.id.home
+                    binding.bottomNav.selectedItemId= R.id.home
                     loadfragment(HomeFragment())
                 }
             }
