@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.activity.OnBackPressedCallback
 import com.airbnb.lottie.LottieDrawable
+import com.example.batteryanimation.HelperClasses.isFirstTimeLaunch
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivityLauncherScreenBinding
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class LauncherScreenActivity : AppCompatActivity(), CoroutineScope {
-    lateinit var binding:ActivityLauncherScreenBinding
+    lateinit var binding: ActivityLauncherScreenBinding
     private var coroutineJob: Job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -24,7 +26,7 @@ class LauncherScreenActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityLauncherScreenBinding.inflate(layoutInflater)
+        binding = ActivityLauncherScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -35,8 +37,7 @@ class LauncherScreenActivity : AppCompatActivity(), CoroutineScope {
 
         coroutineJob = launch {
             delay(5000)
-            startActivity(Intent(this@LauncherScreenActivity,GuideScreenActivity::class.java))
-
+            navigateToNext()
         }
 
 
@@ -47,5 +48,18 @@ class LauncherScreenActivity : AppCompatActivity(), CoroutineScope {
             }
         })
 
+    }
+
+
+    private fun navigateToNext() {
+        prEvents("firstTimeLaunchCheck", "Guide Screen or Welcome Screen activity is displayed!")
+
+        val intent = if (isFirstTimeLaunch()) {
+            Intent(this@LauncherScreenActivity, LanguageActivity::class.java)
+        } else {
+            Intent(this@LauncherScreenActivity, WelcomeActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 }

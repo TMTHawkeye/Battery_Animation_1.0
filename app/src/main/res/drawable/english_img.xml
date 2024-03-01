@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="25dp"
+    android:height="25dp"
+    android:viewportWidth="25"
+    android:viewportHeight="25">
+  <path
+      android:pathData="M12.5,25C5.597,25 0,19.403 0,12.5C0,5.597 5.597,0 12.5,0C19.403,0 25,5.597 25,12.5C25,19.403 19.403,25 12.5,25Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="3.661"
+          android:startY="3.661"
+          android:endX="21.339"
+          android:endY="21.339"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF28EED9"/>
+        <item android:offset="1" android:color="#FF01C0AC"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M17.844,22H7.156C4.861,22 3,20.139 3,17.844V7.156C3,4.861 4.861,3 7.156,3H17.844C20.139,3 22,4.861 22,7.156V17.844C22,20.139 20.139,22 17.844,22Z"
+      android:fillColor="#41479B"/>
+  <path
+      android:pathData="M22,17.843V16.931L19.053,15H22V14H14V22H15V15.931L21.343,20.087C21.571,19.733 21.743,19.346 21.853,18.941M3.279,19.345C3.38,19.604 3.506,19.853 3.657,20.087L10,15.931V22H11V14H3V15H5.947L3,16.931V17.844C3,18.003 3.009,18.161 3.027,18.316M3,7.298V8.069L5.947,10H3V11H11V3H10V9.069L3.657,4.913C3.407,5.302 3.224,5.731 3.116,6.18M21.715,5.641C21.615,5.387 21.491,5.143 21.343,4.913L15,9.069V3H14V11H22V10H19.053L22,8.069V7.156C22,6.991 21.99,6.828 21.971,6.667"
+      android:fillColor="#F5F5F5"/>
+  <path
+      android:pathData="M14,3H11V11H3V14H11V22H14V14H22V11H14V3Z"
+      android:fillColor="#FF4B55"/>
+  <path
+      android:pathData="M8.136,14.999L3.027,18.315C3.067,18.667 3.152,19.013 3.28,19.343L9.973,14.999L8.136,14.999ZM15.783,14.999L21.854,18.939C21.951,18.582 22,18.213 22,17.843V17.842L17.62,14.999L15.783,14.999ZM9,9.999L3.116,6.179C3.039,6.499 3,6.826 3,7.155V7.296L7.163,9.999H9ZM16.837,9.999L21.971,6.666C21.93,6.314 21.844,5.97 21.715,5.64L15,9.999H16.837Z"
+      android:fillColor="#FF4B55"/>
+</vector>

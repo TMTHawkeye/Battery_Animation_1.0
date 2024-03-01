@@ -4,60 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.EnableActivity"
-    android:background="@drawable/gradient_bg_layout">
+    android:background="@drawable/gradient_bg_layout"
+    tools:context=".Activities.EnableActivity">
 
     <ImageView
+        android:id="@+id/back_btn_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:src="@drawable/back_btn_img"
-        android:id="@+id/back_btn_id"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/eneble_animation_title_id"
+        style="@style/textStyle_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enable_animation_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/back_btn_id"
-        app:layout_constraintBottom_toBottomOf="@+id/back_btn_id"
-        style="@style/textStyle_normal"
         android:textSize="@dimen/_14sdp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back_btn_id" />
 
 
     <ImageView
         android:id="@+id/enable_animation_main_icon_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eneble_animation_title_id"
-        android:src="@drawable/enable_animation_main_icon"
         android:layout_marginVertical="@dimen/_20sdp"
-        app:layout_constraintBottom_toTopOf="@+id/card_active_animation"/>
+        android:src="@drawable/enable_animation_main_icon"
+        app:layout_constraintBottom_toTopOf="@+id/card_active_animation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eneble_animation_title_id" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_active_animation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
         android:background="@drawable/gradient_bg_card"
+        app:cardCornerRadius="@dimen/_15sdp"
         app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintBottom_toTopOf="@+id/card_percentage_animation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/card_percentage_animation"
         app:layout_constraintTop_toBottomOf="@+id/enable_animation_main_icon_id"
-        app:strokeWidth="1dp"
-        app:cardCornerRadius="@dimen/_15sdp"
         app:strokeColor="@color/dark_grey"
 
-        android:layout_marginVertical="@dimen/_5sdp">
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -69,16 +70,16 @@
                 android:id="@+id/active_animation_img_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/active_animation_img"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:src="@drawable/active_animation_img"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 style="@style/textStyle_normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/active_animation"
                 app:layout_constraintBottom_toBottomOf="@+id/active_animation_img_id"
@@ -114,9 +115,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_active_animation"
-        app:strokeWidth="1dp"
         app:strokeColor="@color/dark_grey"
-        >
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -136,7 +136,7 @@
 
             <TextView
                 style="@style/textStyle_normal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/batteryPercentage"
@@ -165,16 +165,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
         android:background="@drawable/gradient_bg_card"
+        app:cardCornerRadius="@dimen/_15sdp"
         app:cardElevation="@dimen/_2sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_percentage_animation"
-        app:strokeWidth="1dp"
-        app:cardCornerRadius="@dimen/_15sdp"
-        android:layout_marginVertical="@dimen/_5sdp"
         app:strokeColor="@color/dark_grey"
-        >
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -186,15 +185,15 @@
                 android:id="@+id/double_tap_close_img_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/double_tap_close_img"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:src="@drawable/double_tap_close_img"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 style="@style/textStyle_normal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/double_tap_close_screen"
@@ -223,16 +222,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
         android:background="@drawable/gradient_bg_card"
+        app:cardCornerRadius="@dimen/_15sdp"
         app:cardElevation="@dimen/_2sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_double_tap_close"
-        app:strokeWidth="1dp"
-        app:cardCornerRadius="@dimen/_15sdp"
-        android:layout_marginVertical="@dimen/_5sdp"
         app:strokeColor="@color/dark_grey"
-        >
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -244,15 +242,15 @@
                 android:id="@+id/animation_duration_img_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/duration_animation_img"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:src="@drawable/duration_animation_img"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 style="@style/textStyle_normal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/animation_duration"
@@ -266,22 +264,21 @@
                 android:id="@+id/animation_duration_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:dropDownWidth="wrap_content"
+                android:entries="@array/spinner_items"
+                android:gravity="center_horizontal"
+                android:spinnerMode="dropdown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:drawSelectorOnTop="true"
-                android:entries="@array/spinner_items"/>
+                />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </com.google.android.material.card.MaterialCardView>
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

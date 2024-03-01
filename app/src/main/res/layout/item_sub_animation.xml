@@ -5,7 +5,7 @@
     app:strokeWidth="0dp"
     android:layout_width="@dimen/_120sdp"
     android:layout_height="@dimen/_120sdp"
-    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_15sdp"
     android:layout_margin="@dimen/_10sdp"
     android:background="@drawable/gradient_bg_reverse_card">
 

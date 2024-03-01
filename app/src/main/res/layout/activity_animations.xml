@@ -4,32 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AnimationsActivity"
-    android:background="@drawable/gradient_bg_layout">
+    android:background="@drawable/gradient_bg_layout"
+    tools:context=".Activities.AnimationsActivity">
 
 
-<ImageView
+    <ImageView
+        android:id="@+id/back_btn_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp"
         android:src="@drawable/back_btn_img"
-        android:id="@+id/back_btn_id"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/animation_title_id"
+        style="@style/textStyle_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/animation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/back_btn_id"
-        app:layout_constraintBottom_toBottomOf="@+id/back_btn_id"
-        style="@style/textStyle_normal"
         android:textSize="@dimen/_14sdp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/back_btn_id" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/animation_RV"
@@ -40,7 +41,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/animation_title_id" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

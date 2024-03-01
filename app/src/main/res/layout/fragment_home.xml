@@ -19,7 +19,7 @@
             android:layout_margin="@dimen/_10sdp"
             android:text="@string/welcome"
             android:textColor="@color/sea_green"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/welcome_header"
             app:layout_constraintTop_toBottomOf="@+id/welcome_header" />
 
@@ -50,9 +51,13 @@
             android:id="@+id/battery_percentage_id"
             app:layout_constraintStart_toStartOf="@id/battery_lottie_id_main"
             app:layout_constraintEnd_toEndOf="@+id/battery_lottie_id_main"
-            app:layout_constraintBottom_toTopOf="@+id/charging_status_id"
+            app:layout_constraintBottom_toBottomOf="@+id/battery_lottie_id_main"
+            app:layout_constraintTop_toTopOf="@+id/battery_lottie_id_main"
             android:layout_marginBottom="@dimen/_2sdp"
-            style="@style/textStyle_normal"/>
+            style="@style/textStyle_normal"
+            android:textColor="@color/sea_green"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/battery_lottie_id_main"
             app:strokeWidth="1dp"
             app:strokeColor="@color/dark_grey"
-            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardCornerRadius="@dimen/_18sdp"
             android:layout_marginVertical="@dimen/_5sdp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,20 +109,26 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:cardCornerRadius="@dimen/_60sdp">
 
-                    <RelativeLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/yellow"
-                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_5sdp">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textDirection="locale"
+                            android:textAlignment="viewStart"
                             android:text="@string/enable"
+
                             android:textStyle="bold" />
-                    </RelativeLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
 
@@ -129,9 +140,9 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_battery"
             app:strokeWidth="0dp"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
             app:layout_constraintTop_toBottomOf="@+id/card_enable"
             app:layout_constraintStart_toStartOf="@id/card_enable"
             app:layout_constraintEnd_toStartOf="@+id/card_walpaper"
@@ -173,13 +184,10 @@
                     android:id="@+id/animation_sub_TV"
                     android:text="@string/animation_sub"
                     style="@style/textStyle_normal"
-                    android:textSize="@dimen/_6sdp"
+                    android:textSize="@dimen/_8sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/animation_icon_id"
                     app:layout_constraintTop_toBottomOf="@+id/animation_TV"/>
-
-
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -188,9 +196,9 @@
             android:id="@+id/card_walpaper"
             app:strokeWidth="0dp"
             app:strokeColor="@color/transparent"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
             app:layout_constraintTop_toTopOf="@id/card_battery"
             app:layout_constraintStart_toEndOf="@+id/card_battery"
             app:layout_constraintEnd_toEndOf="@id/card_enable">
@@ -225,11 +233,11 @@
 
                 <TextView
                     android:id="@+id/walpaper_sub_TV"
-                    style="@style/textStyle_normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/walpaper_sub"
-                    android:textSize="@dimen/_6sdp"
+                    style="@style/textStyle_normal"
+                    android:textSize="@dimen/_8sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/walpaper_icon_id"
                     app:layout_constraintTop_toBottomOf="@+id/walpaper_TV" />
@@ -242,9 +250,9 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_create_new"
             app:strokeWidth="0dp"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
             app:layout_constraintTop_toBottomOf="@+id/card_battery"
             app:layout_constraintStart_toStartOf="@id/card_enable"
             app:layout_constraintEnd_toStartOf="@+id/card_walpaper"
@@ -286,14 +294,10 @@
                     android:id="@+id/create_new_sub_TV"
                     android:text="@string/create_sub"
                     style="@style/textStyle_normal"
-                    android:textSize="@dimen/_6sdp"
+                    android:textSize="@dimen/_8sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/create_new_icon_id"
                     app:layout_constraintTop_toBottomOf="@+id/create_new_TV"/>
-
-
-
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -301,9 +305,9 @@
             android:id="@+id/card_creation"
             app:strokeWidth="0dp"
             app:strokeColor="@color/transparent"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
             app:layout_constraintTop_toTopOf="@id/card_create_new"
             app:layout_constraintStart_toEndOf="@+id/card_create_new"
             app:layout_constraintEnd_toEndOf="@id/card_enable">
@@ -338,11 +342,11 @@
 
                 <TextView
                     android:id="@+id/creation_sub_TV"
-                    style="@style/textStyle_normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/creations_sub"
-                    android:textSize="@dimen/_6sdp"
+                    style="@style/textStyle_normal"
+                    android:textSize="@dimen/_8sdp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/creation_icon_id"
                     app:layout_constraintTop_toBottomOf="@+id/creation_TV" />

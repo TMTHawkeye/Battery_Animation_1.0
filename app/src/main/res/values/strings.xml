@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Battery Charging Animation</string>
+    <string name="app_name">Battery Animation</string>
     <string name="launcher_title">Battery Charging\nAnimation</string>
     <string name="welcome_title">Battery Charging Animation</string>
     <string name="title_settings">Settings</string>
@@ -92,10 +92,19 @@
     <string name="letsGo">Lets Go</string>
     <string name="alow_animation_permission">Allow permission to displaying Animation</string>
     <string name="allow">Allow</string>
+    <string name="exit">Exit</string>
+    <string name="wait">Wait</string>
+    <string name="exit_app_desc">Are you sure you want to leave the app?\nWould you like to rate our app?</string>
+    <string name="kindly_rate_our_application">Kindly Rate Our Application</string>
+    <string name="defaultnotificationccc">Battery Animation App</string>
+    <string name="languages">Languages</string>
+    <string name="done">Done</string>
+    <string name="select_language_title">Select Language</string>
+    <string name="english">English</string>
 
     <style name="textStyle_normal" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
         <item name="fontFamily">@font/inter_regulat</item>
     </style>
 
@@ -105,5 +114,7 @@
         <item>5 sec</item>
         <item>10 sec</item>
         <item>15 sec</item>
+        <item>Always</item>
+
     </string-array>
 </resources>

@@ -2,19 +2,27 @@ package com.example.batteryanimation.Activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -22,11 +30,14 @@ import com.example.batteryanimation.Fragments.BatteryFragment
 import com.example.batteryanimation.Fragments.HomeFragment
 import com.example.batteryanimation.Fragments.SettingsFragment
 import com.example.batteryanimation.HelperClasses.Constants
+import com.example.batteryanimation.HelperClasses.Constants.OVERLAY_PERMISSION_REQUEST_CODE
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.ModelClasses.SwitchStates
 import com.example.batteryanimation.R
 import com.example.batteryanimation.Services.BatteryService
 import com.example.batteryanimation.databinding.ActivityMainBinding
+import com.example.batteryanimation.databinding.CustomDialogExitAppBinding
+import com.example.batteryanimation.databinding.CustomDialogPermissionAnimationDisplayBinding
 import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
@@ -50,16 +61,14 @@ class MainActivity : AppCompatActivity() {
             )
             != PackageManager.PERMISSION_GRANTED
         ) {
-            // Permission is not granted
-            // Request the permission
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 STORAGE_PERMISSION_CODE
             )
         }
-        if (!hasOverlayPermission(this@MainActivity)) {
-            requestOverlayPermission(this@MainActivity, OVERLAY_PERMISSION_REQUEST_CODE)
+        if (!hasOverlayPermission()) {
+            showOverlayPermissionDialog()
         } else {
             if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
                 || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
@@ -70,9 +79,6 @@ class MainActivity : AppCompatActivity() {
                 startService()
             }
         }
-
-
-//        observeBatteryStatus()
 
         val selectedColor = ContextCompat.getColor(this, R.color.bottom_nav_icon_selected)
 
@@ -92,6 +98,12 @@ class MainActivity : AppCompatActivity() {
             ),
             intArrayOf(selectedColor, unselectedColor)
         )
+
+
+
+
+//        binding.bottomNav.itemBackground = ContextCompat.getDrawable(this, R.drawable.bottom_nav_item_background)
+
 
 
         binding.bottomNav.itemIconTintList = iconTintList
@@ -146,19 +158,53 @@ class MainActivity : AppCompatActivity() {
             override fun handleOnBackPressed() {
                 val currentFragment = getCurrentFragment()
                 if (currentFragment is HomeFragment) {
-                    finish()
+                    showExitDialog()
+//                    finish()
                 } else {
-                    binding.bottomNav.selectedItemId= R.id.home
+                    binding.bottomNav.selectedItemId = R.id.home
                     loadfragment(HomeFragment())
                 }
             }
         }
-
-        // Add the callback to the activity's OnBackPressedDispatcher
         this.onBackPressedDispatcher.addCallback(this, callback)
 
 
     }
+
+    private fun showExitDialog() {
+        val dialog_binding = CustomDialogExitAppBinding.inflate(layoutInflater)
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(dialog_binding.root)
+
+        val window: Window = dialog.window!!
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window.setGravity(Gravity.CENTER)
+
+        dialog.show()
+
+        dialog_binding.cardNo.setOnClickListener {
+//            prEvents("cancel_btn","cancel Button from exit dialog is pressed!")
+
+            dialog.dismiss()
+        }
+
+        dialog_binding.closeDialogId.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog_binding.cardYes.setOnClickListener {
+//            prEvents("exit_btn","exit Button from exit dialog is pressed!")
+
+            dialog.dismiss()
+//            finishAffinity()
+            finishAffinity()
+            System.exit(0);
+        }
+    }
+
 
     private fun getCurrentFragment(): Fragment? {
         return supportFragmentManager.findFragmentById(R.id.continerView)
@@ -186,60 +232,32 @@ class MainActivity : AppCompatActivity() {
     private var chargerConnectedDialog: Dialog? = null
     private var disconnectedDialog: Dialog? = null
 
-    /*  fun observeBatteryStatus() {
-  //        batteryInfoViewModel.isSwitchOn.observe(this@MainActivity, Observer { isSwitchOn ->
-  //            if (isSwitchOn) {
-                 *//* batteryInfoViewModel.batteryPercentage.observe(
-                     this@MainActivity,
-                     Observer { batteryPercentage ->
-                         if (batteryPercentage != null) {
-                             if (batteryPercentage >= 51) {
-                                 if (batteryFullDialog == null || !batteryFullDialog!!.isShowing) {
-                                     batteryFullDialog = showBatteryFullDialog()
-                                     batteryFullDialog?.show()
-                                 }
-                             } else if (batteryPercentage <= 20) {
-                                 if (batteryLowDialog == null || !batteryLowDialog!!.isShowing) {
-                                     batteryLowDialog = showBatteryLowDialog()
-                                     batteryLowDialog?.show()
-                                 }
-                             } else {
-                                 // Dismiss dialogs if not needed
-                                 batteryFullDialog?.dismiss()
-                                 batteryLowDialog?.dismiss()
-                             }
-                         }
-                     }
-                 )*//*
- //            }
- //        })
+    /*    fun requestOverlayPermission(activity: Activity, requestCode: Int) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + activity.packageName)
+                )
+                activity.startActivityForResult(intent, requestCode)
+            }
+        }*/
 
-         var wasCharging = batteryInfoViewModel.isCharging.value ?: false
+    private fun requestOverlayPermission() {
+        if (!hasOverlayPermission()) {
+            val intent =
+                Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+            startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
+        }
+    }
 
-         batteryInfoViewModel.isCharging.observe(this@MainActivity, Observer { newChargingState ->
-             if (newChargingState != null && newChargingState != wasCharging) {
-                 wasCharging = newChargingState
-                 if (newChargingState) {
-                     disconnectedDialog?.dismiss()
-                     if (chargerConnectedDialog == null || !chargerConnectedDialog!!.isShowing) {
-                         *//*chargerConnectedDialog = showChargerConnectedDialog()
-                         chargerConnectedDialog?.show()*//*
-                     }
-                 } else {
-                     chargerConnectedDialog?.dismiss()
-                     if (disconnectedDialog == null || !disconnectedDialog!!.isShowing) {
-                         *//*disconnectedDialog = showDisconnectedDialog()
-                         disconnectedDialog?.show()*//*
-                     }
-                 }
-             }
-         })
+    private fun showOverlayPermissionDialog() {
+//        val dialogView = layoutInflater.inflate(R.layout.custom_dialog_permission_animation_display, null)
+//        val dialog = AlertDialog.Builder(this)
+//            .setView(dialogView)
+//            .setCancelable(false)
+//            .create()
 
-     }*/
-
-
-    /*private fun showBatteryFullDialog() : Dialog{
-        val dialog_binding = CustomDialogBatteryFullBinding.inflate(layoutInflater)
+        val dialog_binding = CustomDialogPermissionAnimationDisplayBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -250,109 +268,25 @@ class MainActivity : AppCompatActivity() {
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         window.setGravity(Gravity.CENTER)
 
-        dialog_binding.closeDialogId.setOnClickListener {
-//            prEvents("cancel_btn","cancel Button from exit dialog is pressed!")
-            dialog.dismiss()
-        }
 
         dialog_binding.cardOk.setOnClickListener {
+            requestOverlayPermission()
             dialog.dismiss()
         }
 
-        return dialog
-
-
-    }*/
-
-    /*    private fun showChargerConnectedDialog(): Dialog {
-            val dialog_binding = CustomDialogChargerConnectedBinding.inflate(layoutInflater)
-            val dialog = Dialog(this)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
-            dialog.setContentView(dialog_binding.root)
-
-            val window: Window = dialog.window!!
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window.setGravity(Gravity.CENTER)
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                dialog.dismiss()
-            }, 5000)
-
-            dialog_binding.closeDialogId.setOnClickListener {
-                dialog.dismiss()
-            }
-            return dialog
-        }*/
-
-    /*  private fun showDisconnectedDialog(): Dialog {
-          val dialog_binding = CustomDialogChargerDisconnectedBinding.inflate(layoutInflater)
-          val dialog = Dialog(this)
-          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-          dialog.setCancelable(false)
-          dialog.setContentView(dialog_binding.root)
-
-          val window: Window = dialog.window!!
-          window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-          window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-          window.setGravity(Gravity.CENTER)
-          Handler(Looper.getMainLooper()).postDelayed({
-              dialog.dismiss()
-          }, 5000)
-
-          dialog_binding.closeDialogId.setOnClickListener {
-              dialog.dismiss()
-          }
-          return dialog
-      }*/
-
-    /* private fun showBatteryLowDialog():Dialog {
-         val dialog_binding = CustomDialogLowBatteryBinding.inflate(layoutInflater)
-         val dialog = Dialog(this)
-         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-         dialog.setCancelable(false)
-         dialog.setContentView(dialog_binding.root)
-
-         val window: Window = dialog.window!!
-         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-         window.setGravity(Gravity.CENTER)
-
-
-         dialog_binding.closeDialogId.setOnClickListener {
- //            prEvents("cancel_btn","cancel Button from exit dialog is pressed!")
-             dialog.dismiss()
-         }
-
-         dialog_binding.cardOk.setOnClickListener {
-             dialog.dismiss()
-         }
-
-         return dialog
-
-
-     }*/
-    fun requestOverlayPermission(activity: Activity, requestCode: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:" + activity.packageName)
-            )
-            activity.startActivityForResult(intent, requestCode)
-        }
+        dialog.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    /*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
-            if (hasOverlayPermission(this@MainActivity)) {
-                if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
-                    || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
-                    || switchStatesAnmations.isactiveAnimationSwitchOn
-                /* || switchStatesAnmations.isbatteryPercentageSwitchOn
-                 || switchStatesAnmations.isdouble_tap_closeSwitchOn*/
+            if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
+                if (hasOverlayPermission(this@MainActivity)) {
+                    if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
+                        || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
+                        || switchStatesAnmations.isactiveAnimationSwitchOn
+                    *//* || switchStatesAnmations.isbatteryPercentageSwitchOn
+                 || switchStatesAnmations.isdouble_tap_closeSwitchOn*//*
                 ) {
                     startService()
                 }
@@ -362,11 +296,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val OVERLAY_PERMISSION_REQUEST_CODE = 123
 
     fun hasOverlayPermission(context: Context): Boolean {
         return Settings.canDrawOverlays(context)
         return true
+    }*/
+
+
+    private fun hasOverlayPermission(): Boolean {
+        return Settings.canDrawOverlays(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
+            if (hasOverlayPermission()) {
+                // Permission granted, start your service or do any necessary action
+                startService()
+            } else {
+                showOverlayPermissionDialog()
+            }
+        }
     }
 
     fun getSwitchStates(): SwitchStates {
@@ -405,14 +356,23 @@ class MainActivity : AppCompatActivity() {
         return Gson().fromJson(switchStateString, AnimationSwitchStates::class.java)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this@MainActivity, "Read permission granted!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Read permission granted!!", Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                Toast.makeText(this@MainActivity, "Read permission not granted!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "Read permission not granted!!",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
         }

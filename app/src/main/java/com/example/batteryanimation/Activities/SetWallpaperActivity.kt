@@ -14,7 +14,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.batteryanimation.BroadCastReceivers.BootReceiver
@@ -174,7 +173,10 @@ class SetWallpaperActivity : AppCompatActivity() {
             val drawable = loadImageAsync(folderName + animationId)
             binding.selectedWallpaperId.setImageDrawable(drawable)
         }
+
     }
+
+
 
     private fun getBatteryPercentageFromSharedPreference(): Int {
         // Use a specific shared preference file named "battery_preference_file"

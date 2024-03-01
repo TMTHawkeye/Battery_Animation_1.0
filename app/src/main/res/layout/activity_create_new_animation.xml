@@ -24,8 +24,9 @@
         android:id="@+id/back_btn_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"/>
 
     <TextView
         android:id="@+id/newcreate_title_id"
@@ -104,15 +105,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/choose_color"
-        android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginVertical="@dimen/_2sdp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/gradient_bg_layout">
 
-        <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fonts_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_3sdp"/>
+            android:padding="@dimen/_3sdp"
+            android:background="@drawable/gradient_bg_layout"/>
 
     </LinearLayout>
 
@@ -123,7 +126,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/constrain_tools_id"
-        android:id="@+id/choose_color"/>
+        android:id="@+id/choose_color"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textDirection="locale"
+        android:textStyle="bold"/>
 
 
 

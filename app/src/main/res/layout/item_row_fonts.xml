@@ -11,8 +11,8 @@
             android:text="Abc"
             style="@style/textStyle_normal"
             android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="@dimen/_5sdp"
-            android:layout_marginVertical="@dimen/_2sdp"/>
+            android:layout_marginHorizontal="@dimen/_7sdp"
+            android:layout_marginVertical="@dimen/_5sdp"/>
 
 
 </RelativeLayout>

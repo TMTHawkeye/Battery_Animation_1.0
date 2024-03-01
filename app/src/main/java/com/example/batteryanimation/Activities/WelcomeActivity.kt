@@ -3,6 +3,7 @@ package com.example.batteryanimation.Activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.airbnb.lottie.LottieDrawable
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivityWelcomeBinding
@@ -33,6 +34,13 @@ class WelcomeActivity : AppCompatActivity() , CoroutineScope {
                 startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
             }
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finishAffinity()
+            }
+
+        })
 
     }
 }

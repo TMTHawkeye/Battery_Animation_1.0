@@ -99,13 +99,7 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
                 .show()
         })
 
-        binding.constrainPreviewId.setOnClickListener {
-            setPreviewVisibilities()
-        }
 
-        binding.undoPreviewId.setOnClickListener {
-            undoPreviewVisibilities()
-        }
 
         binding.doneId.setOnClickListener {
 //            val createdWallpaperModel = CreatedWallpaperModel(
@@ -207,6 +201,14 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
             currentDateLiveData.observe(this, Observer { date ->
                 binding.dateTV.text = date
             })
+
+            binding.constrainPreviewId.setOnClickListener {
+                setPreviewVisibilities()
+            }
+
+            binding.undoPreviewId.setOnClickListener {
+                undoPreviewVisibilities()
+            }
         }
     }
 

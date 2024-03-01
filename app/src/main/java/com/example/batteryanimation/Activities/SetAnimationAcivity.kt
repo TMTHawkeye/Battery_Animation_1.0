@@ -1,32 +1,22 @@
 package com.example.batteryanimation.Activities
 
-import android.app.Dialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowInsets
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieDrawable
 import com.example.batteryanimation.BroadCastReceivers.BootReceiver
 import com.example.batteryanimation.HelperClasses.Constants
-import com.example.batteryanimation.HelperClasses.getBatteryPercentage
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
 import com.example.batteryanimation.Interfaces.DoubleClickListener
@@ -34,12 +24,8 @@ import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivitySetAnimationAcivityBinding
-import com.example.batteryanimation.databinding.CustomDialogChargerConnectedBinding
-import com.example.batteryanimation.databinding.CustomDialogChargerDisconnectedBinding
 import com.google.gson.Gson
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+
 
 class SetAnimationAcivity : AppCompatActivity() {
     lateinit var binding: ActivitySetAnimationAcivityBinding
@@ -194,7 +180,23 @@ class SetAnimationAcivity : AppCompatActivity() {
             startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
             finish()
         }
+//        getColorOfImageview()
+
     }
+
+  /*  fun getColorOfImageview(){
+        val drawable: Drawable = binding.animationId.drawable
+
+        var color = resources.getColor(android.R.color.white)
+
+        if (drawable != null) {
+            color = Utils.getColorFromDrawable(drawable)
+        }
+
+        binding.timeTV.setTextColor(color)
+        binding.dateTV.setTextColor(color)
+
+    }*/
 
 
     private fun getBatteryPercentageFromSharedPreference(): Int {
@@ -220,56 +222,6 @@ class SetAnimationAcivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putString("intent", "animation")
         editor.apply()
-    }
-
-
-
-
-
-
-
-
-    private fun showChargerConnectedDialog(): Dialog {
-        val dialog_binding = CustomDialogChargerConnectedBinding.inflate(layoutInflater)
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(dialog_binding.root)
-
-        val window: Window = dialog.window!!
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setGravity(Gravity.CENTER)
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            dialog.dismiss()
-        }, 5000)
-
-        dialog_binding.closeDialogId.setOnClickListener {
-            dialog.dismiss()
-        }
-        return dialog
-    }
-
-    private fun showDisconnectedDialog(): Dialog {
-        val dialog_binding = CustomDialogChargerDisconnectedBinding.inflate(layoutInflater)
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(dialog_binding.root)
-
-        val window: Window = dialog.window!!
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setGravity(Gravity.CENTER)
-        Handler(Looper.getMainLooper()).postDelayed({
-            dialog.dismiss()
-        }, 5000)
-
-        dialog_binding.closeDialogId.setOnClickListener {
-            dialog.dismiss()
-        }
-        return dialog
     }
 
     private fun updateCurrentTime() {

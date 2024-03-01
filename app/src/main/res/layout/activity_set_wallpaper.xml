@@ -29,8 +29,9 @@
         android:id="@+id/back_btn_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"/>
 
     <TextView
         android:id="@+id/set_wallpaper_title_id"
@@ -183,6 +184,7 @@
                 android:paddingVertical="@dimen/_5sdp">
 
                 <TextView
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
