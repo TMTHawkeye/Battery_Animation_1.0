@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -87,7 +88,21 @@ class SetCreatedAnimationActivity : AppCompatActivity() {
             binding.setMydesignTitleId.visibility = View.VISIBLE
             animationId = intent.getIntExtra("selected_wallpaper_position", 0)
             val imagePath = getPathFromPreference(animationId ?: 0)
-            Glide.with(this).load(imagePath).into(binding.selectedWallpaperId)
+            if (imagePath.equals("default_custom_img")) {
+                try {
+                    Glide.with(this@SetCreatedAnimationActivity).load(getDrawable(R.drawable.default_custom_img))
+                        .into(binding.selectedWallpaperId)
+                } catch (e: Exception) {
+                    Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+                }
+            }else {
+                try {
+                    Glide.with(this).load(imagePath).into(binding.selectedWallpaperId)
+                }
+                catch(e:Exception){
+                    Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+                }
+            }
 
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
@@ -100,7 +115,21 @@ class SetCreatedAnimationActivity : AppCompatActivity() {
             binding.setMydesignTitleId.visibility = View.GONE
             animationId = getCreationState()
             val imagePath = getPathFromPreference(animationId ?: 0)
-            Glide.with(this).load(imagePath).into(binding.selectedWallpaperId)
+            if (imagePath.equals("default_custom_img")) {
+                try {
+                    Glide.with(this@SetCreatedAnimationActivity).load(getDrawable(R.drawable.default_custom_img))
+                        .into(binding.selectedWallpaperId)
+                } catch (e: Exception) {
+                    Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+                }
+            }
+            else{
+                try{
+                    Glide.with(this).load(imagePath).into(binding.selectedWallpaperId)
+                } catch (e: Exception) {
+                    Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+                }
+            }
 
             binding.timeTV.visibility = View.VISIBLE
             binding.dateTV.visibility = View.VISIBLE
@@ -182,9 +211,11 @@ class SetCreatedAnimationActivity : AppCompatActivity() {
 
             binding.timeTV.typeface = typeface
             binding.dateTV.typeface = typeface
+            binding.batteryPercentageId.typeface = typeface
 
             binding.timeTV.setTextColor(createdWallpaperModel.color ?: 0)
             binding.dateTV.setTextColor(createdWallpaperModel.color ?: 0)
+            binding.batteryPercentageId.setTextColor(createdWallpaperModel.color ?: 0)
 
             Glide.with(this@SetCreatedAnimationActivity)
                 .load(createdWallpaperModel.imagePath)

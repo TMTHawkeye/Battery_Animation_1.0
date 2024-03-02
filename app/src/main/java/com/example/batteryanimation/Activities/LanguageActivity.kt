@@ -48,6 +48,8 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
         })
 
         binding.backBtnId.setOnClickListener {
+            prEvents("backBtnId","Back btn switch from LanguageActivity is pressed!")
+
             if (isFirstTimeLaunch()) {
                 finishAffinity()
             } else {
@@ -56,6 +58,8 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
         }
 
         binding.doneBtn.setOnClickListener {
+            prEvents("doneBtn","Done btn switch from LanguageActivity is pressed!")
+
             if (adapter.savedPosition != -1) {
                 Paper.book().write<Int?>("LANG_POS", selectedPosition)
 

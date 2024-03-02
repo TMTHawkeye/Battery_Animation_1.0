@@ -31,6 +31,7 @@ import com.example.batteryanimation.Fragments.HomeFragment
 import com.example.batteryanimation.Fragments.SettingsFragment
 import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.HelperClasses.Constants.OVERLAY_PERMISSION_REQUEST_CODE
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
 import com.example.batteryanimation.ModelClasses.SwitchStates
 import com.example.batteryanimation.R
@@ -186,20 +187,21 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
 
         dialog_binding.cardNo.setOnClickListener {
-//            prEvents("cancel_btn","cancel Button from exit dialog is pressed!")
+            prEvents("cardNo","No btn switch from Exit Dialog is pressed!")
 
             dialog.dismiss()
         }
 
         dialog_binding.closeDialogId.setOnClickListener {
+            prEvents("closeDialogId","Close btn switch from Exit Dialog is pressed!")
+
             dialog.dismiss()
         }
 
         dialog_binding.cardYes.setOnClickListener {
-//            prEvents("exit_btn","exit Button from exit dialog is pressed!")
+            prEvents("cardYes","Yes btn switch from Exit Dialog is pressed!")
 
             dialog.dismiss()
-//            finishAffinity()
             finishAffinity()
             System.exit(0);
         }
@@ -227,21 +229,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private var batteryFullDialog: Dialog? = null
-    private var batteryLowDialog: Dialog? = null
-    private var chargerConnectedDialog: Dialog? = null
-    private var disconnectedDialog: Dialog? = null
-
-    /*    fun requestOverlayPermission(activity: Activity, requestCode: Int) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + activity.packageName)
-                )
-                activity.startActivityForResult(intent, requestCode)
-            }
-        }*/
-
     private fun requestOverlayPermission() {
         if (!hasOverlayPermission()) {
             val intent =
@@ -251,12 +238,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showOverlayPermissionDialog() {
-//        val dialogView = layoutInflater.inflate(R.layout.custom_dialog_permission_animation_display, null)
-//        val dialog = AlertDialog.Builder(this)
-//            .setView(dialogView)
-//            .setCancelable(false)
-//            .create()
-
         val dialog_binding = CustomDialogPermissionAnimationDisplayBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -276,33 +257,6 @@ class MainActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
-    /*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-
-            if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
-                if (hasOverlayPermission(this@MainActivity)) {
-                    if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
-                        || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
-                        || switchStatesAnmations.isactiveAnimationSwitchOn
-                    *//* || switchStatesAnmations.isbatteryPercentageSwitchOn
-                 || switchStatesAnmations.isdouble_tap_closeSwitchOn*//*
-                ) {
-                    startService()
-                }
-            }
-        } else {
-            Toast.makeText(this@MainActivity, "Permission not granted!!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
-    fun hasOverlayPermission(context: Context): Boolean {
-        return Settings.canDrawOverlays(context)
-        return true
-    }*/
-
-
     private fun hasOverlayPermission(): Boolean {
         return Settings.canDrawOverlays(this)
     }
@@ -312,7 +266,6 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
             if (hasOverlayPermission()) {
-                // Permission granted, start your service or do any necessary action
                 startService()
             } else {
                 showOverlayPermissionDialog()

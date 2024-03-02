@@ -19,6 +19,7 @@ import com.example.batteryanimation.BroadCastReceivers.BootReceiver
 import com.example.batteryanimation.HelperClasses.Constants
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.Interfaces.DoubleClickListener
 import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.ModelClasses.AnimationSwitchStates
@@ -44,35 +45,26 @@ class SetAnimationAcivity : AppCompatActivity() {
         updateCurrentTime()
         updateCurrentDate()
 
-
         currentTimeLiveData.observe(this, Observer { time ->
             binding.timeTV.text = time
         })
 
-        // Observe current date
         currentDateLiveData.observe(this, Observer { date ->
             binding.dateTV.text = date
         })
 
-
-
         binding.previewAnimationId.setOnTouchListener { view, motionEvent ->
+            prEvents("previewAnimationId","Preview btn  from SetAnimation is pressed!")
+
             when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    // When pressed
                     binding.backBtnId.visibility = View.GONE
                     binding.setAnimationTitleId.visibility = View.GONE
                     binding.animationsOptionsConstrain.visibility = View.GONE
                     binding.timeTV.visibility = View.VISIBLE
                     binding.dateTV.visibility = View.VISIBLE
-//                    binding.timeTV.text = getCurrentTime()
-//                    binding.dateTV.text = getCurrentDateFormatted()
-
-
-
                 }
                 MotionEvent.ACTION_UP -> {
-                    // When released
                     binding.backBtnId.visibility = View.VISIBLE
                     binding.setAnimationTitleId.visibility = View.VISIBLE
                     binding.animationsOptionsConstrain.visibility = View.VISIBLE
@@ -84,23 +76,10 @@ class SetAnimationAcivity : AppCompatActivity() {
         }
 
         binding.backBtnId.setOnClickListener {
-//            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+            prEvents("backBtnId","Back btn  from SetAnimation is pressed!")
+
             finish()
         }
-
-
-/*//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-////                prEvents("back_btn","back Button from main activity is pressed and exit dialog is showed!")
-//                if (subintentFrom.equals("From_Adapter")) {
-//                    startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
-//                    finish()
-//                } else {
-////                    finishAffinity()
-//                }
-//            }
-//
-//        })*/
     }
 
     override fun onResume() {
@@ -158,7 +137,6 @@ class SetAnimationAcivity : AppCompatActivity() {
             filter.addAction(Intent.ACTION_POWER_CONNECTED)
             filter.addAction(Intent.ACTION_POWER_DISCONNECTED)
             filter.addAction(Intent.ACTION_BATTERY_CHANGED)
-//        filter.addAction(Intent.ACTION_TIME_TICK)
             registerReceiver(batteryBoardcastReciver, filter)
 
         }
@@ -180,29 +158,9 @@ class SetAnimationAcivity : AppCompatActivity() {
             startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
             finish()
         }
-//        getColorOfImageview()
-
     }
-
-  /*  fun getColorOfImageview(){
-        val drawable: Drawable = binding.animationId.drawable
-
-        var color = resources.getColor(android.R.color.white)
-
-        if (drawable != null) {
-            color = Utils.getColorFromDrawable(drawable)
-        }
-
-        binding.timeTV.setTextColor(color)
-        binding.dateTV.setTextColor(color)
-
-    }*/
-
-
     private fun getBatteryPercentageFromSharedPreference(): Int {
-        // Use a specific shared preference file named "battery_preference_file"
         val sharedPreferences: SharedPreferences = getSharedPreferences(Constants.BATTERY_PREFERENCE_FILE, Context.MODE_PRIVATE)
-        // Retrieve the battery percentage from shared preferences
         return sharedPreferences.getInt("battery_percentage", 0)
     }
 
@@ -226,7 +184,6 @@ class SetAnimationAcivity : AppCompatActivity() {
 
     private fun updateCurrentTime() {
         currentTimeLiveData.value = getCurrentTime()
-        // Schedule next update after 1 minute
         Handler(Looper.getMainLooper()).postDelayed({
             updateCurrentTime()
         }, 1000)
@@ -260,12 +217,6 @@ class SetAnimationAcivity : AppCompatActivity() {
         super.onPause()
         stopFinishHandler()
     }
-
-  /*  private fun getAnimationDuration(): Long {
-        val sharedPreferences = getSharedPreferences("AnimationState", Context.MODE_PRIVATE)
-        return sharedPreferences.getLong("animationDuration", 0)
-    }*/
-
     private fun startFinishHandler() {
         finishHandler = Handler(Looper.getMainLooper())
         finishHandler?.postDelayed({
@@ -277,7 +228,4 @@ class SetAnimationAcivity : AppCompatActivity() {
         finishHandler?.removeCallbacksAndMessages(null)
         finishHandler = null
     }
-
-
-
 }

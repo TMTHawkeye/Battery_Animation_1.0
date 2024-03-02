@@ -16,6 +16,7 @@ import com.example.batteryanimation.Activities.CreatedAnimationsActivity
 import com.example.batteryanimation.Activities.SetCreatedAnimationActivity
 import com.example.batteryanimation.Interfaces.NoDataCallBack
 import com.example.batteryanimation.ModelClasses.CreatedWallpaperModel
+import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.CustomDialogDeleteImageBinding
 import com.example.batteryanimation.databinding.CustomDialogSaveCreationBinding
 import com.example.batteryanimation.databinding.ItemCreatedWallpaperBinding
@@ -26,30 +27,40 @@ class CreatedAnimationsAdapter(
     val createdWallpaperList: ArrayList<CreatedWallpaperModel>?,
     val noDataCallBack: NoDataCallBack
 ) : RecyclerView.Adapter<CreatedAnimationsAdapter.viewHolder>() {
-    lateinit var binding:ItemCreatedWallpaperBinding
+    lateinit var binding: ItemCreatedWallpaperBinding
 
-    inner class viewHolder(val binding: ItemCreatedWallpaperBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class viewHolder(val binding: ItemCreatedWallpaperBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        binding=ItemCreatedWallpaperBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        binding =
+            ItemCreatedWallpaperBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return viewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return createdWallpaperList?.size?:0
+        return createdWallpaperList?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         val wallpaperModel = createdWallpaperList?.get(position)
 
         wallpaperModel?.let {
-            try {
-
-                Glide.with(ctxt)
-                    .load(wallpaperModel.imagePath)
-                    .into(holder.binding.imageItemId)
-            } catch (e: Exception) {
-                Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+            if (wallpaperModel.imagePath.equals("default_custom_img")) {
+                try {
+                    Glide.with(ctxt).load(ctxt.getDrawable(R.drawable.default_custom_img))
+                        .into(holder.binding.imageItemId)
+                } catch (e: Exception) {
+                    Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+                }
+            } else {
+                try {
+                    Glide.with(ctxt)
+                        .load(wallpaperModel.imagePath)
+                        .into(holder.binding.imageItemId)
+                } catch (e: Exception) {
+                    Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
+                }
             }
 
 

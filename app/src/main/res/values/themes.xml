@@ -12,6 +12,7 @@
     <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/rating_selector</item>
         <item name="android:minHeight">15dip</item>
+
         <item name="android:maxHeight">47dip</item>
     </style>
 

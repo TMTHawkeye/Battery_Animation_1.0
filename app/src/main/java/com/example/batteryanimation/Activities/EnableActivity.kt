@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.R
 import com.example.batteryanimation.ViewModels.AnimationViewModel
 import com.example.batteryanimation.ViewModels.BatteryInfoViewModel
@@ -31,14 +32,20 @@ class EnableActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener{
         })
 
         binding.activeAnimationSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("activeAnimationSwitch","Active animation switch from CreateNewAnimationActivity is pressed!")
+
             animationViewModel.updateSwitchState("activeAnimation", isChecked)
         }
 
         binding.percentageSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("percentageSwitch","Percentage Switch from CreateNewAnimationActivity is pressed!")
+
             animationViewModel.updateSwitchState("batteryPercentage", isChecked)
         }
 
         binding.doubleTapCloseSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("doubleTapCloseSwitch","Double tap close switch from CreateNewAnimationActivity is pressed!")
+
             animationViewModel.updateSwitchState("double_tap_close", isChecked)
         }
         binding.animationDurationSpinner.setSelection(0)

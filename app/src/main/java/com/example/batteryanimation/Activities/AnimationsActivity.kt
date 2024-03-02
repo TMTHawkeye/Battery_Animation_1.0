@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.batteryanimation.Adapters.AnimationAdapter
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.ModelClasses.CategoryModel
 import com.example.batteryanimation.R
 import com.example.batteryanimation.databinding.ActivityAnimationsBinding
@@ -11,18 +12,15 @@ import com.example.batteryanimation.databinding.ActivityAnimationsBinding
 class AnimationsActivity : AppCompatActivity() {
     lateinit var binding:ActivityAnimationsBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.backBtnId.setOnClickListener {
+            prEvents("backBtnId","Back Button from Animation Activity is pressed!")
             finish()
         }
-
-
-
     }
 
     private fun setUpAdapter(animationsList: ArrayList<CategoryModel>) {

@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.CreateNewAnimationActivity"
-    android:background="@drawable/gradient_bg_layout">
+    android:background="@color/transparent">
 
     <ImageView
         android:id="@+id/selected_img_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
+        android:src="@drawable/default_custom_img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

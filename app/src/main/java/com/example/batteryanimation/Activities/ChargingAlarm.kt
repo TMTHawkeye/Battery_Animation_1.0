@@ -3,6 +3,7 @@ package com.example.batteryanimation.Activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.ViewModels.BatteryInfoViewModel
 import com.example.batteryanimation.databinding.ActivityChargingAlarmBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,15 +27,23 @@ class ChargingAlarm : AppCompatActivity() {
 
         // Set up listeners for switch state changes
         binding.lowBatterySwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("lowBatterySwitch","Low battery Switch from ChargingAlarm is pressed!")
+
             batteryInfoViewModel.updateSwitchState("low_battery", isChecked)
         }
         binding.fullBatterySwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("fullBatterySwitch","Full battery Switch from ChargingAlarm is pressed!")
+
             batteryInfoViewModel.updateSwitchState("full_battery", isChecked)
         }
         binding.chargerConnectSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("chargerConnectSwitch","Charger Connect Switch from ChargingAlarm is pressed!")
+
             batteryInfoViewModel.updateSwitchState("charger_connect", isChecked)
         }
         binding.chargerDisconnectSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prEvents("chargerDisconnectSwitch","Charger disconnect Switch from ChargingAlarm is pressed!")
+
             batteryInfoViewModel.updateSwitchState("charger_disconnect", isChecked)
         }
 

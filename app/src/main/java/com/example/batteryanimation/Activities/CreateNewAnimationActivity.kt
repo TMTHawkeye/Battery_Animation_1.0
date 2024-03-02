@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide
 import com.example.batteryanimation.Adapters.FontsAdapter
 import com.example.batteryanimation.HelperClasses.getCurrentDateFormatted
 import com.example.batteryanimation.HelperClasses.getCurrentTime
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.Interfaces.FontCallback
 import com.example.batteryanimation.ModelClasses.CreatedWallpaperModel
 import com.example.batteryanimation.R
@@ -77,6 +78,8 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
 
 
         binding.chooseColor.setOnClickListener(View.OnClickListener {
+            prEvents("chooseColor","Choose Color button from CreateNewAnimationActivity is pressed!")
+
             ColorPickerDialog.Builder(this@CreateNewAnimationActivity)
                 .setColorShape(ColorShape.CIRCLE)
                 .setDefaultColor(R.color.white)
@@ -102,27 +105,39 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
 
 
         binding.doneId.setOnClickListener {
-//            val createdWallpaperModel = CreatedWallpaperModel(
-//                binding.timeTV.typeface,
-//                binding.timeTV.currentTextColor,
-//                binding.selectedImgId.drawable.toBitmap()
-//            )
-//
-//            val wallpaperModels: ArrayList<CreatedWallpaperModel>? =
-//                Paper.book().read("wallpaperModels", ArrayList())
-//
-//            wallpaperModels?.add(createdWallpaperModel)
-//
-//            Paper.book().write("wallpaperModels", wallpaperModels?:ArrayList())
+            prEvents("doneId","Done button from CreateNewAnimationActivity is pressed!")
 
-//            startActivity(Intent(this@CreateNewAnimationActivity, CreatedAnimationsActivity::class.java))
             showSaveCreationDialog().show()
 
         }
 
         binding.backBtnId.setOnClickListener {
+            prEvents("doneId","Done button from CreateNewAnimationActivity is pressed!")
+
             finish()
         }
+
+        binding.constrainPreviewId.setOnClickListener {
+            prEvents("constrainPreviewId","Preview button from CreateNewAnimationActivity is pressed!")
+
+            setPreviewVisibilities()
+        }
+
+        binding.undoPreviewId.setOnClickListener {
+            prEvents("undoPreviewId","Undo Preview button from CreateNewAnimationActivity is pressed!")
+
+            undoPreviewVisibilities()
+        }
+
+        binding.doneId.visibility = View.VISIBLE
+
+        currentTimeLiveData.observe(this, Observer { time ->
+            binding.timeTV.text = time
+        })
+
+        currentDateLiveData.observe(this, Observer { date ->
+            binding.dateTV.text = date
+        })
 
     }
 
@@ -142,6 +157,12 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
 
 
          dialog_binding.cardOk.setOnClickListener {
+             if(selectedImagePath==null){
+                 val drawableResourceId = R.drawable.default_custom_img
+                 val drawableResourceName = resources.getResourceEntryName(drawableResourceId)
+                 selectedImagePath=drawableResourceName
+                 Log.d("TAG_path", "showSaveCreationDialog: $selectedImagePath")
+             }
              val createdWallpaperModel = CreatedWallpaperModel(
                  fontPath,
                  binding.timeTV.currentTextColor,
@@ -189,26 +210,10 @@ class CreateNewAnimationActivity : AppCompatActivity(), FontCallback {
             val selectedImageUri = data.data
             selectedImagePath = selectedImageUri?.toString()
 
-            binding.doneId.visibility = View.VISIBLE
             Glide.with(this)
                 .load(selectedImageUri)
                 .into(binding.selectedImgId)
 
-            currentTimeLiveData.observe(this, Observer { time ->
-                binding.timeTV.text = time
-            })
-
-            currentDateLiveData.observe(this, Observer { date ->
-                binding.dateTV.text = date
-            })
-
-            binding.constrainPreviewId.setOnClickListener {
-                setPreviewVisibilities()
-            }
-
-            binding.undoPreviewId.setOnClickListener {
-                undoPreviewVisibilities()
-            }
         }
     }
 

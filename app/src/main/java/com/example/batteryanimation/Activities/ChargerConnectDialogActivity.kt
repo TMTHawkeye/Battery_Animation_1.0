@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.batteryanimation.HelperClasses.Constants
+import com.example.batteryanimation.HelperClasses.prEvents
 import com.example.batteryanimation.Interfaces.OnStateCharge
 import com.example.batteryanimation.ModelClasses.SwitchStates
 import com.example.batteryanimation.R
@@ -22,6 +23,8 @@ class ChargerConnectDialogActivity : AppCompatActivity(),OnStateCharge {
 
 
         binding.closeDialogId.setOnClickListener {
+            prEvents("closeDialogId","Close Button from Charger Connected Dialog is pressed!")
+
             finish()
         }
 

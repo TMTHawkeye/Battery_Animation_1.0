@@ -1,6 +1,7 @@
 package com.example.batteryanimation.Fragments
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -65,6 +66,11 @@ class SettingsFragment : Fragment() {
             prEvents("feedback_btn","Feedback Button from settings fragment is pressed!")
 
             feedBack(4f)
+        }
+
+        binding.linearMoreapps.setOnClickListener {
+            prEvents("moreapps_btn","More Apps Button from settings fragment is pressed!")
+            moreApps()
         }
 
         return binding.root
@@ -243,6 +249,14 @@ class SettingsFragment : Fragment() {
         }
 
 
+    }
+
+    private fun moreApps(){
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=%22alawraq+studio%22&c=apps&hl=en&gl=US&pli=1")))
+        } catch (e: ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=%22alawraq+studio%22&c=apps&hl=en&gl=US&pli=1")))
+        }
     }
 
 
