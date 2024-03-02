@@ -1,0 +1,78 @@
+package com.batterycharging.animation.chargingeffect.Fragments
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import com.airbnb.lottie.LottieDrawable
+import com.batterycharging.animation.chargingeffect.Activities.AnimationsActivity
+import com.batterycharging.animation.chargingeffect.Activities.CreateNewAnimationActivity
+import com.batterycharging.animation.chargingeffect.Activities.CreatedAnimationsActivity
+import com.batterycharging.animation.chargingeffect.Activities.EnableActivity
+import com.batterycharging.animation.chargingeffect.Activities.WallpaperActivity
+import com.batterycharging.animation.chargingeffect.R
+import com.batterycharging.animation.chargingeffect.ViewModels.BatteryInfoViewModel
+import com.batterycharging.animation.chargingeffect.databinding.FragmentHomeBinding
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
+
+class HomeFragment : Fragment() {
+    lateinit var binding: FragmentHomeBinding
+    val batteryInfoViewModel: BatteryInfoViewModel by sharedViewModel()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding=FragmentHomeBinding.inflate(layoutInflater,container,false)
+        binding.batteryLottieIdMain.repeatCount = LottieDrawable.INFINITE
+        binding.batteryLottieIdMain.playAnimation()
+        getBatteryInfo()
+
+        binding.cardBattery.setOnClickListener {
+            startActivity(Intent(requireContext(), AnimationsActivity::class.java))
+        }
+
+        binding.cardWalpaper.setOnClickListener {
+            startActivity(Intent(requireContext(), WallpaperActivity::class.java))
+        }
+
+        binding.cardCreateNew.setOnClickListener {
+            startActivity(Intent(requireContext(), CreateNewAnimationActivity::class.java))
+        }
+
+        binding.cardCreation.setOnClickListener {
+            startActivity(Intent(requireContext(), CreatedAnimationsActivity::class.java))
+        }
+
+        binding.enableAnimationCardId.setOnClickListener {
+            startActivity(Intent(requireContext(), EnableActivity::class.java))
+        }
+
+
+        return binding.root
+    }
+
+    fun getBatteryInfo(){
+        batteryInfoViewModel.batteryPercentage.observe(viewLifecycleOwner, Observer { batteryPercentage ->
+            binding.batteryPercentageId.text=batteryPercentage.toString()+"%"
+        })
+
+        batteryInfoViewModel.isCharging.observe(viewLifecycleOwner, Observer { isCharging ->
+            if(isCharging){
+                binding.chargingStatusId.text=requireContext().getString(R.string.connected)
+            }
+            else{
+                binding.chargingStatusId.text=requireContext().getString(R.string.disconnect)
+
+            }
+        })
+
+    }
+
+
+
+}

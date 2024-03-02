@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:background="@drawable/gradient_bg_layout"
-    tools:context=".Activities.MainActivity">
+    tools:context="com.batterycharging.animation.chargingeffect.Activities.MainActivity">
 
 <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--        android:layout_width="match_parent"-->
@@ -25,24 +25,24 @@
             app:layout_constraintTop_toTopOf="parent"
             android:paddingBottom="@dimen/_5sdp"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_Nav"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/bottom_nevigation_background"
-            android:paddingTop="@dimen/_5sdp"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/continerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav"
-            app:itemTextColor="@color/theme"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_Nav"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bottom_nevigation_background"
+        android:paddingTop="@dimen/_5sdp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav"
+        />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--    <com.google.android.material.navigation.NavigationView-->
 <!--        android:id="@+id/navigation_view"-->

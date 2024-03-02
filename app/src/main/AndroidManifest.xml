@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MainApplication"
+        android:name="com.batterycharging.animation.chargingeffect.MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,63 +20,63 @@
         android:theme="@style/Theme.BatteryAnimation"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.BaseActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.LanguageActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.LanguageActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.WelcomeActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.WelcomeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.GuideScreenActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.GuideScreenActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:supportsRtl="true"
             />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:supportsRtl="true"
             />
         <activity
-            android:name=".Activities.SetCreatedAnimationActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.SetCreatedAnimationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.CreatedAnimationsActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.CreatedAnimationsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.CreateNewAnimationActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.CreateNewAnimationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChargerDisconnectDialogActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.ChargerDisconnectDialogActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChargerConnectDialogActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.ChargerConnectDialogActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.BatteryLowDialogActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.BatteryLowDialogActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.BatteryFullDialogActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.BatteryFullDialogActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <receiver
-            android:name=".BroadCastReceivers.BootReceiver"
+            android:name="com.batterycharging.animation.chargingeffect.BroadCastReceivers.BootReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".Services.BatteryService"
+            android:name="com.batterycharging.animation.chargingeffect.Services.BatteryService"
             android:exported="false">
 
             <!-- <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" -->
@@ -86,7 +86,7 @@
             <!-- android:foregroundServiceType="specialUse" -->
         </service>
         <service
-            android:name=".FireBaseMessage"
+            android:name="com.batterycharging.animation.chargingeffect.FireBaseMessage"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -94,40 +94,40 @@
         </service>
 
         <activity
-            android:name=".Activities.MyCreationActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.MyCreationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChargingAlarm"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.ChargingAlarm"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.SetWallpaperActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.SetWallpaperActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.WallpaperActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.WallpaperActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.SetAnimationAcivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.SetAnimationAcivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.SubAnimationActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.SubAnimationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.AnimationsActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.AnimationsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.EnableActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.EnableActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.LauncherScreenActivity"
+            android:name="com.batterycharging.animation.chargingeffect.Activities.LauncherScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

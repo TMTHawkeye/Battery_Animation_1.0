@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg_layout"
-    tools:context=".Activities.AnimationsActivity">
+    tools:context="com.batterycharging.animation.chargingeffect.Activities.AnimationsActivity">
 
 
     <ImageView
@@ -36,7 +36,7 @@
         android:id="@+id/animation_RV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

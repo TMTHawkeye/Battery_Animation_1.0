@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.HomeFragment">
+    tools:context="com.batterycharging.animation.chargingeffect.Fragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -146,7 +146,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_enable"
             app:layout_constraintStart_toStartOf="@id/card_enable"
             app:layout_constraintEnd_toStartOf="@+id/card_walpaper"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:background="@drawable/gradient_bg_reverse_card">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -199,6 +199,7 @@
             android:layout_width="@dimen/_135sdp"
             android:layout_height="@dimen/_135sdp"
             app:cardCornerRadius="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             app:layout_constraintTop_toTopOf="@id/card_battery"
             app:layout_constraintStart_toEndOf="@+id/card_battery"
             app:layout_constraintEnd_toEndOf="@id/card_enable">
@@ -254,9 +255,9 @@
             android:layout_height="@dimen/_135sdp"
             app:cardCornerRadius="@dimen/_15sdp"
             app:layout_constraintTop_toBottomOf="@+id/card_battery"
-            app:layout_constraintStart_toStartOf="@id/card_enable"
-            app:layout_constraintEnd_toStartOf="@+id/card_walpaper"
-            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="@id/card_battery"
+            app:layout_constraintEnd_toEndOf="@+id/card_battery"
+            android:layout_marginTop="@dimen/_6sdp"
             android:background="@drawable/gradient_bg_reverse_card">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -309,8 +310,8 @@
             android:layout_height="@dimen/_135sdp"
             app:cardCornerRadius="@dimen/_15sdp"
             app:layout_constraintTop_toTopOf="@id/card_create_new"
-            app:layout_constraintStart_toEndOf="@+id/card_create_new"
-            app:layout_constraintEnd_toEndOf="@id/card_enable">
+            app:layout_constraintStart_toStartOf="@+id/card_walpaper"
+            app:layout_constraintEnd_toEndOf="@id/card_walpaper">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

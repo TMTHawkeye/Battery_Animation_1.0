@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.WelcomeActivity"
+    tools:context="com.batterycharging.animation.chargingeffect.Activities.WelcomeActivity"
     android:background="@drawable/gradient_bg_layout">
 
     <com.airbnb.lottie.LottieAnimationView

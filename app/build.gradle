@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.batteryanimation'
+    namespace 'com.batterycharging.animation.chargingeffect'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.batteryanimation"
+        applicationId "com.batterycharging.animation.chargingeffect"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -96,5 +96,8 @@ dependencies {
 
     //localization
     implementation ("com.zeugmasolutions.localehelper:locale-helper-android:1.5.1")
+
+//    implementation 'com.github.TMTHawkeye:DependencyApp:1.0'
+
 
 }

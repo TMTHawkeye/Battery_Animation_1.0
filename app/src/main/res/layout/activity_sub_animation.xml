@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.SubAnimationActivity"
+    tools:context="com.batterycharging.animation.chargingeffect.Activities.SubAnimationActivity"
     android:background="@drawable/gradient_bg_layout">
 
 
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sub_animation_title_id"
-        android:padding="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
         android:id="@+id/animation_RV"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
