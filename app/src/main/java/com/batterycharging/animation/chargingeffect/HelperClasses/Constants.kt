@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.batterycharging.animation.chargingeffect.BuildConfig
 import com.google.firebase.analytics.FirebaseAnalytics
+//import com.google.firebase.analytics.FirebaseAnalytics
 import io.paperdb.Paper
 import timber.log.Timber
 

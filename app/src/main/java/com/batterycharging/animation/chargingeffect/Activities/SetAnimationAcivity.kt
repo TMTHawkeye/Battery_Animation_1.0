@@ -150,12 +150,12 @@ class SetAnimationAcivity : BaseActivity() {
             saveActivityIntent()
             Toast.makeText(this@SetAnimationAcivity,
                 getString(R.string.animation_applied), Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+//            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
             finish()
         }
 
         binding.cancelAnimationId.setOnClickListener {
-            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
+//            startActivity(Intent(this@SetAnimationAcivity, SubAnimationActivity::class.java).putExtra("intentFrom",intentFrom))
             finish()
         }
     }

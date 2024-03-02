@@ -36,9 +36,10 @@
                 android:layout_marginTop="@dimen/_7sdp"
                 android:text="@string/animation"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/image_item_id"
                 app:layout_constraintStart_toStartOf="@+id/image_item_id"
-                app:layout_constraintTop_toBottomOf="@+id/image_item_id" />
+                android:layout_marginBottom="@dimen/_10sdp"/>
 
 
 

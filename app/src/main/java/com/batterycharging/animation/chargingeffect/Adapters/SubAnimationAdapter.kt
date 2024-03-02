@@ -52,9 +52,9 @@ class SubAnimationAdapter(
                     holderItem
                 ).putExtra("fromAdapter", "From_Adapter").putExtra("intentFrom",intentFrom)
             )
-            if (ctxt is Activity) {
+          /*  if (ctxt is Activity) {
                 ctxt.finish()
-            }
+            }*/
         }
 
 

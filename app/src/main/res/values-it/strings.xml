@@ -102,4 +102,5 @@
     <string name="done">Fatto</string>
     <string name="select_language_title">Seleziona Lingua</string>
     <string name="english">Inglese</string>
+    <string name="next">Next</string>
 </resources>

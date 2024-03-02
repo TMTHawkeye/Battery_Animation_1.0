@@ -48,6 +48,16 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/_10sdp"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/letsGo_card_id"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/guide_3_nav_img"
+        android:layout_marginBottom="@dimen/_20sdp"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/letsGo_card_id"
         android:layout_width="wrap_content"
@@ -70,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/inter_semi_bold"
-                android:text="@string/letsGo"
+                android:text="@string/next"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
                 android:textDirection="locale"

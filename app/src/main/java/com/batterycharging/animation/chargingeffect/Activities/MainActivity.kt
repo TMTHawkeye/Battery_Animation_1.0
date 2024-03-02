@@ -214,6 +214,15 @@ class MainActivity : BaseActivity() {
         }
     }
 
+//    private fun startService() {
+//        val serviceIntent = Intent(this, BatteryService::class.java)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Check for Android 12 (API level 31) or higher
+//            startForegroundService(serviceIntent)
+//        } else {
+//            startService(serviceIntent)
+//        }
+//    }
+
 
     private fun loadfragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
@@ -312,14 +321,14 @@ class MainActivity : BaseActivity() {
 
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this@MainActivity, "Read permission granted!!", Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(this@MainActivity, "Read permission granted!!", Toast.LENGTH_SHORT)
+//                    .show()
             } else {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Read permission not granted!!",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this@MainActivity,
+//                    "Read permission not granted!!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
 
             }
         }

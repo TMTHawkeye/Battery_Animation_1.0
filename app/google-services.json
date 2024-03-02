@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "852352197816",
+    "project_id": "battery-charging-animati-420e3",
+    "storage_bucket": "battery-charging-animati-420e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852352197816:android:7f94c756e2adab8684004d",
+        "android_client_info": {
+          "package_name": "com.batterycharging.animation.chargingeffect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApJRakupON1_I2CdjCkLGMWo2VJb58x_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

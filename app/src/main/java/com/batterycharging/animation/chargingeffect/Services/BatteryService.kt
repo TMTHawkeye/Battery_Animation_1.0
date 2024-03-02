@@ -6,6 +6,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -27,14 +28,14 @@ class BatteryService : Service() {
         return START_STICKY
     }
 
-    @SuppressLint("ForegroundServiceType")
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        val drawableIcon : Int = R.drawable.app_icon ?: R.drawable.ic_launcher_foreground
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Battery Charging Animation")
             .setContentText("Battery Animation Applied.")
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(drawableIcon)
             .build()
 
         startForeground(FOREGROUND_SERVICE_ID, notification)
@@ -69,13 +70,8 @@ class BatteryService : Service() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "Battery Charging Animation is Started",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            val notificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = NotificationChannel(CHANNEL_ID, "Battery Charging Animation is Started", NotificationManager.IMPORTANCE_DEFAULT)
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

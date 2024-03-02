@@ -23,6 +23,7 @@ class SecondGuideFragment : Fragment() {
             (activity as GuideScreenActivity).navigateToNextFragment(2)
         }
 
+
         return binding.root
     }
 

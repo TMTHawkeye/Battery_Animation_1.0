@@ -12,6 +12,7 @@ import com.batterycharging.animation.chargingeffect.Activities.AnimationsActivit
 import com.batterycharging.animation.chargingeffect.Activities.CreateNewAnimationActivity
 import com.batterycharging.animation.chargingeffect.Activities.CreatedAnimationsActivity
 import com.batterycharging.animation.chargingeffect.Activities.EnableActivity
+import com.batterycharging.animation.chargingeffect.Activities.GuideScreenActivity
 import com.batterycharging.animation.chargingeffect.Activities.WallpaperActivity
 import com.batterycharging.animation.chargingeffect.R
 import com.batterycharging.animation.chargingeffect.ViewModels.BatteryInfoViewModel
@@ -50,6 +51,10 @@ class HomeFragment : Fragment() {
 
         binding.enableAnimationCardId.setOnClickListener {
             startActivity(Intent(requireContext(), EnableActivity::class.java))
+        }
+
+        binding.guideInfoId.setOnClickListener {
+            startActivity(Intent(requireContext(),GuideScreenActivity::class.java).putExtra("fromMain","FROM_MAIN"))
         }
 
 

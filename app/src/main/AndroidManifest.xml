@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+<!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name="com.batterycharging.animation.chargingeffect.MainApplication"
@@ -21,10 +22,12 @@
         tools:targetApi="31">
         <activity
             android:name="com.batterycharging.animation.chargingeffect.Activities.BaseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.batterycharging.animation.chargingeffect.Activities.LanguageActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.batterycharging.animation.chargingeffect.Activities.WelcomeActivity"
             android:exported="false"
@@ -73,18 +76,42 @@
         <receiver
             android:name="com.batterycharging.animation.chargingeffect.BroadCastReceivers.BootReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="com.batterycharging.animation.chargingeffect.Services.BatteryService"
-            android:exported="false">
+            android:exported="true"
+            android:enabled="true"/>
 
-            <!-- <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" -->
-            <!-- android:value="TYPE_APPLICATION_OVERLAY"/> -->
+<!--&lt;!&ndash;           &ndash;&gt;-->
 
 
-            <!-- android:foregroundServiceType="specialUse" -->
-        </service>
+<!--&lt;!&ndash;            &lt;!&ndash; <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash; android:value="TYPE_APPLICATION_OVERLAY"/> &ndash;&gt;&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;            &lt;!&ndash; android:foregroundServiceType="specialUse" &ndash;&gt;&ndash;&gt;-->
+<!--        </service>-->
+
+<!--        <service android:name="com.batterycharging.animation.chargingeffect.Services.BatteryService" android:foregroundServiceType="specialUse">-->
+<!--            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"-->
+<!--                android:value="TYPE_APPLICATION_OVERLAY"/>-->
+<!--        </service>-->
+<!--        <service-->
+<!--            android:name="com.batterycharging.animation.chargingeffect.Services.BatteryService"-->
+<!--            android:foregroundServiceType="specialUse"-->
+<!--            android:stopWithTask="true">-->
+
+<!--            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"-->
+<!--                android:foregroundServiceType="specialUse"/>-->
+<!--        </service>-->
+
         <service
             android:name="com.batterycharging.animation.chargingeffect.FireBaseMessage"
             android:exported="false">

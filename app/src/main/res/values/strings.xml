@@ -101,6 +101,7 @@
     <string name="done">Done</string>
     <string name="select_language_title">Select Language</string>
     <string name="english">English</string>
+    <string name="next">Next</string>
 
     <style name="textStyle_normal" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>
