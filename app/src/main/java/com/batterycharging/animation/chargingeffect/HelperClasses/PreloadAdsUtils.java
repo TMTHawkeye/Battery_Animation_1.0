@@ -238,7 +238,7 @@ public class PreloadAdsUtils {
                     },
                     reload);
         } else {
-            loadIntersAlternate(context, BuildConfig.welcome_interstitial, BuildConfig.home_interstitial, 2);
+            loadIntersAlternate(context, BuildConfig.home_interstitial, BuildConfig.home_interstitial, 2);
             adCallback.onNextAction();
         }
     }
@@ -285,7 +285,7 @@ public class PreloadAdsUtils {
                     },
                     reload);
         } else {
-            loadIntersAlternate(context, BuildConfig.welcome_interstitial, BuildConfig.home_interstitial, 2);
+            loadIntersAlternate(context, BuildConfig.home_interstitial, BuildConfig.home_interstitial, 2);
             adCallback.onNextAction();
         }
     }

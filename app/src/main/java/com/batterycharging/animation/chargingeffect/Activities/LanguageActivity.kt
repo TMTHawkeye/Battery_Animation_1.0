@@ -37,9 +37,9 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
 
         languageNativeAd()
         loadSplashNative()
-        loadGuideNative()
-
-
+        if (isFirstTimeLaunch()) {
+            loadGuideNative()
+        }
 
         val languagesList = getLanguagesList()
         val savedPosition = Paper.book().read<Int?>("LANG_POS", selectedPosition)
@@ -75,6 +75,8 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
         }
 
         binding.doneBtn.setOnClickListener {
+
+            AdsClass.getAdApplication().getStorageCommon()?.nativeAdsLanguage = null
             prEvents("doneBtn","Done btn switch from LanguageActivity is pressed!")
             Log.d("TAG_savedPosition", "savedPosition: $selectedPosition")
             if (adapter.savedPosition != -1) {

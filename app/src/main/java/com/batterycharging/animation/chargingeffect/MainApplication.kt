@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import androidx.lifecycle.MutableLiveData
 import com.batterycharging.animation.chargingeffect.DependencyInjection.mainModule
 import com.google.firebase.FirebaseApp
 import com.zeugmasolutions.localehelper.LocaleHelper
@@ -11,10 +12,12 @@ import com.zeugmasolutions.localehelper.LocaleHelperApplicationDelegate
 import io.paperdb.Paper
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.smrtobjads.ads.ads.models.AdmobNative
 
 class MainApplication : AdsClass() {
     private val localeAppDelegate = LocaleHelperApplicationDelegate()
     private var currentActivity: Activity? = null
+
 
     override fun onCreate() {
         super.onCreate()
@@ -24,8 +27,6 @@ class MainApplication : AdsClass() {
             androidContext(this@MainApplication)
             modules(mainModule)
         }
-
-
     }
 
     override fun attachBaseContext(base: Context) {

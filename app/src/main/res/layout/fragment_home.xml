@@ -176,7 +176,6 @@
             app:layout_constraintTop_toBottomOf="@+id/ad_view_container"
             app:layout_constraintStart_toStartOf="@id/card_enable"
             app:layout_constraintEnd_toStartOf="@+id/card_walpaper"
-            android:layout_marginTop="@dimen/_6sdp"
             android:background="@drawable/gradient_bg_reverse_card">
 
             <androidx.constraintlayout.widget.ConstraintLayout

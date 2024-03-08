@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.MutableLiveData;
 
 import com.batterycharging.animation.chargingeffect.Activities.LauncherScreenActivity;
+import com.batterycharging.animation.chargingeffect.Activities.SetAnimationAcivity;
+import com.batterycharging.animation.chargingeffect.Activities.SetCreatedAnimationActivity;
+import com.batterycharging.animation.chargingeffect.Activities.SetWallpaperActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.smrtobjads.ads.AdsParent;
@@ -11,11 +14,14 @@ import org.smrtobjads.ads.SmartAds;
 import org.smrtobjads.ads.ads.AppOpenManager;
 import org.smrtobjads.ads.ads.SmartAdsConfig;
 import org.smrtobjads.ads.ads.SmartObjAdmob;
+import org.smrtobjads.ads.ads.models.AdmobNative;
 import org.smrtobjads.ads.adsutils.StorageCommon;
 
 public class AdsClass extends AdsParent {
 //    @NotNull
     public MutableLiveData<Boolean> isAdCloseSplash =new MutableLiveData<Boolean>();
+     public MutableLiveData<AdmobNative> settingsNative = new MutableLiveData();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,6 +34,9 @@ public class AdsClass extends AdsParent {
         AppOpenManager.getInstance().setSplashAdId(BuildConfig.launcher_app_open);
         AppOpenManager.getInstance().init(this, BuildConfig.app_open_others);
         AppOpenManager.getInstance().disableAppResumeWithActivity(LauncherScreenActivity.class);
+        AppOpenManager.getInstance().disableAppResumeWithActivity(SetAnimationAcivity.class);
+        AppOpenManager.getInstance().disableAppResumeWithActivity(SetWallpaperActivity.class);
+        AppOpenManager.getInstance().disableAppResumeWithActivity(SetCreatedAnimationActivity.class);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         String environment = BuildConfig.env_dev ? SmartAdsConfig.ENVIRONMENT_DEVELOP : SmartAdsConfig.ENVIRONMENT_PRODUCTION;

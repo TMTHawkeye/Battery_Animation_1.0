@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.batterycharging.animation.chargingeffect.Activities.MainActivity
 import com.batterycharging.animation.chargingeffect.Activities.WelcomeActivity
+import com.batterycharging.animation.chargingeffect.AdsClass
 import com.batterycharging.animation.chargingeffect.databinding.FragmentThirdGuideBinding
 
 
@@ -26,6 +27,7 @@ class ThirdGuideFragment : Fragment() {
             } else {
                 startActivity(Intent(requireContext(), WelcomeActivity::class.java))
             }
+            AdsClass.getAdApplication().getStorageCommon()?.exitNative = null
         }
         return binding.root
     }

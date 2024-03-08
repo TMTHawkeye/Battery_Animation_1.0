@@ -25,17 +25,7 @@ class CreatedAnimationsActivity : BaseActivity() , NoDataCallBack {
         binding=ActivityCreatedAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        SmartAds.getInstance().loadBanner(this@CreatedAnimationsActivity, BuildConfig.my_creation_banner,object :
-            AperoAdCallback(){
-            override fun onAdFailedToLoad(adError: ApAdError?) {
-                super.onAdFailedToLoad(adError)
-                binding.welcomeNativecontainer.visibility = View.GONE
-            }
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                binding.welcomeNativecontainer.visibility = View.VISIBLE
-            }
-        })
+
 
         retrieveListFromPaperDb(){
             if(it?.size!=0) {
@@ -43,10 +33,24 @@ class CreatedAnimationsActivity : BaseActivity() , NoDataCallBack {
                 val layoutManager = GridLayoutManager(this, 2)
                 binding.creationsRV.layoutManager = layoutManager
                 binding.creationsRV.adapter =  CreatedAnimationsAdapter(this@CreatedAnimationsActivity, it, this)
+
+                SmartAds.getInstance().loadBanner(this@CreatedAnimationsActivity, BuildConfig.my_creation_banner,object :
+                    AperoAdCallback(){
+                    override fun onAdFailedToLoad(adError: ApAdError?) {
+                        super.onAdFailedToLoad(adError)
+                        binding.welcomeNativecontainer.visibility = View.GONE
+                    }
+                    override fun onAdLoaded() {
+                        super.onAdLoaded()
+                        binding.welcomeNativecontainer.visibility = View.VISIBLE
+                    }
+                })
             }
             else{
                 binding.creationsRV.visibility= View.GONE
                 binding.noCreationId.visibility=View.VISIBLE
+                binding.welcomeNativecontainer.visibility = View.GONE
+
             }
         }
 

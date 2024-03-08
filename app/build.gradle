@@ -165,7 +165,6 @@ android {
             )
 
 
-
             buildConfigField("Boolean", "env_dev", "false")
             signingConfig = signingConfigs.getByName("release")
 

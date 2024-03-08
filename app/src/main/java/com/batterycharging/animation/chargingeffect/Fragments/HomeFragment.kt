@@ -110,39 +110,41 @@ class HomeFragment : Fragment() {
 
     private fun homeFragmentNativeAd() {
         AdsClass.getAdApplication().getStorageCommon().homeNative.let { appNative ->
-            if (appNative == null || appNative.value == null && !AppPurchase.getInstance().isPurchased) {
-                SmartAds.getInstance().loadNativeAdResultCallback(requireContext(),
-                    BuildConfig.home_fragment_native, R.layout.custom_native_medium, object :
-                        AperoAdCallback() {
-                        override fun onNativeAdLoaded(nativeAd: AdmobNative) {
-                            super.onNativeAdLoaded(nativeAd)
-                            SmartAds.getInstance().populateNativeAdView(
-                                requireContext(),
-                                nativeAd,
-                                binding.adViewContainer,
-                                binding.splashNativeAd.shimmerContainerNative
-                            )
-                        }
+          context?.let { cont->
+              if (appNative == null || appNative.value == null && !AppPurchase.getInstance().isPurchased) {
+                  SmartAds.getInstance().loadNativeAdResultCallback(cont,
+                      BuildConfig.home_fragment_native, R.layout.custom_native_medium, object :
+                          AperoAdCallback() {
+                          override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                              super.onNativeAdLoaded(nativeAd)
+                              SmartAds.getInstance().populateNativeAdView(
+                                  cont,
+                                  nativeAd,
+                                  binding.adViewContainer,
+                                  binding.splashNativeAd.shimmerContainerNative
+                              )
+                          }
 
-                        override fun onAdFailedToLoad(adError: ApAdError?) {
-                            super.onAdFailedToLoad(adError)
-                            binding.adViewContainer.visibility = View.GONE
-                        }
+                          override fun onAdFailedToLoad(adError: ApAdError?) {
+                              super.onAdFailedToLoad(adError)
+                              binding.adViewContainer.visibility = View.GONE
+                          }
 
-                        override fun onAdFailedToShow(adError: ApAdError?) {
-                            super.onAdFailedToShow(adError)
-                            binding.adViewContainer.visibility = View.GONE
-                        }
+                          override fun onAdFailedToShow(adError: ApAdError?) {
+                              super.onAdFailedToShow(adError)
+                              binding.adViewContainer.visibility = View.GONE
+                          }
 
-                    })
-            } else {
-                SmartAds.getInstance().populateNativeAdView(
-                    requireContext(),
-                    appNative.value,
-                    binding.adViewContainer,
-                    binding.splashNativeAd.shimmerContainerNative
-                )
-            }
+                      })
+              } else {
+                  SmartAds.getInstance().populateNativeAdView(
+                      cont,
+                      appNative.value,
+                      binding.adViewContainer,
+                      binding.splashNativeAd.shimmerContainerNative
+                  )
+              }
+          }
         }
 
     }

@@ -2,7 +2,6 @@ package com.batterycharging.animation.chargingeffect.Activities
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
@@ -22,7 +21,6 @@ import com.google.android.gms.ads.LoadAdError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.smrtobjads.ads.AdsConsentManager
 import org.smrtobjads.ads.SmartAds
@@ -80,14 +78,14 @@ class LauncherScreenActivity : BaseActivity(), CoroutineScope, UMPResultListener
                 runOnUiThread {
                     PreloadAdsUtils.getInstance().loadIntersAlternate(
                         this,
-                        BuildConfig.welcome_interstitial,
+                        BuildConfig.home_interstitial,
                         BuildConfig.home_interstitial,
                         2
                     )
                     if (DataStoreUtils.getLanguageSelected(this, false)) {
                         loadLanguageNative()
                     }
-                    loadSplashNative()
+                    loadWelcomeNative()
 
                     handleFetchedRemoteConfig()
 //                    loadAdsSplash()
@@ -97,7 +95,7 @@ class LauncherScreenActivity : BaseActivity(), CoroutineScope, UMPResultListener
         } else {
             PreloadAdsUtils.getInstance().loadIntersAlternate(
                 this,
-                BuildConfig.welcome_interstitial,
+                BuildConfig.home_interstitial,
                 BuildConfig.home_interstitial,
                 2)
 
@@ -106,7 +104,7 @@ class LauncherScreenActivity : BaseActivity(), CoroutineScope, UMPResultListener
             }
             handleFetchedRemoteConfig()
 //            loadAdsSplash()
-            loadSplashNative()
+            loadWelcomeNative()
             loadWelcomeInter()
         }
 
@@ -265,7 +263,7 @@ class LauncherScreenActivity : BaseActivity(), CoroutineScope, UMPResultListener
     }
 
 
-    fun loadSplashNative(nativeAdId: String = BuildConfig.welcome_native) {
+    fun loadWelcomeNative(nativeAdId: String = BuildConfig.welcome_native) {
         if (AdsClass.getAdApplication()?.getStorageCommon()?.welcomeNative?.getValue() == null
             && !AppPurchase.getInstance().isPurchased
         ) {

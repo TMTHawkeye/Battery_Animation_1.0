@@ -86,6 +86,7 @@ class WelcomeActivity : BaseActivity(), CoroutineScope {
         }
 
         binding.letsGoCardId.setOnClickListener {
+
             showInterstitial()
         }
 
@@ -93,13 +94,8 @@ class WelcomeActivity : BaseActivity(), CoroutineScope {
             override fun handleOnBackPressed() {
                 finishAffinity()
                 System.exit(0);
-
             }
-
         })
-
-
-
     }
 
     fun showInterstitial() {
@@ -146,9 +142,10 @@ class WelcomeActivity : BaseActivity(), CoroutineScope {
     }
 
     private fun navigateToNext() {
+
+        AdsClass.getAdApplication().getStorageCommon()?.welcomeNative = null
         AdsClass.getAdApplication().getStorageCommon().welcomeInterstitialAd = null
         startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
-
 
     }
 

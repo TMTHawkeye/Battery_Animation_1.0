@@ -20,6 +20,7 @@ import com.batterycharging.animation.chargingeffect.Activities.LanguageActivity
 import com.batterycharging.animation.chargingeffect.AdsClass
 import com.batterycharging.animation.chargingeffect.BuildConfig
 import com.batterycharging.animation.chargingeffect.HelperClasses.prEvents
+import com.batterycharging.animation.chargingeffect.MainApplication
 import com.batterycharging.animation.chargingeffect.R
 import com.batterycharging.animation.chargingeffect.databinding.CustomDialogRateUsBinding
 import com.batterycharging.animation.chargingeffect.databinding.FragmentSettingsBinding
@@ -85,30 +86,49 @@ class SettingsFragment : Fragment() {
     }
 
     private fun batteryFragmentNativeAd(){
-        SmartAds.getInstance().loadNativeAdResultCallback(requireContext(),
-            BuildConfig.settings_fragment_native, R.layout.custom_native_medium, object :
-                AperoAdCallback(){
-                override fun onNativeAdLoaded(nativeAd: AdmobNative) {
-                    super.onNativeAdLoaded(nativeAd)
-                    SmartAds.getInstance().populateNativeAdView(requireContext(), nativeAd, binding.adViewContainer,binding.splashNativeAd.shimmerContainerNative)
-                }
+        MainApplication()
+        context?.let {cont->
+            AdsClass.getAdApplication().settingsNative.let { appNative ->
+                if (appNative == null || appNative.value == null && !AppPurchase.getInstance().isPurchased) {
+                    SmartAds.getInstance().loadNativeAdResultCallback(cont,
+                        BuildConfig.settings_fragment_native,
+                        R.layout.custom_native_medium,
+                        object :
+                            AperoAdCallback() {
+                            override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                                super.onNativeAdLoaded(nativeAd)
+                                AdsClass.getAdApplication().settingsNative.postValue(nativeAd)
+                                SmartAds.getInstance().populateNativeAdView(
+                                    cont,
+                                    nativeAd,
+                                    binding.adViewContainer,
+                                    binding.splashNativeAd.shimmerContainerNative
+                                )
+                            }
 
-                override fun onAdFailedToLoad(adError: ApAdError?) {
-                    super.onAdFailedToLoad(adError)
-                    binding.adViewContainer.visibility = View.GONE
-                }
+                            override fun onAdFailedToLoad(adError: ApAdError?) {
+                                super.onAdFailedToLoad(adError)
+                                binding.adViewContainer.visibility = View.GONE
+                            }
 
-                override fun onAdFailedToShow(adError: ApAdError?) {
-                    super.onAdFailedToShow(adError)
-                    binding.adViewContainer.visibility = View.GONE
+                            override fun onAdFailedToShow(adError: ApAdError?) {
+                                super.onAdFailedToShow(adError)
+                                binding.adViewContainer.visibility = View.GONE
+                            }
+                        })
+                } else {
+                    SmartAds.getInstance().populateNativeAdView(
+                        cont,
+                        appNative.value,
+                        binding.adViewContainer,
+                        binding.splashNativeAd.shimmerContainerNative
+                    )
                 }
+            }
+        }
 
-                override fun onAdImpression() {
-                    super.onAdImpression()
-
-                }
-            })
     }
+
 
     private fun privacyPolicy() {
         val privacyPolicyUrl = "https://sites.google.com/view/alawraq-studio-privacy-policy/home"

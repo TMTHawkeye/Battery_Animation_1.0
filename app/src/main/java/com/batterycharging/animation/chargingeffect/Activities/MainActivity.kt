@@ -145,6 +145,11 @@ class MainActivity : BaseActivity() {
 
 
         binding.bottomNav.setOnItemSelectedListener {
+            val currentFragment = getCurrentFragment()
+
+            if (currentFragment is HomeFragment && it.itemId == R.id.home) {
+                return@setOnItemSelectedListener false
+            }
 
             when (it.itemId) {
                 R.id.home -> {
