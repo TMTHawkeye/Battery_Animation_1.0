@@ -1,5 +1,6 @@
 package com.batterycharging.animation.chargingeffect
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
@@ -11,8 +12,9 @@ import io.paperdb.Paper
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class MainApplication : Application() {
+class MainApplication : AdsClass() {
     private val localeAppDelegate = LocaleHelperApplicationDelegate()
+    private var currentActivity: Activity? = null
 
     override fun onCreate() {
         super.onCreate()

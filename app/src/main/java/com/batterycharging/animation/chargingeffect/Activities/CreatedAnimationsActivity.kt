@@ -6,10 +6,14 @@ import android.os.Bundle
  import android.view.View
  import androidx.recyclerview.widget.GridLayoutManager
  import com.batterycharging.animation.chargingeffect.Adapters.CreatedAnimationsAdapter
+ import com.batterycharging.animation.chargingeffect.BuildConfig
  import com.batterycharging.animation.chargingeffect.Interfaces.NoDataCallBack
  import com.batterycharging.animation.chargingeffect.ModelClasses.CreatedWallpaperModel
  import com.batterycharging.animation.chargingeffect.databinding.ActivityCreatedAnimationsBinding
   import io.paperdb.Paper
+ import org.smrtobjads.ads.SmartAds
+ import org.smrtobjads.ads.ads.models.ApAdError
+ import org.smrtobjads.ads.callbacks.AperoAdCallback
 
 
 class CreatedAnimationsActivity : BaseActivity() , NoDataCallBack {
@@ -20,6 +24,19 @@ class CreatedAnimationsActivity : BaseActivity() , NoDataCallBack {
         super.onCreate(savedInstanceState)
         binding=ActivityCreatedAnimationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        SmartAds.getInstance().loadBanner(this@CreatedAnimationsActivity, BuildConfig.my_creation_banner,object :
+            AperoAdCallback(){
+            override fun onAdFailedToLoad(adError: ApAdError?) {
+                super.onAdFailedToLoad(adError)
+                binding.welcomeNativecontainer.visibility = View.GONE
+            }
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                binding.welcomeNativecontainer.visibility = View.VISIBLE
+            }
+        })
+
         retrieveListFromPaperDb(){
             if(it?.size!=0) {
                 Log.d("TAG_size", "onCreate: ${it?.size}")

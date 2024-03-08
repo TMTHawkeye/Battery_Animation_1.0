@@ -57,13 +57,15 @@
                 app:layout_constraintStart_toStartOf="@+id/exit_img_id"
                 app:layout_constraintTop_toBottomOf="@+id/exit_img_id" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:strokeColor="@null"
+                app:strokeWidth="0dp"
                 android:id="@+id/card_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_60sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/card_no"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,15 +96,18 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="@dimen/_15sdp"
+                android:backgroundTint="@color/yellow"
+                app:strokeColor="@null"
+                app:strokeWidth="0dp"
                 android:id="@+id/card_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_60sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_yes"
@@ -112,7 +117,6 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/yellow"
                     android:paddingHorizontal="@dimen/_20sdp"
                     android:paddingVertical="@dimen/_5sdp">
 
@@ -131,7 +135,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

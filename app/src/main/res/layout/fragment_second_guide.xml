@@ -30,7 +30,7 @@
         style="@style/textStyle_normal"
         android:fontFamily="@font/inter_semi_bold"
         android:textSize="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:gravity="center"
         android:textStyle="bold"/>
 
@@ -58,15 +58,17 @@
         android:src="@drawable/guide_2_nav_img"
         android:layout_marginBottom="@dimen/_20sdp"/>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:backgroundTint="@color/yellow"
+        app:strokeColor="@null"
+        app:strokeWidth="0dp"
         android:id="@+id/continue_card_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="@dimen/_60sdp"
-        android:layout_marginBottom="@dimen/_60sdp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -90,6 +92,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.batterycharging.animation.chargingeffect.BuildConfig
 import com.batterycharging.animation.chargingeffect.R
  import com.batterycharging.animation.chargingeffect.ViewModels.BatteryInfoViewModel
 import com.batterycharging.animation.chargingeffect.databinding.FragmentBatteryBinding
- import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import com.google.android.gms.ads.LoadAdError
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.smrtobjads.ads.SmartAds
+import org.smrtobjads.ads.ads.models.ApAdError
+import org.smrtobjads.ads.callbacks.AdCallback
+import org.smrtobjads.ads.callbacks.AperoAdCallback
 
 
 class BatteryFragment : Fragment() {
@@ -21,6 +27,21 @@ class BatteryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBatteryBinding.inflate(layoutInflater, container, false)
+
+        SmartAds.getInstance().loadBannerFragment(requireActivity(), BuildConfig.battery_fragment_banner,binding.welcomeNativecontainer,object :
+            AdCallback(){
+            override fun onAdFailedToLoad(i: LoadAdError?) {
+                super.onAdFailedToLoad(i)
+                binding.welcomeNativecontainer.visibility = View.GONE
+            }
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                binding.welcomeNativecontainer.visibility = View.VISIBLE
+            }
+        })
+
+
+
         getBatteryInfo()
 
 

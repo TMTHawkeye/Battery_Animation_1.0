@@ -69,6 +69,204 @@ android {
         buildConfig true
 
     }
+
+    flavorDimensions += ["defaultFlavour"]
+    productFlavors {
+        create("Prod") {
+            dimension = "defaultFlavour"
+            resValue("string", "admob_app_id", "\"ca-app-pub-4970195951959554~2144692233\"")
+
+
+            buildConfigField(
+                    "String",
+                    "battery_fragment_banner",
+                    "\"ca-app-pub-4970195951959554/9967341934\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "create_new_banner",
+                    "\"ca-app-pub-4970195951959554/9448467189\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "my_creation_banner",
+                    "\"ca-app-pub-4970195951959554/7532750289\""
+            )
+
+
+
+            buildConfigField(
+                    "String",
+                    "language_native",
+                    "\"ca-app-pub-4970195951959554/9775770249\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "guide_screen_native",
+                    "\"ca-app-pub-4970195951959554/1897280224\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "welcome_native",
+                    "\"ca-app-pub-4970195951959554/6958035212\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "home_fragment_native",
+                    "\"ca-app-pub-4970195951959554/4331871877\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "settings_fragment_native",
+                    "\"ca-app-pub-4970195951959554/1544505555\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "wallpaper_native",
+                    "\"ca-app-pub-4970195951959554/7918342214\""
+            )
+
+
+
+
+            buildConfigField(
+                    "String",
+                    "welcome_interstitial",
+                    "\"ca-app-pub-4970195951959554/1514136843\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "home_interstitial",
+                    "\"ca-app-pub-4970195951959554/6436179086\""
+            )
+
+
+
+
+            buildConfigField(
+                    "String",
+                    "app_open_others",
+                    "\"ca-app-pub-4970195951959554/5700793868\""
+            )
+
+
+            buildConfigField(
+                    "String",
+                    "launcher_app_open",
+                    "\"ca-app-pub-4970195951959554/3266202212\""
+            )
+
+
+
+            buildConfigField("Boolean", "env_dev", "false")
+            signingConfig = signingConfigs.getByName("release")
+
+        }
+        create("Dev") {
+            dimension = "defaultFlavour"
+
+            resValue("string", "admob_app_id", "\"ca-app-pub-3940256099942544~3347511713\"")
+
+            buildConfigField(
+                    "String",
+                    "battery_fragment_banner",
+                    "\"ca-app-pub-3940256099942544/6300978111\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "create_new_banner",
+                    "\"ca-app-pub-3940256099942544/6300978111\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "my_creation_banner",
+                    "\"ca-app-pub-3940256099942544/6300978111\""
+            )
+
+
+
+            buildConfigField(
+                    "String",
+                    "language_native",
+                    "\"ca-app-pub-3940256099942544/2247696110\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "guide_screen_native",
+                    "\"ca-app-pub-3940256099942544/2247696110\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "welcome_native",
+                    "\"ca-app-pub-3940256099942544/2247696110\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "home_fragment_native",
+                    "\"ca-app-pub-3940256099942544/2247696110\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "settings_fragment_native",
+                    "\"ca-app-pub-3940256099942544/2247696110\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "wallpaper_native",
+                    "\"ca-app-pub-3940256099942544/2247696110\""
+            )
+
+
+
+
+            buildConfigField(
+                    "String",
+                    "welcome_interstitial",
+                    "\"ca-app-pub-3940256099942544/1033173712\""
+            )
+
+            buildConfigField(
+                    "String",
+                    "home_interstitial",
+                    "\"ca-app-pub-3940256099942544/1033173712\""
+            )
+
+
+
+
+            buildConfigField(
+                    "String",
+                    "app_open_others",
+                    "\"ca-app-pub-3940256099942544/9257395921\""
+            )
+
+
+            buildConfigField(
+                    "String",
+                    "launcher_app_open",
+                    "\"ca-app-pub-3940256099942544/9257395921\""
+            )
+
+            buildConfigField("Boolean", "env_dev", "true")
+            signingConfig = signingConfigs.getByName("debug")
+
+        }
+    }
 }
 
 dependencies {
@@ -126,6 +324,19 @@ dependencies {
     implementation ("com.zeugmasolutions.localehelper:locale-helper-android:1.5.1")
 
 //    implementation 'com.github.TMTHawkeye:DependencyApp:1.0'
+
+    implementation("com.google.android.gms:play-services-ads:22.6.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.1")
+    implementation("com.google.firebase:firebase-analytics:21.5.0")
+
+    implementation("com.google.android.ump:user-messaging-platform:2.1.0")
+    implementation("com.android.billingclient:billing:6.1.0")
+
+    api 'com.google.firebase:firebase-config:21.6.1'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
+
+
+    implementation(files("libs/SmrtobjAds-release-V5.aar"))
 
 
 }

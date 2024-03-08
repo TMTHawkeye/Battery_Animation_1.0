@@ -72,7 +72,7 @@
     <string name="add_pic">Add Pic</string>
     <string name="add_text">Text</string>
     <string name="preview">Preview</string>
-    <string name="my_designs">My Designs</string>
+    <string name="my_designs">My Creation</string>
     <string name="apply">Apply</string>
     <string name="save_file_desc">Your Picture, Saved ‘ Creation’ Folder\n Click Creation > Apply.></string>
     <string name="delete_desc">Do you want to delete this wallpaper?</string>
@@ -102,6 +102,9 @@
     <string name="select_language_title">Select Language</string>
     <string name="english">English</string>
     <string name="next">Next</string>
+    <string name="this_action_may_contain_ad">This action may contain ads</string>
+    <string name="storagePermissionCode">1</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
 
     <style name="textStyle_normal" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>

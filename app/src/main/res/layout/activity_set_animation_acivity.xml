@@ -11,7 +11,7 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/animations_options_constrain"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,6 @@
         android:id="@+id/battery_percentage_constrain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,12 +107,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/animations_options_constrain"
         android:layout_width="0dp"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            android:backgroundTint="@color/yellow"
+            app:strokeColor="@null"
+            app:strokeWidth="0dp"
             android:id="@+id/cancel_animation_id"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
@@ -127,7 +130,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/yellow"
                 android:padding="@dimen/_10sdp">
 
                 <ImageView
@@ -136,9 +138,12 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/cancen_animation_icon" />
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            android:backgroundTint="@color/yellow"
+            app:strokeColor="@null"
+            app:strokeWidth="0dp"
             android:id="@+id/preview_animation_id"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
@@ -151,7 +156,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/yellow"
                 android:padding="@dimen/_10sdp">
 
                 <ImageView
@@ -160,13 +164,16 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/preview_icon" />
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            app:cardCornerRadius="@dimen/_15sdp"
+            android:backgroundTint="@color/yellow"
+            app:strokeColor="@null"
+            app:strokeWidth="0dp"
             android:id="@+id/set_animation_id_card"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_60sdp"
             app:layout_constraintBottom_toBottomOf="@id/cancel_animation_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +182,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/yellow"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_5sdp">
 
@@ -187,7 +193,7 @@
                     android:gravity="center"
                     android:textStyle="bold" />
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

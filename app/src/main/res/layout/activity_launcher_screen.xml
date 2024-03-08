@@ -40,9 +40,21 @@
         android:id="@+id/loading_lottie_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/_25sdp"
+        app:layout_constraintBottom_toTopOf="@+id/ad_contain_id"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:lottie_rawRes="@raw/loading_lottie_battery_animation"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/ad_contain_id"
+        android:text="@string/this_action_may_contain_ad"
+        android:layout_marginBottom="@dimen/_25sdp"
+        style="@style/textStyle_normal"
+        android:textSize="@dimen/_10sdp"/>
 
 
 

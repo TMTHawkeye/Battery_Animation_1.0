@@ -15,6 +15,8 @@
     <string name="walpaper">خلفيات</string>
     <string name="walpaper_sub">اختر الخلفية</string>
     <string name="creation">الإبداعات</string>
+    <string name="this_action_may_contain_ad">قد تحتوي هذه الإجراءات على إعلان</string>
+
     <string name="create_new">إنشاء جديد</string>
     <string name="create_sub">أنشئ شاشتك الخاصة</string>
     <string name="creations_sub">تحقق من إبداعاتك</string>

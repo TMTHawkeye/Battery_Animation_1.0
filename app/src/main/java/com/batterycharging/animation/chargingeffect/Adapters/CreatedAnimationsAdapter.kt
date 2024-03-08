@@ -52,9 +52,11 @@ class CreatedAnimationsAdapter(
                     Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
                 }
             } else {
+                Log.d("TAG_path", "selected Wallpaper: ${wallpaperModel.imagePath}")
                 try {
                     Glide.with(ctxt)
                         .load(wallpaperModel.imagePath)
+                        .error(R.drawable.battery_icon)
                         .into(holder.binding.imageItemId)
                 } catch (e: Exception) {
                     Log.e("CreatedAnimationsAdapter", "Error loading image: ${e.message}")
@@ -63,7 +65,7 @@ class CreatedAnimationsAdapter(
 
 
             holder.itemView.setOnClickListener {
-                Log.e("CreatedAnimationsAdapter", "image path : ${wallpaperModel.imagePath}")
+//                Log.e("CreatedAnimationsAdapter", "image path : ${wallpaperModel.imagePath}")
 
                 Intent(ctxt, SetCreatedAnimationActivity::class.java).apply {
                     putExtra("selected_wallpaper_position", position)

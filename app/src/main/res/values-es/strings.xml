@@ -16,6 +16,8 @@
     <string name="walpaper_sub">Seleccionar Fondo</string>
     <string name="creation">Creaciones</string>
     <string name="create_new">Crear Nuevo</string>
+    <string name="this_action_may_contain_ad">Esta acción puede contener publicidad</string>
+
     <string name="create_sub">Crear tu Propia Pantalla</string>
     <string name="creations_sub">Ver tus Creaciones</string>
     <string name="enable_animation_title">Activar Animación</string>

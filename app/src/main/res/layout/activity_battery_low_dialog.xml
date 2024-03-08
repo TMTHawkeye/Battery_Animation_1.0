@@ -72,7 +72,11 @@
                 app:layout_constraintStart_toStartOf="@+id/low_battery_img_id"
                 app:layout_constraintTop_toBottomOf="@+id/low_battery_header_id_TV" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="@dimen/_15sdp"
+                android:backgroundTint="@color/yellow"
+                app:strokeColor="@null"
+                app:strokeWidth="0dp"
                 android:id="@+id/card_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,14 +84,12 @@
                 app:layout_constraintEnd_toEndOf="@+id/low_battery_img_id"
                 app:layout_constraintStart_toStartOf="@+id/low_battery_img_id"
                 app:layout_constraintTop_toBottomOf="@id/connect_charger_desc_id"
-                app:cardCornerRadius="@dimen/_60sdp"
                 android:layout_marginTop="@dimen/_25sdp">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/yellow"
                     android:paddingHorizontal="@dimen/_20sdp"
                     android:paddingVertical="@dimen/_5sdp">
                     <TextView
@@ -105,8 +107,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
+            </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

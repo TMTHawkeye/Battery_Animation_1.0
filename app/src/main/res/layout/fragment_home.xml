@@ -109,19 +109,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    android:backgroundTint="@color/yellow"
+                    app:strokeColor="@null"
+                    app:strokeWidth="0dp"
                     android:id="@+id/enable_animation_card_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:cardCornerRadius="@dimen/_60sdp">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/yellow"
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_5sdp">
                         <TextView
@@ -138,7 +141,7 @@
 
                             android:textStyle="bold" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -146,13 +149,31 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <FrameLayout
+            android:id="@+id/ad_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:background="@color/transparent"
+            android:backgroundTint="@color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_enable">
+
+            <include
+                android:id="@+id/splashNativeAd"
+                layout="@layout/custom_native_medium_placeholder" />
+        </FrameLayout>
+
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_battery"
             app:strokeWidth="0dp"
             android:layout_width="@dimen/_135sdp"
             android:layout_height="@dimen/_135sdp"
             app:cardCornerRadius="@dimen/_15sdp"
-            app:layout_constraintTop_toBottomOf="@+id/card_enable"
+            app:layout_constraintTop_toBottomOf="@+id/ad_view_container"
             app:layout_constraintStart_toStartOf="@id/card_enable"
             app:layout_constraintEnd_toStartOf="@+id/card_walpaper"
             android:layout_marginTop="@dimen/_6sdp"

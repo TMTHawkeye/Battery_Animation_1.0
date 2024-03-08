@@ -13,6 +13,8 @@
     <string name="animation">Animazioni</string>
     <string name="animation_sub">Seleziona Animazione della Batteria</string>
     <string name="walpaper">Sfondi</string>
+    <string name="this_action_may_contain_ad">Questa azione potrebbe contenere pubblicità</string>
+
     <string name="walpaper_sub">Seleziona Sfondo</string>
     <string name="creation">Creazioni</string>
     <string name="create_new">Crea Nuovo</string>

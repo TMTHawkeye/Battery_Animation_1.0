@@ -1,12 +1,15 @@
 package com.batterycharging.animation.chargingeffect.Activities
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,6 +26,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.batterycharging.animation.chargingeffect.Adapters.FontsAdapter
+import com.batterycharging.animation.chargingeffect.BuildConfig
 import com.batterycharging.animation.chargingeffect.HelperClasses.getCurrentDateFormatted
 import com.batterycharging.animation.chargingeffect.HelperClasses.getCurrentTime
 import com.batterycharging.animation.chargingeffect.HelperClasses.prEvents
@@ -37,6 +41,13 @@ import com.github.dhaval2404.colorpicker.listener.DismissListener
 import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.github.dhaval2404.colorpicker.util.ColorUtil.isDarkColor
 import io.paperdb.Paper
+import org.smrtobjads.ads.SmartAds
+import org.smrtobjads.ads.ads.models.ApAdError
+import org.smrtobjads.ads.callbacks.AperoAdCallback
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 
 class CreateNewAnimationActivity : BaseActivity(), FontCallback {
@@ -45,15 +56,28 @@ class CreateNewAnimationActivity : BaseActivity(), FontCallback {
     private val currentTimeLiveData = MutableLiveData<String>()
     private val currentDateLiveData = MutableLiveData<String>()
     private lateinit var sharedPreferences: SharedPreferences
-     var fontPath : String?= null
+    var fontPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateNewAnimationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        SmartAds.getInstance().loadBanner(this@CreateNewAnimationActivity, BuildConfig.create_new_banner,object :
+            AperoAdCallback(){
+            override fun onAdFailedToLoad(adError: ApAdError?) {
+                super.onAdFailedToLoad(adError)
+                binding.welcomeNativecontainer.visibility = View.GONE
+            }
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                binding.welcomeNativecontainer.visibility = View.VISIBLE
+            }
+        })
+
         updateCurrentTime()
         updateCurrentDate()
-        fontPath= getString(R.string.default_font_path)
+        fontPath = getString(R.string.default_font_path)
         sharedPreferences = getSharedPreferences("created_wallpaper_prefs", MODE_PRIVATE)
 
         binding.constrainAddPicId.setOnClickListener(View.OnClickListener { openGallery() })
@@ -73,7 +97,10 @@ class CreateNewAnimationActivity : BaseActivity(), FontCallback {
 
 
         binding.chooseColor.setOnClickListener(View.OnClickListener {
-            prEvents("chooseColor","Choose Color button from CreateNewAnimationActivity is pressed!")
+            prEvents(
+                "chooseColor",
+                "Choose Color button from CreateNewAnimationActivity is pressed!"
+            )
 
             ColorPickerDialog.Builder(this@CreateNewAnimationActivity)
                 .setColorShape(ColorShape.CIRCLE)
@@ -100,26 +127,32 @@ class CreateNewAnimationActivity : BaseActivity(), FontCallback {
 
 
         binding.doneId.setOnClickListener {
-            prEvents("doneId","Done button from CreateNewAnimationActivity is pressed!")
+            prEvents("doneId", "Done button from CreateNewAnimationActivity is pressed!")
 
             showSaveCreationDialog().show()
 
         }
 
         binding.backBtnId.setOnClickListener {
-            prEvents("doneId","Done button from CreateNewAnimationActivity is pressed!")
+            prEvents("doneId", "Done button from CreateNewAnimationActivity is pressed!")
 
             finish()
         }
 
         binding.constrainPreviewId.setOnClickListener {
-            prEvents("constrainPreviewId","Preview button from CreateNewAnimationActivity is pressed!")
+            prEvents(
+                "constrainPreviewId",
+                "Preview button from CreateNewAnimationActivity is pressed!"
+            )
 
             setPreviewVisibilities()
         }
 
         binding.undoPreviewId.setOnClickListener {
-            prEvents("undoPreviewId","Undo Preview button from CreateNewAnimationActivity is pressed!")
+            prEvents(
+                "undoPreviewId",
+                "Undo Preview button from CreateNewAnimationActivity is pressed!"
+            )
 
             undoPreviewVisibilities()
         }
@@ -136,47 +169,47 @@ class CreateNewAnimationActivity : BaseActivity(), FontCallback {
 
     }
 
-     private fun showSaveCreationDialog(): Dialog {
-         val dialog_binding = CustomDialogSaveCreationBinding.inflate(layoutInflater)
-         val dialog = Dialog(this)
-         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-         dialog.setCancelable(false)
-         dialog.setContentView(dialog_binding.root)
+    private fun showSaveCreationDialog(): Dialog {
+        val dialog_binding = CustomDialogSaveCreationBinding.inflate(layoutInflater)
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(dialog_binding.root)
 
-         val window: Window = dialog.window!!
-         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-         window.setGravity(Gravity.CENTER)
-
-
-         dialog_binding.cardOk.setOnClickListener {
-             if(selectedImagePath==null){
-                 val drawableResourceId = R.drawable.default_custom_img
-                 val drawableResourceName = resources.getResourceEntryName(drawableResourceId)
-                 selectedImagePath=drawableResourceName
-                 Log.d("TAG_path", "showSaveCreationDialog: $selectedImagePath")
-             }
-             val createdWallpaperModel = CreatedWallpaperModel(
-                 fontPath,
-                 binding.timeTV.currentTextColor,
-                 selectedImagePath ?: ""
-             )
-
-             val wallpaperModels: ArrayList<CreatedWallpaperModel>? =
-                 Paper.book().read("wallpaperModels", ArrayList())
-
-             wallpaperModels?.add(createdWallpaperModel)
-
-             Paper.book().write("wallpaperModels", wallpaperModels ?: ArrayList())
-
-             dialog.dismiss()
-             finish()
-         }
-
-         return dialog
+        val window: Window = dialog.window!!
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window.setGravity(Gravity.CENTER)
 
 
-     }
+        dialog_binding.cardOk.setOnClickListener {
+            if (selectedImagePath == null) {
+                val drawableResourceId = R.drawable.default_custom_img
+                val drawableResourceName = resources.getResourceEntryName(drawableResourceId)
+                selectedImagePath = drawableResourceName
+                Log.d("TAG_path", "showSaveCreationDialog: $selectedImagePath")
+            }
+            val createdWallpaperModel = CreatedWallpaperModel(
+                fontPath,
+                binding.timeTV.currentTextColor,
+                selectedImagePath ?: ""
+            )
+
+            val wallpaperModels: ArrayList<CreatedWallpaperModel>? =
+                Paper.book().read("wallpaperModels", ArrayList())
+
+            wallpaperModels?.add(createdWallpaperModel)
+
+            Paper.book().write("wallpaperModels", wallpaperModels ?: ArrayList())
+
+            dialog.dismiss()
+            finish()
+        }
+
+        return dialog
+
+
+    }
 
 
     private fun setButtonBackground(btn: AppCompatButton, color: Int) {
@@ -192,65 +225,144 @@ class CreateNewAnimationActivity : BaseActivity(), FontCallback {
 
     private var selectedImagePath: String? = null
 
-    private fun openGallery() {
+/*    private fun openGallery() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
+    }*/
+
+    private fun openGallery() {
+        val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+        galleryIntent.type = "image/*"
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
     }
 
+
+        /*   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+               super.onActivityResult(requestCode, resultCode, data)
+               if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+                   val selectedImageUri = data.data
+                   selectedImagePath = selectedImageUri?.toString()
+
+                   Glide.with(this)
+                       .load(selectedImageUri)
+                       .into(binding.selectedImgId)
+
+               }
+           }*/
+
+       /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+                val selectedImageUri = data.data
+                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                selectedImagePath = selectedImageUri?.let { uri ->
+                    val cursor: Cursor? =
+                        contentResolver.query(uri, filePathColumn, null, null, null)
+                    cursor?.moveToFirst()
+                    val columnIndex: Int? = cursor?.getColumnIndex(filePathColumn[0])
+                    val imagePath: String? = columnIndex?.let { cursor.getString(it) }
+                    cursor?.close()
+                    imagePath
+                }
+
+                selectedImagePath?.let {
+                    Glide.with(this)
+                        .load(it)
+                        .into(binding.selectedImgId)
+                }
+            }
+        }*/
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri = data.data
-            selectedImagePath = selectedImageUri?.toString()
-
-            Glide.with(this)
-                .load(selectedImageUri)
-                .into(binding.selectedImgId)
-
+            selectedImagePath = selectedImageUri?.let { uri ->
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val file = createTemporalFileFrom(inputStream)
+                    file?.path
+                } catch (e: Exception) {
+                    Log.e("ImageFileError", "Error getting image path", e)
+                    null
+                }
+            }
+            selectedImagePath?.let {
+                Glide.with(this)
+                    .load(it)
+                    .into(binding.selectedImgId)
+            }
         }
     }
 
-    override fun addFont(typeface: Typeface?,fontPath:String?) {
-        binding.timeTV.setTypeface(typeface)
-        binding.dateTV.setTypeface(typeface)
-        this.fontPath=fontPath
+    private fun createTemporalFileFrom(inputStream: InputStream?): File? {
+        var targetFile: File? = null
+        if (inputStream != null) {
+            var read: Int
+            val buffer = ByteArray(8 * 1024)
+            try {
+                targetFile = File.createTempFile("tempImage", ".jpg")
+                val outputStream = FileOutputStream(targetFile)
+                while (inputStream.read(buffer).also { read = it } != -1) {
+                    outputStream.write(buffer, 0, read)
+                }
+                outputStream.flush()
+            } catch (e: IOException) {
+                Log.e("ImageFileError", "Error creating temporal file", e)
+            } finally {
+                try {
+                    inputStream.close()
+                } catch (e: IOException) {
+                    Log.e("ImageFileError", "Error closing input stream", e)
+                }
+            }
+        }
+        return targetFile
     }
 
-    private fun updateCurrentTime() {
-        currentTimeLiveData.value = getCurrentTime()
-        // Schedule next update after 1 minute
-        Handler(Looper.getMainLooper()).postDelayed({
-            updateCurrentTime()
-        }, 1000)
-    }
 
-    private fun updateCurrentDate() {
-        currentDateLiveData.value = getCurrentDateFormatted()
-    }
 
-    private fun setPreviewVisibilities() {
-        binding.backBtnId.visibility = View.GONE
-        binding.newcreateTitleId.visibility = View.GONE
-        binding.doneId.visibility = View.GONE
+    override fun addFont(typeface: Typeface?, fontPath: String?) {
+            binding.timeTV.setTypeface(typeface)
+            binding.dateTV.setTypeface(typeface)
+            this.fontPath = fontPath
+        }
 
-        binding.linearCardsFont.visibility = View.GONE
-        binding.chooseColor.visibility = View.GONE
-        binding.constrainToolsId.visibility = View.GONE
+        private fun updateCurrentTime() {
+            currentTimeLiveData.value = getCurrentTime()
+            // Schedule next update after 1 minute
+            Handler(Looper.getMainLooper()).postDelayed({
+                updateCurrentTime()
+            }, 1000)
+        }
 
-        binding.undoPreviewId.visibility = View.VISIBLE
+        private fun updateCurrentDate() {
+            currentDateLiveData.value = getCurrentDateFormatted()
+        }
+
+        private fun setPreviewVisibilities() {
+            binding.backBtnId.visibility = View.GONE
+            binding.newcreateTitleId.visibility = View.GONE
+            binding.doneId.visibility = View.GONE
+
+            binding.linearCardsFont.visibility = View.GONE
+            binding.chooseColor.visibility = View.GONE
+            binding.constrainToolsId.visibility = View.GONE
+
+            binding.undoPreviewId.visibility = View.VISIBLE
 //        binding.batteryPercentageConstrain.visibility=View.VISIBLE
-    }
+        }
 
-    private fun undoPreviewVisibilities() {
-        binding.backBtnId.visibility = View.VISIBLE
-        binding.newcreateTitleId.visibility = View.VISIBLE
-        binding.doneId.visibility = View.VISIBLE
+        private fun undoPreviewVisibilities() {
+            binding.backBtnId.visibility = View.VISIBLE
+            binding.newcreateTitleId.visibility = View.VISIBLE
+            binding.doneId.visibility = View.VISIBLE
 
-        binding.linearCardsFont.visibility = View.VISIBLE
-        binding.chooseColor.visibility = View.VISIBLE
-        binding.constrainToolsId.visibility = View.VISIBLE
+            binding.linearCardsFont.visibility = View.VISIBLE
+            binding.chooseColor.visibility = View.VISIBLE
+            binding.constrainToolsId.visibility = View.VISIBLE
 
-        binding.undoPreviewId.visibility = View.GONE
+            binding.undoPreviewId.visibility = View.GONE
 //        binding.batteryPercentageConstrain.visibility=View.GONE
+        }
     }
-}

@@ -17,11 +17,18 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.batterycharging.animation.chargingeffect.Activities.ChargingAlarm
 import com.batterycharging.animation.chargingeffect.Activities.LanguageActivity
+import com.batterycharging.animation.chargingeffect.AdsClass
+import com.batterycharging.animation.chargingeffect.BuildConfig
 import com.batterycharging.animation.chargingeffect.HelperClasses.prEvents
 import com.batterycharging.animation.chargingeffect.R
 import com.batterycharging.animation.chargingeffect.databinding.CustomDialogRateUsBinding
 import com.batterycharging.animation.chargingeffect.databinding.FragmentSettingsBinding
 import io.paperdb.Paper
+import org.smrtobjads.ads.SmartAds
+import org.smrtobjads.ads.ads.models.AdmobNative
+import org.smrtobjads.ads.ads.models.ApAdError
+import org.smrtobjads.ads.billings.AppPurchase
+import org.smrtobjads.ads.callbacks.AperoAdCallback
 
 class SettingsFragment : Fragment() {
     lateinit var binding: FragmentSettingsBinding
@@ -33,6 +40,7 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentSettingsBinding.inflate(layoutInflater,container,false)
+        batteryFragmentNativeAd()
 
         binding.cardChargingNotificationId.setOnClickListener {
             prEvents("Charging_Notification","Charging Notification Button from settings fragment is pressed!")
@@ -74,6 +82,32 @@ class SettingsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun batteryFragmentNativeAd(){
+        SmartAds.getInstance().loadNativeAdResultCallback(requireContext(),
+            BuildConfig.settings_fragment_native, R.layout.custom_native_medium, object :
+                AperoAdCallback(){
+                override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                    super.onNativeAdLoaded(nativeAd)
+                    SmartAds.getInstance().populateNativeAdView(requireContext(), nativeAd, binding.adViewContainer,binding.splashNativeAd.shimmerContainerNative)
+                }
+
+                override fun onAdFailedToLoad(adError: ApAdError?) {
+                    super.onAdFailedToLoad(adError)
+                    binding.adViewContainer.visibility = View.GONE
+                }
+
+                override fun onAdFailedToShow(adError: ApAdError?) {
+                    super.onAdFailedToShow(adError)
+                    binding.adViewContainer.visibility = View.GONE
+                }
+
+                override fun onAdImpression() {
+                    super.onAdImpression()
+
+                }
+            })
     }
 
     private fun privacyPolicy() {
@@ -247,8 +281,6 @@ class SettingsFragment : Fragment() {
 
             }
         }
-
-
     }
 
     private fun moreApps(){

@@ -17,6 +17,8 @@
     <string name="creation">تخلیقات</string>
     <string name="create_new">نیا بنائیں</string>
     <string name="create_sub">اپنی خود کی اسکرین بنائیں</string>
+    <string name="this_action_may_contain_ad">یہ کارروائی اشتہار شامل کر سکتی ہے</string>
+
     <string name="creations_sub">اپنی تخلیقات چیک کریں</string>
     <string name="enable_animation_title">انیمیشن فعال کریں</string>
     <string name="batteryPercentage">بیٹری فیصد دکھائیں</string>

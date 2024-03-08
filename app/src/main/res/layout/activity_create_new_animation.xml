@@ -99,6 +99,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/welcomeNativecontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linear_cards_font">
+
+        <include
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:id="@+id/layoutBannerAdsContainer"
+            layout="@layout/layout_banner_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/linear_cards_font"
         android:layout_width="match_parent"
@@ -109,6 +129,7 @@
         android:layout_marginVertical="@dimen/_2sdp"
         android:orientation="horizontal"
         android:background="@drawable/gradient_bg_layout">
+
 
 
     <androidx.recyclerview.widget.RecyclerView

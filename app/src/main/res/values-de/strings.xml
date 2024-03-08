@@ -19,6 +19,8 @@
     <string name="create_sub">Erstellen Sie Ihren eigenen Bildschirm</string>
     <string name="creations_sub">Ihre Kreationen überprüfen</string>
     <string name="enable_animation_title">Animation aktivieren</string>
+    <string name="this_action_may_contain_ad">Diese Aktion kann Werbung enthalten</string>
+
     <string name="batteryPercentage">Batteriestand anzeigen</string>
     <string name="double_tap_close_screen">Bildschirm mit Doppelklick schließen</string>
     <string name="animation_duration">Animationsdauer</string>

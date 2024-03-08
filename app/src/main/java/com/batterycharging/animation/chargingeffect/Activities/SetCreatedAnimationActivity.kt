@@ -97,6 +97,7 @@ class SetCreatedAnimationActivity : BaseActivity() {
                 }
             }else {
                 try {
+                    Log.d("TAG_path", "onBindViewHolder: $imagePath")
                     Glide.with(this).load(imagePath).into(binding.selectedWallpaperId)
                 }
                 catch(e:Exception){
@@ -217,9 +218,9 @@ class SetCreatedAnimationActivity : BaseActivity() {
             binding.dateTV.setTextColor(createdWallpaperModel.color ?: 0)
             binding.batteryPercentageId.setTextColor(createdWallpaperModel.color ?: 0)
 
-            Glide.with(this@SetCreatedAnimationActivity)
-                .load(createdWallpaperModel.imagePath)
-                .into(binding.selectedWallpaperId)
+//            Glide.with(this@SetCreatedAnimationActivity)
+//                .load(createdWallpaperModel.imagePath)
+//                .into(binding.selectedWallpaperId)
             return createdWallpaperModel.imagePath
         }
         return null

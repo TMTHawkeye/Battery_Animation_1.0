@@ -2,11 +2,18 @@ package com.batterycharging.animation.chargingeffect.Activities
 
 import android.content.res.AssetManager
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.batterycharging.animation.chargingeffect.Adapters.WalpaperAdapter
+import com.batterycharging.animation.chargingeffect.BuildConfig
+import com.batterycharging.animation.chargingeffect.R
 import com.batterycharging.animation.chargingeffect.databinding.ActivityWallpaperBinding
- import java.io.IOException
+import org.smrtobjads.ads.SmartAds
+import org.smrtobjads.ads.ads.models.AdmobNative
+import org.smrtobjads.ads.ads.models.ApAdError
+import org.smrtobjads.ads.callbacks.AperoAdCallback
+import java.io.IOException
 
 class WallpaperActivity : BaseActivity() {
     lateinit var binding: ActivityWallpaperBinding
@@ -16,6 +23,8 @@ class WallpaperActivity : BaseActivity() {
         binding=ActivityWallpaperBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        wallpaperNativeAd()
+
         getListFromAssets{
             setUpAdapter(it)
         }
@@ -24,6 +33,33 @@ class WallpaperActivity : BaseActivity() {
             finish()
         }
     }
+
+    private fun wallpaperNativeAd(){
+        SmartAds.getInstance().loadNativeAdResultCallback(this@WallpaperActivity,
+            BuildConfig.wallpaper_native, R.layout.custom_native_medium, object :
+                AperoAdCallback(){
+                override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                    super.onNativeAdLoaded(nativeAd)
+                    SmartAds.getInstance().populateNativeAdView(this@WallpaperActivity, nativeAd, binding.adViewContainer,binding.splashNativeAd.shimmerContainerNative)
+                }
+
+                override fun onAdFailedToLoad(adError: ApAdError?) {
+                    super.onAdFailedToLoad(adError)
+                    binding.adViewContainer.visibility = View.GONE
+                }
+
+                override fun onAdFailedToShow(adError: ApAdError?) {
+                    super.onAdFailedToShow(adError)
+                    binding.adViewContainer.visibility = View.GONE
+                }
+
+                override fun onAdImpression() {
+                    super.onAdImpression()
+
+                }
+            })
+    }
+
 
     private fun setUpAdapter(wallpapersList: ArrayList<String>?) {
         val layoutManager = GridLayoutManager(this, 2)

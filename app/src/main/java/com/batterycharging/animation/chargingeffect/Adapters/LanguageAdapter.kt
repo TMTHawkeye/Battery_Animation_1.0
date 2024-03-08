@@ -32,11 +32,12 @@ class LanguageAdapter(val ctxt: Context, val languagesList: ArrayList<Language>,
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         holder.binding.languageTitleId.text = languagesList.get(position).languageName
         holder.binding.flagImgId.setImageDrawable(languagesList.get(position).languageDrawable)
+        changeLanguage(languagesList.get(selectedPosition?:0).languageCode!!)
 
         holder.itemView.setOnClickListener {
 //            ctxt.startActivity(Intent(ctxt,GuideActivity::class.java))
             changeLanguage(languagesList.get(position).languageCode!!)
-            setSelectedPosition(position)
+            updateSelectedPosition(position)
 
         }
 
@@ -56,9 +57,10 @@ class LanguageAdapter(val ctxt: Context, val languagesList: ArrayList<Language>,
 
     }
 
-    private fun setSelectedPosition(position: Int) {
+    private fun updateSelectedPosition(position: Int) {
         selectedPosition = position
         positionListner.languageSelected(position)
+
         notifyDataSetChanged()
     }
 

@@ -3,9 +3,13 @@ package com.batterycharging.animation.chargingeffect.Activities
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.batterycharging.animation.chargingeffect.Adapters.LanguageAdapter
+import com.batterycharging.animation.chargingeffect.AdsClass
+import com.batterycharging.animation.chargingeffect.BuildConfig
 import com.batterycharging.animation.chargingeffect.HelperClasses.isFirstTimeLaunch
 import com.batterycharging.animation.chargingeffect.HelperClasses.prEvents
 import com.batterycharging.animation.chargingeffect.Interfaces.SelectedLanguageCallback
@@ -14,6 +18,11 @@ import com.batterycharging.animation.chargingeffect.R
 import com.batterycharging.animation.chargingeffect.databinding.ActivityLanguageBinding
 import com.zeugmasolutions.localehelper.LocaleHelper
 import io.paperdb.Paper
+import org.smrtobjads.ads.SmartAds
+import org.smrtobjads.ads.ads.models.AdmobNative
+import org.smrtobjads.ads.ads.models.ApAdError
+import org.smrtobjads.ads.billings.AppPurchase
+import org.smrtobjads.ads.callbacks.AperoAdCallback
 import java.util.Locale
 
 class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
@@ -26,8 +35,15 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
         binding= ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        languageNativeAd()
+        loadSplashNative()
+        loadGuideNative()
+
+
+
         val languagesList = getLanguagesList()
         val savedPosition = Paper.book().read<Int?>("LANG_POS", selectedPosition)
+        selectedPosition=savedPosition?:0
         val adapter = LanguageAdapter(this@LanguageActivity, languagesList, savedPosition, this)
         binding.languagesRV.layoutManager = LinearLayoutManager(this)
         binding.languagesRV.adapter = adapter
@@ -51,6 +67,8 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
 
             if (isFirstTimeLaunch()) {
                 finishAffinity()
+                System.exit(0);
+
             } else {
                 finish()
             }
@@ -58,7 +76,7 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
 
         binding.doneBtn.setOnClickListener {
             prEvents("doneBtn","Done btn switch from LanguageActivity is pressed!")
-
+            Log.d("TAG_savedPosition", "savedPosition: $selectedPosition")
             if (adapter.savedPosition != -1) {
                 Paper.book().write<Int?>("LANG_POS", selectedPosition)
 
@@ -108,4 +126,86 @@ class LanguageActivity : BaseActivity(), SelectedLanguageCallback {
     override fun languageSelected(position: Int) {
         this.selectedPosition = position
     }
+
+    private fun languageNativeAd(){
+        AdsClass.getAdApplication().getStorageCommon().nativeAdsLanguage.let { appNative->
+            if (appNative == null || appNative.value == null && !AppPurchase.getInstance().isPurchased) {
+                SmartAds.getInstance().loadNativeAdResultCallback(applicationContext,
+                    BuildConfig.language_native, R.layout.native_ad_template, object :
+                        AperoAdCallback(){
+                        override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                            super.onNativeAdLoaded(nativeAd)
+                            SmartAds.getInstance().populateNativeAdView(this@LanguageActivity, nativeAd, binding.adViewContainer, binding.splashNativeAd.shimmerContainerNative)
+                        }
+
+                        override fun onAdFailedToLoad(adError: ApAdError?) {
+                            super.onAdFailedToLoad(adError)
+                            binding.adViewContainer.visibility = View.GONE
+                        }
+
+                        override fun onAdFailedToShow(adError: ApAdError?) {
+                            super.onAdFailedToShow(adError)
+                            binding.adViewContainer.visibility = View.GONE
+                        }
+
+                    })
+            }else{
+                SmartAds.getInstance().populateNativeAdView(
+                    this@LanguageActivity,
+                    appNative.value,
+                    binding.adViewContainer,
+                    binding.splashNativeAd.shimmerContainerNative)
+            }
+        }
+
+    }
+
+    fun loadSplashNative(nativeAdId: String = BuildConfig.welcome_native) {
+        if (AdsClass.getAdApplication().getStorageCommon()?.welcomeNative?.getValue() == null
+            && !AppPurchase.getInstance().isPurchased) {
+
+            SmartAds.getInstance().loadNativeAdResultCallback(
+                applicationContext,
+                nativeAdId,
+                R.layout.custom_native_medium,
+                object : AperoAdCallback() {
+                    override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                        super.onNativeAdLoaded(nativeAd)
+                        AdsClass.getAdApplication()?.getStorageCommon()?.welcomeNative?.postValue(nativeAd)
+                    }
+
+                    override fun onAdFailedToLoad(adError: ApAdError?) {
+                        super.onAdFailedToLoad(adError)
+                        AdsClass.getAdApplication()?.getStorageCommon()?.welcomeNative?.postValue(null)
+                    }
+                }
+            )
+        }
+    }
+
+    fun loadGuideNative(nativeAdId: String = BuildConfig.guide_screen_native) {
+        if (AdsClass.getAdApplication().getStorageCommon()?.exitNative?.getValue() == null
+            && !AppPurchase.getInstance().isPurchased) {
+
+            SmartAds.getInstance().loadNativeAdResultCallback(
+                applicationContext,
+                nativeAdId,
+                R.layout.custom_native_medium,
+                object : AperoAdCallback() {
+                    override fun onNativeAdLoaded(nativeAd: AdmobNative) {
+                        super.onNativeAdLoaded(nativeAd)
+                        AdsClass.getAdApplication()?.getStorageCommon()?.exitNative?.postValue(nativeAd)
+                    }
+
+                    override fun onAdFailedToLoad(adError: ApAdError?) {
+                        super.onAdFailedToLoad(adError)
+                        AdsClass.getAdApplication()?.getStorageCommon()?.exitNative?.postValue(null)
+                    }
+                }
+            )
+        }
+    }
+
+
+
 }

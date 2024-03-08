@@ -12,7 +12,7 @@
         android:id="@+id/selected_wallpaper_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/battery_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,11 +103,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:backgroundTint="@color/yellow"
+        app:strokeColor="@null"
+        app:strokeWidth="0dp"
         android:id="@+id/set_animation_id_card"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_40sdp"
-        app:cardCornerRadius="@dimen/_60sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +119,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/yellow"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_5sdp">
 
@@ -127,7 +129,7 @@
                 android:text="@string/apply"
                 android:textStyle="bold" />
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 

@@ -1,450 +1,482 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg_layout"
     tools:context="com.batterycharging.animation.chargingeffect.Fragments.BatteryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient_bg_layout">
+        android:layout_height="wrap_content">
 
-        <!--        <ImageView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:src="@drawable/back_btn_img"-->
-        <!--            android:id="@+id/back_btn_id"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            android:layout_marginStart="@dimen/_10sdp"-->
-        <!--            android:layout_marginTop="@dimen/_15sdp"/>-->
-
-        <TextView
-            android:id="@+id/batteryInfo_title_id"
-            style="@style/textStyle_normal"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/welcomeNativecontainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:text="@string/batteryInfo"
-            android:textSize="@dimen/_14sdp"
-            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_5sdp">
 
-        <ImageView
-            android:id="@+id/enable_animation_main_icon_id"
-            android:layout_width="wrap_content"
+            <include
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:id="@+id/layoutBannerAdsContainer"
+                layout="@layout/layout_banner_control"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/_20sdp"
-            android:src="@drawable/battery_info_icon"
+            android:background="@drawable/gradient_bg_layout"
+            android:paddingBottom="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/batteryInfo_title_id" />
+            app:layout_constraintTop_toBottomOf="@+id/welcomeNativecontainer">
 
-        <TextView
-            android:id="@+id/battery_percentage_id"
-            style="@style/textStyle_normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="@+id/enable_animation_main_icon_id"
-            app:layout_constraintStart_toStartOf="@+id/enable_animation_main_icon_id"
-            app:layout_constraintTop_toBottomOf="@+id/enable_animation_main_icon_id" />
+            <!--        <ImageView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:src="@drawable/back_btn_img"-->
+            <!--            android:id="@+id/back_btn_id"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toTopOf="parent"-->
+            <!--            android:layout_marginStart="@dimen/_10sdp"-->
+            <!--            android:layout_marginTop="@dimen/_15sdp"/>-->
 
-        <TextView
-            android:id="@+id/battery_remaining_id"
-            style="@style/textStyle_normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="@+id/enable_animation_main_icon_id"
-            app:layout_constraintStart_toStartOf="@+id/enable_animation_main_icon_id"
-            app:layout_constraintTop_toBottomOf="@+id/battery_percentage_id" />
 
-        <TextView
-            android:id="@+id/charging_status_id"
-            style="@style/textStyle_normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/enable_animation_main_icon_id"
-            app:layout_constraintStart_toStartOf="@+id/enable_animation_main_icon_id"
-            app:layout_constraintTop_toBottomOf="@+id/battery_remaining_id" />
+            <TextView
+                android:id="@+id/batteryInfo_title_id"
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="@string/batteryInfo"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_temperature"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/gradient_bg_reverse_card"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:layout_constraintEnd_toStartOf="@+id/card_voltage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/charging_status_id"
-            app:strokeColor="@color/dark_grey"
-            app:strokeWidth="1dp">
+            <ImageView
+                android:id="@+id/enable_animation_main_icon_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_20sdp"
+                android:src="@drawable/battery_info_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/batteryInfo_title_id" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/battery_percentage_id"
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="@+id/enable_animation_main_icon_id"
+                app:layout_constraintStart_toStartOf="@+id/enable_animation_main_icon_id"
+                app:layout_constraintTop_toBottomOf="@+id/enable_animation_main_icon_id" />
+
+            <TextView
+                android:id="@+id/battery_remaining_id"
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="@+id/enable_animation_main_icon_id"
+                app:layout_constraintStart_toStartOf="@+id/enable_animation_main_icon_id"
+                app:layout_constraintTop_toBottomOf="@+id/battery_percentage_id" />
+
+            <TextView
+                android:id="@+id/charging_status_id"
+                style="@style/textStyle_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/enable_animation_main_icon_id"
+                app:layout_constraintStart_toStartOf="@+id/enable_animation_main_icon_id"
+                app:layout_constraintTop_toBottomOf="@+id/battery_remaining_id" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_temperature"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/gradient_bg_reverse_card"
-                android:padding="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:layout_constraintEnd_toStartOf="@+id/card_voltage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/charging_status_id"
+                app:strokeColor="@color/dark_grey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_bg_reverse_card"
+                    android:padding="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/animation_icon_id"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/temperature_img"
-                    app:layout_constraintEnd_toEndOf="@id/temperature_title_TV"
-                    app:layout_constraintStart_toStartOf="@id/temperature_title_TV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    <ImageView
+                        android:id="@+id/animation_icon_id"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/temperature_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/temperature_title_TV"
+                        app:layout_constraintStart_toStartOf="@id/temperature_title_TV"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/temperature_title_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/temperature_title"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/animation_icon_id"/>
+                    <TextView
+                        android:id="@+id/temperature_title_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/temperature_title"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/animation_icon_id"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/temperature_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_8sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/temperature_title_TV"
-                    app:layout_constraintStart_toStartOf="@+id/temperature_title_TV"
-                    android:layout_marginBottom="@dimen/_10sdp"/>
+                    <TextView
+                        android:id="@+id/temperature_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/temperature_title_TV"
+                        app:layout_constraintStart_toStartOf="@+id/temperature_title_TV" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_voltage"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:background="@drawable/gradient_bg_reverse_card"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/card_temperature"
-            app:layout_constraintEnd_toStartOf="@+id/card_technology"
-            app:layout_constraintStart_toEndOf="@+id/card_temperature"
-
-            app:layout_constraintTop_toTopOf="@+id/card_temperature"
-            app:strokeColor="@color/dark_grey"
-            app:strokeWidth="1dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_voltage"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:background="@drawable/gradient_bg_reverse_card"
-                android:padding="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/card_temperature"
+                app:layout_constraintEnd_toStartOf="@+id/card_technology"
+                app:layout_constraintStart_toEndOf="@+id/card_temperature"
+
+                app:layout_constraintTop_toTopOf="@+id/card_temperature"
+                app:strokeColor="@color/dark_grey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_bg_reverse_card"
+                    android:padding="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/voltage_icon_id"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/voltage_img"
-                    app:layout_constraintEnd_toEndOf="@id/voltage_title_TV"
-                    app:layout_constraintStart_toStartOf="@id/voltage_title_TV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <ImageView
+                        android:id="@+id/voltage_icon_id"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/voltage_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/voltage_title_TV"
+                        app:layout_constraintStart_toStartOf="@id/voltage_title_TV"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/voltage_title_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/voltage_title"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/voltage_icon_id" />
+                    <TextView
+                        android:id="@+id/voltage_title_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/voltage_title"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/voltage_icon_id"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/voltage_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_8sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/voltage_title_TV"
-                    app:layout_constraintStart_toStartOf="@+id/voltage_title_TV"
-                    android:layout_marginBottom="@dimen/_10sdp"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/voltage_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/voltage_title_TV"
+                        app:layout_constraintStart_toStartOf="@+id/voltage_title_TV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_technology"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:background="@drawable/gradient_bg_reverse_card"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/card_temperature"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/card_voltage"
-            app:layout_constraintTop_toTopOf="@+id/card_temperature"
-            app:strokeColor="@color/dark_grey"
-            app:strokeWidth="1dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_technology"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:background="@drawable/gradient_bg_reverse_card"
-                android:padding="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/card_temperature"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/card_voltage"
+                app:layout_constraintTop_toTopOf="@+id/card_temperature"
+                app:strokeColor="@color/dark_grey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_bg_reverse_card"
+                    android:padding="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/technology_icon_id"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/technology_img"
-                    app:layout_constraintEnd_toEndOf="@id/technology_title_TV"
-                    app:layout_constraintStart_toStartOf="@id/technology_title_TV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <ImageView
+                        android:id="@+id/technology_icon_id"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/technology_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/technology_title_TV"
+                        app:layout_constraintStart_toStartOf="@id/technology_title_TV"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/technology_title_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/technology_title"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/technology_icon_id" />
-
-
-                <TextView
-                    android:id="@+id/technology_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_8sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/technology_title_TV"
-                    app:layout_constraintStart_toStartOf="@+id/technology_title_TV"
-                    android:layout_marginBottom="@dimen/_10sdp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/technology_title_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/technology_title"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/technology_icon_id"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_health"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/gradient_bg_reverse_card"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:layout_constraintEnd_toStartOf="@+id/card_voltage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_temperature"
-            app:strokeColor="@color/dark_grey"
-            app:strokeWidth="1dp">
+                    <TextView
+                        android:id="@+id/technology_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/technology_title_TV"
+                        app:layout_constraintStart_toStartOf="@+id/technology_title_TV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_health"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/gradient_bg_reverse_card"
-                android:padding="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:layout_constraintEnd_toStartOf="@+id/card_voltage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_temperature"
+                app:strokeColor="@color/dark_grey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_bg_reverse_card"
+                    android:padding="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/health_icon_id"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/health_img"
-                    app:layout_constraintEnd_toEndOf="@id/health_title_TV"
-                    app:layout_constraintStart_toStartOf="@id/health_title_TV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <ImageView
+                        android:id="@+id/health_icon_id"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/health_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/health_title_TV"
+                        app:layout_constraintStart_toStartOf="@id/health_title_TV"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/health_title_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/health_title"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/health_icon_id"/>
+                    <TextView
+                        android:id="@+id/health_title_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/health_title"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/health_icon_id"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/health_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_8sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/health_title_TV"
-                    app:layout_constraintStart_toStartOf="@+id/health_title_TV"
-                    android:layout_marginBottom="@dimen/_10sdp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/health_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/health_title_TV"
+                        app:layout_constraintStart_toStartOf="@+id/health_title_TV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_capacity"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:background="@drawable/gradient_bg_reverse_card"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/card_health"
-            app:layout_constraintEnd_toStartOf="@+id/card_technology"
-            app:layout_constraintStart_toEndOf="@+id/card_health"
-
-            app:layout_constraintTop_toTopOf="@+id/card_health"
-            app:strokeColor="@color/dark_grey"
-            app:strokeWidth="1dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_capacity"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:background="@drawable/gradient_bg_reverse_card"
-                android:padding="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/card_health"
+                app:layout_constraintEnd_toStartOf="@+id/card_technology"
+                app:layout_constraintStart_toEndOf="@+id/card_health"
+
+                app:layout_constraintTop_toTopOf="@+id/card_health"
+                app:strokeColor="@color/dark_grey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_bg_reverse_card"
+                    android:padding="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/capacity_icon_id"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/capacity_img"
-                    app:layout_constraintEnd_toEndOf="@id/capacity_title_TV"
-                    app:layout_constraintStart_toStartOf="@id/capacity_title_TV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <ImageView
+                        android:id="@+id/capacity_icon_id"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/capacity_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/capacity_title_TV"
+                        app:layout_constraintStart_toStartOf="@id/capacity_title_TV"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/capacity_title_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/capacity_title"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/capacity_icon_id" />
+                    <TextView
+                        android:id="@+id/capacity_title_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/capacity_title"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/capacity_icon_id"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/capacity_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_8sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/capacity_title_TV"
-                    app:layout_constraintStart_toStartOf="@+id/capacity_title_TV"
-                    android:layout_marginBottom="@dimen/_10sdp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/capacity_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/capacity_title_TV"
+                        app:layout_constraintStart_toStartOf="@+id/capacity_title_TV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_plugged"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:background="@drawable/gradient_bg_reverse_card"
-            app:cardCornerRadius="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/card_health"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/card_voltage"
-            app:layout_constraintTop_toTopOf="@+id/card_health"
-            app:strokeColor="@color/dark_grey"
-            app:strokeWidth="1dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_plugged"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:background="@drawable/gradient_bg_reverse_card"
-                android:padding="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/card_health"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/card_voltage"
+                app:layout_constraintTop_toTopOf="@+id/card_health"
+                app:strokeColor="@color/dark_grey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_bg_reverse_card"
+                    android:padding="@dimen/_10sdp">
 
 
-                <ImageView
-                    android:id="@+id/plugged_icon_id"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/plugged_img"
-                    app:layout_constraintEnd_toEndOf="@id/plugged_title_TV"
-                    app:layout_constraintStart_toStartOf="@id/plugged_title_TV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <ImageView
+                        android:id="@+id/plugged_icon_id"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/plugged_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/plugged_title_TV"
+                        app:layout_constraintStart_toStartOf="@id/plugged_title_TV"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/plugged_title_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/plugged_title"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/plugged_icon_id" />
+                    <TextView
+                        android:id="@+id/plugged_title_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/plugged_title"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/plugged_icon_id"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/plugged_TV"
-                    style="@style/textStyle_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/_8sdp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/plugged_title_TV"
-                    app:layout_constraintStart_toStartOf="@+id/plugged_title_TV"
-                    android:layout_marginBottom="@dimen/_10sdp"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/plugged_TV"
+                        style="@style/textStyle_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/plugged_title_TV"
+                        app:layout_constraintStart_toStartOf="@+id/plugged_title_TV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</ScrollView>

@@ -79,7 +79,6 @@ class BatteryService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        // Unregister the BroadcastReceiver to avoid memory leaks
         batteryBoardcastReciver?.let {
             unregisterReceiver(it)
         }

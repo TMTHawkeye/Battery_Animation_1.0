@@ -37,7 +37,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mycreation_title_id"
+        app:layout_constraintBottom_toTopOf="@+id/welcomeNativecontainer"
         android:padding="@dimen/_10sdp"
         android:id="@+id/mycreation_RV"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/welcomeNativecontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@color/grey"
+        android:paddingVertical="@dimen/_3sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include
+            android:id="@+id/layoutBannerAdsContainer"
+            layout="@layout/layout_banner_control"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

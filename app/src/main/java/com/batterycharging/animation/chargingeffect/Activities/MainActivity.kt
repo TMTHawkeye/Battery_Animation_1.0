@@ -27,7 +27,10 @@ import com.batterycharging.animation.chargingeffect.Fragments.HomeFragment
 import com.batterycharging.animation.chargingeffect.Fragments.SettingsFragment
 import com.batterycharging.animation.chargingeffect.HelperClasses.Constants
 import com.batterycharging.animation.chargingeffect.HelperClasses.Constants.OVERLAY_PERMISSION_REQUEST_CODE
+import com.batterycharging.animation.chargingeffect.HelperClasses.isReadStorageAllowed
+import com.batterycharging.animation.chargingeffect.HelperClasses.isWriteStorageAllowed
 import com.batterycharging.animation.chargingeffect.HelperClasses.prEvents
+import com.batterycharging.animation.chargingeffect.HelperClasses.requestStoragePermission
 import com.batterycharging.animation.chargingeffect.ModelClasses.AnimationSwitchStates
 import com.batterycharging.animation.chargingeffect.ModelClasses.SwitchStates
 import com.batterycharging.animation.chargingeffect.R
@@ -44,6 +47,7 @@ class MainActivity : BaseActivity() {
 
     //    val batteryInfoViewModel: BatteryInfoViewModel by viewModel()
     private val STORAGE_PERMISSION_CODE = 123
+    private val NOTIFICATION_PERMISSION_CODE = 124
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,30 +56,50 @@ class MainActivity : BaseActivity() {
         switchStatesBattery = getSwitchStates()
         switchStatesAnmations = getSwitchStatesAnimations()
 
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                STORAGE_PERMISSION_CODE
-            )
-        }
+
         if (!hasOverlayPermission()) {
             showOverlayPermissionDialog()
         } else {
-            if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
-                || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
-                || switchStatesAnmations.isactiveAnimationSwitchOn
-            /*|| switchStatesAnmations.isbatteryPercentageSwitchOn
-            || switchStatesAnmations.isdouble_tap_closeSwitchOn*/
-            ) {
+//            if (switchStatesBattery.isChargerConnectSwitchOn || switchStatesBattery.isChargerDisconnectSwitchOn
+//                || switchStatesBattery.isFullBatterySwitchOn || switchStatesBattery.isLowBatterySwitchOn
+//                || switchStatesAnmations.isactiveAnimationSwitchOn
+//            /*|| switchStatesAnmations.isbatteryPercentageSwitchOn
+//            || switchStatesAnmations.isdouble_tap_closeSwitchOn*/
+//            ) {
                 startService()
+//            }
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_CODE
+                )
+            }
+
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                android.Manifest.permission.READ_EXTERNAL_STORAGE
+//            )
+//            != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+//                STORAGE_PERMISSION_CODE
+//            )
+//        }
+
+            if (!isReadStorageAllowed(this@MainActivity) && !isWriteStorageAllowed(this@MainActivity)) {
+                requestStoragePermission(this)
             }
         }
+
+
 
         val selectedColor = ContextCompat.getColor(this, R.color.bottom_nav_icon_selected)
 
@@ -212,6 +236,9 @@ class MainActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(serviceIntent)
         }
+        else{
+            startService(serviceIntent)
+        }
     }
 
 //    private fun startService() {
@@ -270,6 +297,35 @@ class MainActivity : BaseActivity() {
         if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
             if (hasOverlayPermission()) {
                 startService()
+
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                        NOTIFICATION_PERMISSION_CODE
+                    )
+                }
+
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                android.Manifest.permission.READ_EXTERNAL_STORAGE
+//            )
+//            != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+//                STORAGE_PERMISSION_CODE
+//            )
+//        }
+
+                if (!isReadStorageAllowed(this@MainActivity) && !isWriteStorageAllowed(this@MainActivity)) {
+                    requestStoragePermission(this)
+                }
             } else {
                 showOverlayPermissionDialog()
             }
@@ -295,7 +351,7 @@ class MainActivity : BaseActivity() {
         val savedSwitchStateString =
             sharedPreferences.getString(Constants.SWITCH_STATE_ANIMATION_KEY, null)
         val defaultSwitchState = AnimationSwitchStates(
-            isactiveAnimationSwitchOn = true,
+            isactiveAnimationSwitchOn = false,
             isbatteryPercentageSwitchOn = false,
             isdouble_tap_closeSwitchOn = false,
             animationDuration = 3000
@@ -330,6 +386,17 @@ class MainActivity : BaseActivity() {
 //                    Toast.LENGTH_SHORT
 //                ).show()
 
+            }
+        }
+        if (requestCode == NOTIFICATION_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (!isReadStorageAllowed(this@MainActivity) && !isWriteStorageAllowed(this@MainActivity)) {
+                    requestStoragePermission(this)
+                }
+            } else {
+                if (!isReadStorageAllowed(this@MainActivity) && !isWriteStorageAllowed(this@MainActivity)) {
+                    requestStoragePermission(this)
+                }
             }
         }
     }
